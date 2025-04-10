@@ -1,0 +1,370 @@
+/* Simulation_CSS.css */
+
+.simulation-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+}
+
+.simulation-body {
+    flex: 1;
+    position: relative;
+}
+
+.fullscreen-map {
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+    position: relative;
+}
+
+.simulation-map-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.simulation-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: #e0e0e0;
+}
+
+.panel-button-topright {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+.open-panel-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.open-panel-button img {
+    width: 70px;
+    height: 40px;
+}
+
+/* 팝업 패널 */
+.popup-panel {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 480px;
+    height: 450px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+    padding: 24px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.popup-panel-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.close-button-area {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.panel-content-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.panel-image-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 50%;
+    align-items: center;
+}
+
+.panel-image-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.panel-image {
+    object-fit: contain;
+    background: none;
+}
+
+.panel-small {
+    width: 120px;
+    height: auto;
+}
+
+.panel-large {
+    width: 140px;
+    height: auto;
+}
+
+.panel-size {
+    font-size: 12px;
+    margin-top: 4px;
+    color: #444;
+}
+
+.panel-form-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    width: 50%;
+}
+
+.panel-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-label {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.panel-input,
+.panel-result-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #fafafa;
+}
+
+/* 구분선 */
+.panel-divider {
+    margin: 16px 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+/* 차트 영역 */
+.chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chart-box {
+    height: 120px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-placeholder-text {
+    font-size: 13px;
+    color: #777;
+}
+
+/* 완료 버튼 */
+.complete-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.complete-button {
+    background-color: #000000;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* 상세주소 버튼 위치 */
+.address-slide-button {
+    position: absolute;
+    top: 50%;
+    left: -10px; 
+    transform: translateY(-50%); 
+    z-index: 10;
+}
+
+.slide-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* 슬라이드 창 */
+.address-slide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+    transform: translateX(-100%); 
+    transition: transform 0.3s ease-in-out; 
+    box-sizing: border-box;
+}
+
+.address-slide.open {
+    transform: translateX(0); 
+}
+
+.address-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #324DDD;
+    padding: 20px;
+    justify-content: space-between; 
+    align-items: stretch; 
+    gap: 16px;
+    width: 100%;
+    height: 100%; 
+    box-sizing: border-box; 
+}
+
+
+.address-content p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* 닫기 버튼 */
+.close-slide {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #000;
+    font-size: 14px;
+    text-align: right;
+    position: absolute; 
+    bottom: 50%; 
+    left: 105%;
+    transform: translateX(-50%); 
+}
+
+
+.address-content .address-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f5f5f5;
+    color: #333;
+    width: 170px;
+}
+
+.address-content .address-input::placeholder {
+    color: #aaa;
+}
+
+
+.address-content h3 {
+    font-size: 20px;
+    color: #ffffff;
+    margin-bottom: 0; 
+}
+
+.address-content .address-input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f5f5f5;
+    color: #333;
+    width: 200px;
+    margin-top: 0;
+}
+
+.coordinates-section {
+    display: flex;
+    justify-content: space-between; 
+    flex-direction: column; 
+    gap: 10px; 
+    padding: 15px;
+    background-color: #D9D9D9;
+}
+
+.coordinates-title {
+    color: #888; 
+    text-decoration: underline;
+    font-size: 15px; 
+}
+
+.coordinate-input {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.coordinate-input input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #f5f5f5;
+    width: 160px; 
+}
+
+.location-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.location-box {
+    height: 500px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 8px;
+    
+}
+
+.location-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    background-color: white;
+    border-bottom: 1px solid #C0B2B2; 
+    padding-bottom: 5px; 
+}
+
+
+.sunlight-filter-button {
+    position: fixed; 
+    right: 20px; 
+    bottom: 20px; 
+}
+
+.filter-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
