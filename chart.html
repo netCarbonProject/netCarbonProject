@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전력 사용 대시보드</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 20px;
+      padding: 20px;
+    }
+    .chart-container {
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .map-placeholder {
+      background-color: #ffffff;
+      border: 2px dashed #ccc;
+      border-radius: 12px;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      color: #888;
+    }
+    canvas {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      height: auto !important;
+      aspect-ratio: 1 / 1 !important; /* 정사각형 유지 */
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="chart-container">
+      <h3>지역별 전력 사용량</h3>
+      <div class="map-placeholder">지도 자리</div>
+    </div>
+    <div class="chart-container">
+      <h3>업종별 전력 사용량</h3>
+      <canvas id="industryChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>전력 사용량 비교</h3>
+      <canvas id="usageCompareChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>에너지원별 발전 비율</h3>
+      <canvas id="energySourceChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>신재생에너지 사용 비율</h3>
+      <canvas id="renewableChart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="chart.js"></script>
+</body>
+</html>
