@@ -1,5 +1,5 @@
-import React from 'react';
-import '../components/common/css/Info_CSS.css'
+import React from 'react'; // React 선언
+import '../components/common/css/Info_CSS.css' // css
 const InfoPage = () => {
   return (
     <div className="info-container">

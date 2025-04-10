@@ -1,7 +1,8 @@
-import React, { useState } from 'react'; // 
+import React, { useState } from 'react'; // React 선언
+
 import '../components/common/css/Simulation_CSS.css'; // css
 
-// 이미지 
+// 이미지
 import solarpanel1 from '../assets/SimulationPage/solarpanel1.png';
 import solarpanel2 from '../assets/SimulationPage/solarpanel2.png';
 import simulation_button from '../assets/SimulationPage/simulation_button.png';
@@ -11,12 +12,20 @@ import slide_btn from '../assets/SimulationPage/slide_btn.png';
 import { useNavigate } from 'react-router-dom'; // 페이지 이동 함수
 
 const SimulationPage = () => {
-    // 패널 on & off / 슬라이드
+    // 패널 
     const [showPanel, setShowPanel] = useState(false);
-    const [showAddressSlide, setShowAddressSlide] = useState(false); 
+
+    // 왼쪽 주소
+    const [showAddressSlide, setShowAddressSlide] = useState(false);
+    
+    // 패널 열기/닫기
     const handleOpenPanel = () => setShowPanel(true);
     const handleClosePanel = () => setShowPanel(false);
+
+    // 페이지 이동동
     const navigate = useNavigate(); 
+
+    // 슬라이드 버튼 열기/닫기기
     const handleSlideToggle = () => setShowAddressSlide(!showAddressSlide); 
 
     return (
@@ -27,13 +36,15 @@ const SimulationPage = () => {
                         <canvas id="simulation-canvas" className="simulation-canvas">
                             현재 브라우저는 캔버스를 지원하지 않습니다.
                         </canvas>
+
+                        {/* 패널 팝업 */}
                         <div className="panel-button-topright">
                             <button className="open-panel-button" onClick={handleOpenPanel}>
-                                <img src={simulation_button} alt="패널
-                                 보기 버튼" />
+                                <img src={simulation_button} alt="패널 보기 버튼" />
                             </button>
                         </div>
 
+                        {/* 패널 팝업 창 */}
                         {showPanel && (
                             <div className="popup-panel">
                                 <div className="popup-panel-content">
@@ -44,7 +55,6 @@ const SimulationPage = () => {
                                     >
                                     </div>
                                     <h2>설치 패널 상세</h2>
-
                                     <div className="panel-content-row">
                                         <div className="panel-image-selection">
                                             <div className="panel-image-box">
