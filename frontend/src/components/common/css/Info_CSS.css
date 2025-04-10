@@ -1,0 +1,105 @@
+/* 기본값 초기화 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 전체 화면 고정 */
+html, body {
+  height: 100%;
+  overflow: hidden; /* 전체 페이지 스크롤 제거 */
+  font-family: sans-serif;
+}
+
+/* 컨테이너 영역 */
+.info-container {
+  height: 100vh;
+  padding: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 지도 + 차트 섹션 */
+.top-section {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* 지도 영역 */
+.left-map {
+  flex: 1;
+  min-width: 200px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  min-height: 0; /* 추가: 내부 스크롤 방지 */
+}
+
+/* 구분선 */
+.vertical-divider {
+  width: 1px;
+  background-color: #aaa;
+}
+
+/* 차트 전체 영역 */
+.right-top {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  min-height: 0; /* 추가 */
+}
+
+/* 위/아래 차트 */
+.top-charts,
+.bottom-charts {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  min-height: 0; /* 추가 */
+  gap: 20px; /* 차트 간 간격 */
+  margin: 20px 0;
+}
+
+.bottom-charts {
+  display: flex;
+  flex: 1;
+  gap: 12px;
+  margin-top: -8px; 
+}
+
+/* 구분선 */
+.horizontal-divider {
+  height: 1px;
+  background-color: #aaa;
+  margin: 8px 0;
+}
+
+/* 차트 박스 */
+.chart {
+  flex: 1;
+  max-width: 50%;    
+  height: 500px;      
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  box-sizing: border-box;
+}
+
+/* 캔버스 크기 조절 */
+.chart canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
