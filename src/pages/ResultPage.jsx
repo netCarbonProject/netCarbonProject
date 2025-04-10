@@ -4,7 +4,7 @@ import '../components/common/css/ResultPage_CSS.css';
 const ResultPage = () => {
   return (
     <div className="result-page-wrapper">
-
+      {/* 지도 시뮬 결과 */}
       <div className="top-section">
         <div className="result-map-placeholder">지도 시뮬레이션 결과</div>
 

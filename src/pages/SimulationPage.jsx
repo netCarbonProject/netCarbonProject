@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
-import '../components/common/css/Simulation_CSS.css';
+import React, { useState } from 'react'; // 
+import '../components/common/css/Simulation_CSS.css'; // css
+
+// 이미지 
 import solarpanel1 from '../assets/SimulationPage/solarpanel1.png';
 import solarpanel2 from '../assets/SimulationPage/solarpanel2.png';
 import simulation_button from '../assets/SimulationPage/simulation_button.png';
 import sunlight_btn from '../assets/SimulationPage/sunlight_btn.png';
 import slide_btn from '../assets/SimulationPage/slide_btn.png';
+
 import { useNavigate } from 'react-router-dom'; // 페이지 이동 함수
 
 const SimulationPage = () => {
+    // 패널 on & off / 슬라이드
     const [showPanel, setShowPanel] = useState(false);
-    const [showAddressSlide, setShowAddressSlide] = useState(false); // 슬라이드 상태
+    const [showAddressSlide, setShowAddressSlide] = useState(false); 
     const handleOpenPanel = () => setShowPanel(true);
     const handleClosePanel = () => setShowPanel(false);
     const navigate = useNavigate(); 
-    const handleSlideToggle = () => setShowAddressSlide(!showAddressSlide); // 슬라이드 토글 함수
+    const handleSlideToggle = () => setShowAddressSlide(!showAddressSlide); 
 
     return (
         <div className="simulation-container">
@@ -25,7 +29,8 @@ const SimulationPage = () => {
                         </canvas>
                         <div className="panel-button-topright">
                             <button className="open-panel-button" onClick={handleOpenPanel}>
-                                <img src={simulation_button} alt="패널 보기 버튼" />
+                                <img src={simulation_button} alt="패널
+                                 보기 버튼" />
                             </button>
                         </div>
 
