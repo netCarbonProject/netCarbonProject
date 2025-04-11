@@ -42,7 +42,7 @@ html, body {
   min-height: 0; /* 추가: 내부 스크롤 방지 */
 }
 
-/* 구분선 */
+/* 지도와 차트 구분선 */
 .vertical-divider {
   width: 1px;
   background-color: #aaa;
@@ -58,41 +58,42 @@ html, body {
   min-height: 0; /* 추가 */
 }
 
-/* 위/아래 차트 */
-.top-charts,
-.bottom-charts {
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-  min-height: 0; 
-  gap: 20px; 
-  margin: 20px 0;
-}
 
-.bottom-charts {
-  display: flex;
-  flex: 1;
-  gap: 12px;
-  margin-top: -8px; 
-}
-
-/* 구분선 */
-.horizontal-divider {
-  height: 1px;
-  background-color: #aaa;
-  margin: 8px 0;
-}
-
-/* 차트 박스 */
+/* 전체 차트 박스 */
 .chart {
   flex: 1;
   max-width: 50%;    
-  height: 500px;      
+  height: 400px;      
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.08);
   box-sizing: border-box;
+}
+
+
+/* 위/아래 차트 */
+.top-charts {
+  height: 250px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 165px; 
+}
+
+.bottom-charts {
+  justify-content: space-between;
+  display: flex;
+  flex: 1;
+  gap: 12px;
+  margin-top: 0px; 
+}
+
+/* 차트 사이 구분선 */
+.horizontal-divider {
+  height: 1px;
+  background-color: #aaa;
+  margin: 8px 0;
 }
 
 /* 캔버스 */

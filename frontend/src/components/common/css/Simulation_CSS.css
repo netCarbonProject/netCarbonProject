@@ -221,8 +221,8 @@
 /* 슬라이드 열기 버튼 위치 */
 .address-slide-button {
     position: absolute;
-    top: 50%;
-    left: -10px;
+    bottom: 61%;
+    left: -5px;
     transform: translateY(-50%);
     z-index: 10;
 }
@@ -236,21 +236,23 @@
 /* 슬라이드 패널 */
 .address-slide {
     position: fixed;
-    top: 0;
     left: 0;
-    width: 300px;
-    height: 100%;
+    top: 415px;
+    width: 250px;
+    height: 70%;
     background-color: #fff;
     box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 20;
-    transform: translateX(-100%);
+    transform: translate(-100%, -50%);
     transition: transform 0.3s ease-in-out;
     box-sizing: border-box;
+    border-radius: 12px;
 }
+
 
 /* 슬라이드 열림 상태 */
 .address-slide.open {
-    transform: translateX(0);
+    transform: translate(0, -50%);
 }
 
 /* 슬라이드 안 콘텐츠 스타일 */
@@ -364,11 +366,11 @@
     padding-bottom: 5px;
 }
 
-/* 햇빛 필터 버튼 (우측 하단 고정) */
+/* 햇빛 필터 버튼 */
 .sunlight-filter-button {
     position: fixed;
     right: 20px;
-    bottom: 20px;
+    top: 150px;
 }
 
 .filter-button {
@@ -377,7 +379,7 @@
     cursor: pointer;
 }
 
-/* 스크롤 방지 클래스 (슬라이드 열릴 때 사용) */
+/* 스크롤 방지 */
 body.no-scroll {
     overflow: hidden !important;
 }

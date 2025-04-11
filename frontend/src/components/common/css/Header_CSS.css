@@ -5,8 +5,19 @@ html, body {
   flex: 1;
   width: 100%;
   height: 100%;
+  /* 선명도 설정 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* 스크롤바 숨기기 */
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 /* 전체 헤더 영역 */
@@ -44,6 +55,7 @@ html, body {
   height: 30px;
 }
 
+/* 인트로 */
 .home-page .logo-icon {
   background-image: url('../../../assets/Header/Icon.png');
 }
@@ -51,7 +63,32 @@ html, body {
   background-image: url('../../../assets/Header/intro.png');
 }
 
+/*  */
+.info-page .logo-icon {
+  background-image: url('../../../assets/Header/icon2.png');
+}
 
+.info-page .logo-title {
+  background-image: url('../../../assets/Header/Dashboard-logo.png');
+}
+
+/* 시뮬레이션 */
+.sim-page .logo-icon {
+  background-image: url('../../../assets/Header/icon3.png');
+}
+
+.sim-page .logo-title {
+  background-image: url('../../../assets/Header/Simulation-logo.png');
+}
+
+/* 결과 */
+.result-page .logo-icon {
+  background-image: url('../../../assets/Header/icon4.png');
+}
+
+.result-page .logo-title {
+  background-image: url('../../../assets/Header/SimulationResult-logo.png');
+}
 
 /* 아이콘 영역 */
 .icons {
