@@ -8,7 +8,6 @@
 /* 전체 화면 고정 */
 html, body {
   height: 100%;
-  overflow: hidden; /* 전체 페이지 스크롤 제거 */
   font-family: sans-serif;
 }
 
@@ -65,8 +64,8 @@ html, body {
   display: flex;
   flex: 1;
   justify-content: space-between;
-  min-height: 0; /* 추가 */
-  gap: 20px; /* 차트 간 간격 */
+  min-height: 0; 
+  gap: 20px; 
   margin: 20px 0;
 }
 
@@ -96,10 +95,11 @@ html, body {
   box-sizing: border-box;
 }
 
-/* 캔버스 크기 조절 */
+/* 캔버스 */
 .chart canvas {
   width: 100% !important;
   height: 100% !important;
   max-width: 100% !important;
   max-height: 100% !important;
 }
+

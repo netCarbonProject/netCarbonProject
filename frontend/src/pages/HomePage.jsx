@@ -26,7 +26,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="intro-container">
+    <div className="Home-container">
 
       {/* Section 1 탄소 중립*/}
       <section className="section" id="section1"> 
@@ -64,7 +64,7 @@ const HomePage = () => {
           <button className="custom-btn" onClick={() => navigate('/info')}>
             더 알아보기 →
           </button>
-          <button className="custom-btn" onClick={() => navigate('/simulatation')}>
+          <button className="custom-btn" onClick={() => navigate('/simulation')}>
             시뮬레이션 체험하기 →
           </button>
         </div>

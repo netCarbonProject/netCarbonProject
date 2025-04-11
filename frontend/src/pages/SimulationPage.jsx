@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // React 선언
+import React, { useState, useEffect } from 'react'; // React 선언
 
 import '../components/common/css/Simulation_CSS.css'; // css
 
@@ -29,6 +29,16 @@ const SimulationPage = () => {
 
     // 슬라이드 버튼 열기/닫기기
     const handleSlideToggle = () => setShowAddressSlide(!showAddressSlide); 
+
+    useEffect(() => {
+        // 페이지 들어올 때 스크롤 막기
+        document.body.classList.add('no-scroll');
+      
+        // 페이지 떠날 때 스크롤 다시 허용
+        return () => {
+          document.body.classList.remove('no-scroll');
+        };
+      }, []);
 
     return (
         <div className="simulation-container">
@@ -113,6 +123,8 @@ const SimulationPage = () => {
                                     </div>
 
                                     <div className="complete-button-wrapper">
+                                        <button className='ai-input-button'>AI 자동 배치</button>
+
                                         <button className="complete-button" onClick={() => navigate('/result')}>배치 완료</button>
                                     </div>
                                 </div>

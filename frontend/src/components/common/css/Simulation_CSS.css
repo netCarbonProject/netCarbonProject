@@ -1,5 +1,6 @@
 /* Simulation_CSS.css */
 
+/* 전체 시뮬레이션 영역 컨테이너 */
 .simulation-container {
     width: 100%;
     height: 100vh;
@@ -8,11 +9,13 @@
     background-color: #f5f5f5;
 }
 
+/* 지도 포함 본문 영역 */
 .simulation-body {
     flex: 1;
     position: relative;
 }
 
+/* 지도 영역 (풀스크린 지도) */
 .fullscreen-map {
     width: 100%;
     height: 100%;
@@ -20,12 +23,14 @@
     position: relative;
 }
 
+/* 지도 래퍼 (지도+캔버스 포함) */
 .simulation-map-wrapper {
     width: 100%;
     height: 100%;
     position: relative;
 }
 
+/* 캔버스 영역 (그리기용 등) */
 .simulation-canvas {
     width: 100%;
     height: 100%;
@@ -33,6 +38,7 @@
     background-color: #e0e0e0;
 }
 
+/* 우측 상단 패널 열기 버튼 위치 */
 .panel-button-topright {
     position: absolute;
     top: 20px;
@@ -40,6 +46,7 @@
     z-index: 10;
 }
 
+/* 패널 열기 버튼 스타일 */
 .open-panel-button {
     background: transparent;
     border: none;
@@ -51,7 +58,7 @@
     height: 40px;
 }
 
-/* 팝업 패널 */
+/* ---------- 팝업 패널 ---------- */
 .popup-panel {
     position: absolute;
     top: 10px;
@@ -67,11 +74,13 @@
     overflow-y: auto;
 }
 
+/* 팝업 내부 콘텐츠 세로 정렬 */
 .popup-panel-content {
     display: flex;
     flex-direction: column;
 }
 
+/* 닫기 버튼 위치 및 정렬 */
 .close-button-area {
     position: absolute;
     top: 12px;
@@ -85,7 +94,7 @@
     align-items: center;
 }
 
-
+/* 입력/이미지 영역 배치 */
 .panel-content-row {
     display: flex;
     flex-direction: row;
@@ -94,6 +103,7 @@
     margin-bottom: 16px;
 }
 
+/* 이미지 선택 영역 */
 .panel-image-selection {
     display: flex;
     flex-direction: column;
@@ -102,6 +112,7 @@
     align-items: center;
 }
 
+/* 이미지 박스 및 정렬 */
 .panel-image-box {
     display: flex;
     flex-direction: column;
@@ -113,6 +124,7 @@
     background: none;
 }
 
+/* 이미지 크기 설정 */
 .panel-small {
     width: 120px;
     height: auto;
@@ -123,12 +135,14 @@
     height: auto;
 }
 
+/* 이미지 하단 텍스트 */
 .panel-size {
     font-size: 12px;
     margin-top: 4px;
     color: #444;
 }
 
+/* 입력 폼 영역 */
 .panel-form-section {
     display: flex;
     flex-direction: column;
@@ -137,6 +151,7 @@
     width: 50%;
 }
 
+/* 입력 라벨 및 인풋 스타일 */
 .panel-info {
     display: flex;
     flex-direction: column;
@@ -163,7 +178,7 @@
     border-top: 1px solid #ddd;
 }
 
-/* 차트 영역 */
+/* ---------- 차트 영역 ---------- */
 .chart-wrapper {
     display: flex;
     flex-direction: column;
@@ -184,29 +199,31 @@
     color: #777;
 }
 
-/* 완료 버튼 */
+/* ---------- 버튼 영역 ---------- */
 .complete-button-wrapper {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-top: 16px;
 }
 
-.complete-button {
-    background-color: #000000;
+/* 완료 버튼 / AI 배치 버튼 스타일 */
+.complete-button, .ai-input-button {
+    background-color: black;
     color: white;
-    padding: 10px 20px;
-    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 8px;
     border: none;
-    border-radius: 10px;
     cursor: pointer;
 }
 
-/* 상세주소 버튼 위치 */
+/* ---------- 슬라이드 패널 영역 ---------- */
+
+/* 슬라이드 열기 버튼 위치 */
 .address-slide-button {
     position: absolute;
     top: 50%;
-    left: -10px; 
-    transform: translateY(-50%); 
+    left: -10px;
+    transform: translateY(-50%);
     z-index: 10;
 }
 
@@ -216,7 +233,7 @@
     cursor: pointer;
 }
 
-/* 슬라이드 창 */
+/* 슬라이드 패널 */
 .address-slide {
     position: fixed;
     top: 0;
@@ -226,35 +243,36 @@
     background-color: #fff;
     box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 20;
-    transform: translateX(-100%); 
-    transition: transform 0.3s ease-in-out; 
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
     box-sizing: border-box;
 }
 
+/* 슬라이드 열림 상태 */
 .address-slide.open {
-    transform: translateX(0); 
+    transform: translateX(0);
 }
 
+/* 슬라이드 안 콘텐츠 스타일 */
 .address-content {
     display: flex;
     flex-direction: column;
     background-color: #324DDD;
     padding: 20px;
-    justify-content: space-between; 
-    align-items: stretch; 
+    justify-content: space-between;
+    align-items: stretch;
     gap: 16px;
     width: 100%;
-    height: 100%; 
-    box-sizing: border-box; 
+    height: 100%;
+    box-sizing: border-box;
 }
-
 
 .address-content p {
     font-size: 14px;
     color: #555;
 }
 
-/* 닫기 버튼 */
+/* 슬라이드 닫기 버튼 */
 .close-slide {
     background-color: transparent;
     border: none;
@@ -262,34 +280,13 @@
     color: #000;
     font-size: 14px;
     text-align: right;
-    position: absolute; 
-    bottom: 50%; 
+    position: absolute;
+    bottom: 50%;
     left: 105%;
-    transform: translateX(-50%); 
+    transform: translateX(-50%);
 }
 
-
-.address-content .address-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    background-color: #f5f5f5;
-    color: #333;
-    width: 170px;
-}
-
-.address-content .address-input::placeholder {
-    color: #aaa;
-}
-
-
-.address-content h3 {
-    font-size: 20px;
-    color: #ffffff;
-    margin-bottom: 0; 
-}
-
+/* 슬라이드 내부 input */
 .address-content .address-input {
     padding: 12px;
     border: 1px solid #ccc;
@@ -301,23 +298,34 @@
     margin-top: 0;
 }
 
+.address-content .address-input::placeholder {
+    color: #aaa;
+}
+
+.address-content h3 {
+    font-size: 20px;
+    color: #ffffff;
+    margin-bottom: 0;
+}
+
+/* 위도 경도 섹션 */
 .coordinates-section {
     display: flex;
-    justify-content: space-between; 
-    flex-direction: column; 
-    gap: 10px; 
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
     padding: 15px;
     background-color: #D9D9D9;
 }
 
 .coordinates-title {
-    color: #888; 
+    color: #888;
     text-decoration: underline;
-    font-size: 15px; 
+    font-size: 15px;
 }
 
 .coordinate-input {
-    flex: 1; 
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -329,9 +337,10 @@
     border-radius: 4px;
     font-size: 14px;
     background-color: #f5f5f5;
-    width: 160px; 
+    width: 160px;
 }
 
+/* 위치 박스 */
 .location-section {
     display: flex;
     flex-direction: column;
@@ -344,7 +353,6 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 8px;
-    
 }
 
 .location-title {
@@ -352,19 +360,24 @@
     font-weight: bold;
     text-align: center;
     background-color: white;
-    border-bottom: 1px solid #C0B2B2; 
-    padding-bottom: 5px; 
+    border-bottom: 1px solid #C0B2B2;
+    padding-bottom: 5px;
 }
 
-
+/* 햇빛 필터 버튼 (우측 하단 고정) */
 .sunlight-filter-button {
-    position: fixed; 
-    right: 20px; 
-    bottom: 20px; 
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
 }
 
 .filter-button {
     background: transparent;
     border: none;
     cursor: pointer;
+}
+
+/* 스크롤 방지 클래스 (슬라이드 열릴 때 사용) */
+body.no-scroll {
+    overflow: hidden !important;
 }

@@ -1,11 +1,21 @@
-import React from 'react'; // React 선언
-import '../components/common/css/Info_CSS.css' // css
+import React, { useEffect } from 'react'; // useEffect 추가
+import '../components/common/css/Info_CSS.css';
 import IndustryUsageChart from '../components/charts/IndustryUsageChart';
 import UsageCompareChart from '../components/charts/UsageCompareChart';
 import EnergySourceChart from '../components/charts/EnergySourceChart';
 import RenewableChart from '../components/charts/RenewableChart';
 
 const InfoPage = () => {
+  useEffect(() => {
+    // 페이지에 진입하면 body 스크롤 비활성화
+    document.body.style.overflow = 'hidden';
+
+    // 페이지에서 나가면 다시 스크롤 활성화
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   return (
     <div className="info-container">
       <div className="top-section">
@@ -28,5 +38,3 @@ const InfoPage = () => {
 };
 
 export default InfoPage;
-
-

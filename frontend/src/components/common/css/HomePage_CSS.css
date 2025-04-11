@@ -1,8 +1,18 @@
-.intro-container {
-  width: 100%;
-  overflow-x: hidden;
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
 }
 
+.Home-container {
+  width: 100%;
+  min-height: 100vh;
+  overflow: auto;
+}
+
+/* 고정 헤더 */
 .fixed-header {
   position: fixed;
   top: 0;
@@ -14,19 +24,14 @@
   border-bottom: 1px solid #ccc;
 }
 
-.intro-container {
-  width: 100%;
-  overflow-x: hidden;
-}
-
+/* 각 섹션 설정 */
 .section {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh; 
   text-align: center;
-  overflow: hidden;
+  overflow: auto; 
 }
-
 
 #section1 .top-overlay {
   width: 100%;
@@ -45,7 +50,6 @@
   margin-top: 20rem;
   cursor: pointer;
 }
-
 
 .fullscreen-img {
   width: 100%;
