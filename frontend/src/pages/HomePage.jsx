@@ -58,7 +58,7 @@ const HomePage = () => {
         <img
           src={solar_power}
           alt="태양광 관련"
-          className="fullscreen-img"
+          className="fullscreen-img solar-img"
         />
         <div className="button-group">
           <button className="custom-btn" onClick={() => navigate('/info')}>
