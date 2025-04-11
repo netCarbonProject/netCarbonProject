@@ -3,11 +3,11 @@ import '../css/Header_CSS.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 // 이미지 import (src/assets 경로 기준)
-import icon from '../../../assets/Header/Icon.png';
-import intro from '../../../assets/Header/intro.png';
-import vector2 from '../../../assets/Header/Vector-2.png';
-import vector1 from '../../../assets/Header/Vector-1.png';
-import vector from '../../../assets/Header/Vector.png';
+// import icon from '../../../assets/Header/Icon.png';
+// import intro from '../../../assets/Header/intro.png';
+// import vector2 from '../../../assets/Header/Vector-2.png';
+// import vector1 from '../../../assets/Header/Vector-1.png';
+// import vector from '../../../assets/Header/Vector.png';
 import menu from '../../../assets/Header/menu.png';
 import vector2b from '../../../assets/Header/Vector2.png';
 
@@ -27,20 +27,14 @@ const Header = () => {
   return (
     <header className={`header ${pageClass}`}>
       <div className="logo">
-        <img src={icon} alt="logo" />
-        <img src={intro} alt="intro text" />
+        <div className="logo-icon" />
+        <div className="logo-title" />
       </div>
       <div className="icons">
         <button id="icon1_img" onClick={() => navigate('/')}></button>
-        <button id="icon2_img">
-          <img src={vector2} alt="vector2" onClick={() => navigate('/info')}/>
-        </button>
-        <button id="icon3_img">
-          <img src={vector1} alt="vector1" onClick={() => navigate('/simulation')}/>
-        </button>
-        <button id="icon4_img">
-          <img src={vector} alt="vector" onClick={() => navigate('/result')}/>
-        </button>
+        <button id="icon2_img" onClick={() => navigate('/info')}></button>
+        <button id="icon3_img" onClick={() => navigate('/simulation')}></button>
+        <button id="icon4_img" onClick={() => navigate('/result')}></button>
         <div className="menu-group">
           <div><img src={menu} alt="menu" /></div>
           <div><img src={vector2b} alt="menu vector" /></div>
