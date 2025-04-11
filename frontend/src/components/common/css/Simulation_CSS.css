@@ -221,7 +221,7 @@
 /* 슬라이드 열기 버튼 위치 */
 .address-slide-button {
     position: absolute;
-    bottom: 61%;
+    bottom: 56%;
     left: -5px;
     transform: translateY(-50%);
     z-index: 10;
@@ -233,26 +233,25 @@
     cursor: pointer;
 }
 
-/* 슬라이드 패널 */
+/* 지역 슬라이드 패널 */
 .address-slide {
     position: fixed;
     left: 0;
-    top: 415px;
+    top: 8.5%;      
+    bottom: 5%;     
     width: 250px;
-    height: 70%;
+    height: 770px; /* 지역 슬라이드드 하단 사이즈 조절용 */
     background-color: #fff;
     box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 20;
-    transform: translate(-100%, -50%);
+    transform: translate(-100%, 0);  
     transition: transform 0.3s ease-in-out;
     box-sizing: border-box;
-    border-radius: 12px;
 }
-
 
 /* 슬라이드 열림 상태 */
 .address-slide.open {
-    transform: translate(0, -50%);
+    transform: translate(0, 0);  
 }
 
 /* 슬라이드 안 콘텐츠 스타일 */
@@ -349,7 +348,7 @@
 }
 
 .location-box {
-    height: 500px;
+    height: 300px;
     background-color: white;
     display: flex;
     flex-direction: column;
