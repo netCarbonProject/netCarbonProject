@@ -10,7 +10,7 @@ import ResultPage from './pages/ResultPage';
 const AppRoutes = () =>{
     return (
         <Routes>
-            <Route element={<Layout />}>s
+            <Route element={<Layout />}>
                 <Route path="/" element={<HomePage/>}></Route>
                 <Route path="/info" element={<InfoPage/>}></Route>
                 <Route path="/simulation" element={<SimulationPage/>}></Route>

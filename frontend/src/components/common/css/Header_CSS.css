@@ -20,7 +20,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* 전체 헤더 영역 */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -28,6 +28,11 @@ body::-webkit-scrollbar {
   padding: 10px 40px;
   background-color: white;
   border-bottom: 1px solid #ccc;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0; 
+  width: 100%;
 }
 
 /* 로고 영역 */

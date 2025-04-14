@@ -9,18 +9,7 @@ html, body {
   width: 100%;
   min-height: 100vh;
   overflow: auto;
-}
-
-/* 고정 헤더 */
-.fixed-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: white;
-  z-index: 10;
-  text-align: center;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+  padding-top: 80px; 
 }
 
 /* 각 섹션 설정 */

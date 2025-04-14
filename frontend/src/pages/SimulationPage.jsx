@@ -62,8 +62,7 @@ const SimulationPage = () => {
                                 <div className="popup-panel-content">
                                     <div 
                                         className="close-button-area" 
-                                        onClick={handleClosePanel} 
-                                        style={{cursor: 'pointer'}}
+                                        onClick={handleClosePanel}
                                     >
                                     </div>
                                     <h2>설치 패널 상세</h2>

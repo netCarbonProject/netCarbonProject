@@ -1,6 +1,7 @@
 .result-page-wrapper {
   padding: 40px;
   box-sizing: border-box;
+  padding-top: 90px; 
 }
 
 /* ─── 지도 + 시뮬 결과 ─── */
