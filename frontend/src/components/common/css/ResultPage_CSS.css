@@ -15,7 +15,7 @@
 .result-map-placeholder {
   flex: 1.2;
   background-color: #e0e0e0;
-  height: 400px;
+  height: 820px;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -36,7 +36,7 @@
   background-color: #f8f8f8;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  height: 400px;
 }
 
 .result-stats h3 {
@@ -46,7 +46,7 @@
 
 .donut-chart-placeholder {
   background-color: #f0f0f0;
-  height: 160px;
+  height: 400px;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -60,6 +60,8 @@
   background-color: #f7f7f7;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 900px;
+  margin-bottom: 40px;
 }
 
 /* 제목 스타일 */
@@ -81,6 +83,7 @@
   flex-direction: column;
   gap: 15px;
   width: 55%;
+  height: 750px;
 }
 
 .carbon-right {
@@ -100,9 +103,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-direction: column; /* 텍스트를 세로로 정렬 */
-  justify-content: flex-end; /* 내용이 카드 하단에 위치하도록 */
-  height: 60px;
+  flex-direction: column; 
+  justify-content: center; 
+  height: 400px;
 }
 
 /* 탄소 배출량 강조 스타일 */
@@ -131,7 +134,7 @@
 }
 
 .carbon-card.solar {
-  height: 200px;
+  height: 350px;
   background-color: #A1DD32;
   color: #000000;
   align-items: center;
@@ -143,7 +146,7 @@
 }
 /* 태양광 그래프 placeholder 스타일 */
 .carbon-chart-placeholder {
-  height: 200px;
+  height: 350px;
   background-color: #e0e0e0;
   margin-top: 20px;
   border-radius: 8px;
@@ -158,7 +161,8 @@
 
 /* ─── 미래 예측 ─── */
 .future-section {
-  margin-top: 60px;
+  /* margin-top: 60px; */
+  margin-bottom: 40px;
   text-align: center;
 }
 
@@ -169,8 +173,8 @@
 
 .line-chart-placeholder {
   background-color: #e9f4ff;
-  height: 240px;
-  border-radius: 12px;
+  height: 780px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -179,7 +183,7 @@
 /* ─── 나무 효과 ─── */
 .tree-section {
   position: relative;
-  height: 500px; /* 적당한 높이 설정 */
+  height: 800px; 
   background: url('../../../assets/ResultPage/grassy_field.png') no-repeat center center;
   background-size: cover;
   z-index: 0;
@@ -199,7 +203,7 @@
 .tree-effect {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
+  margin-top: 120px;
 }
 
 .tree-effect-item {
