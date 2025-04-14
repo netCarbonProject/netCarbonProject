@@ -18,5 +18,5 @@ index.js
 chart.js
 .gitignore
 frontend/public/
-src/routes.jsx
-/utils/
+routes.jsx
+utils/
