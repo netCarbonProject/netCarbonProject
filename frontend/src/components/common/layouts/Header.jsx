@@ -17,7 +17,6 @@ const Header = () => {
   
   return (
     <header className={`header ${pageClass}`}>
-    <header className={`header ${pageClass}`}>
       <div className="logo">
         <div className="logo-icon" />
         <div className="logo-title" />
