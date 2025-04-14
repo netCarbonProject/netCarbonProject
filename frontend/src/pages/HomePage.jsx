@@ -1,24 +1,32 @@
 import React, { useRef } from 'react'; // React 선언 , useRef로 타겟지정
 import { useNavigate } from 'react-router-dom'; // 페이지 이동 함수
+
 import '../components/common/css/HomePage_CSS.css'; // css
-import green_intro from '../assets/intro_green.png';
-import carbon_intro from '../assets/carbon_intro.png';
-import new_energy from '../assets/new_energy.png';
-import solar_power from '../assets/solar_power.png';
+
+
+// 이미지
+import green_intro from '../assets/HomePage/intro_green.png';
+import carbon_intro from '../assets/HomePage/carbon_intro.png';
+import new_energy from '../assets/HomePage/new_energy.png';
+import solar_power from '../assets/HomePage/solar_power.png';
 
 
 const HomePage = () => {
+
+  // 스크롤 이동
   const section2Ref = useRef(null); 
   const section3Ref = useRef(null); 
+
+  // 페이지 이동동
   const navigate = useNavigate(); 
 
+  //부드러운 스크롤
   const scrollTo = (ref) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="intro-container">
-      {/* 상단바 */}
+    <div className="Home-container">
 
       {/* Section 1 탄소 중립*/}
       <section className="section" id="section1"> 
@@ -50,7 +58,7 @@ const HomePage = () => {
         <img
           src={solar_power}
           alt="태양광 관련"
-          className="fullscreen-img"
+          className="fullscreen-img solar-img"
         />
         <div className="button-group">
           <button className="custom-btn" onClick={() => navigate('/info')}>

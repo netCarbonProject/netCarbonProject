@@ -26,42 +26,144 @@ html, body {
   gap: 8px;
 }
 
-.logo img {
-  height: 20px; 
-  object-fit: contain;
+.logo-icon,
+.logo-title {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
+
+.logo-icon {
+  width: 40px;
+  height: 30px;
+}
+
+.logo-title {
+  width: 120px; 
+  height: 30px;
+}
+
+.home-page .logo-icon {
+  background-image: url('../../../assets/Header/Icon.png');
+}
+.home-page .logo-title {
+  background-image: url('../../../assets/Header/intro.png');
+}
+
+
 
 /* 아이콘 영역 */
 .icons {
   display: flex;
   align-items: center;
   gap: 20px;
+  margin-left: auto;   
 }
 
-/* 버튼 스타일 초기화 */
+ 
 .icons button {
   background: none;
   border: none;
   cursor: pointer;
   padding: 4px;
+  outline: none;      
+  box-shadow: none;   
 }
 
-/* 모든 아이콘 이미지 크기 동일하게 (버튼 내부) */
+
 .icons button img {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
 }
 
-/* 개별 div로 들어간 아이콘들 (크게) */
+
 .icons div img {
   width: 50px;
   height: 50px;
   object-fit: contain;
 }
 
-/* menu.png 와 Vector2.png 붙이기 */
+
 .icons .menu-group {
   display: flex;
   gap: 0;
+}
+
+#icon1_img {
+  background-image: url('../../../assets/Header/Icon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 30px;
+  height: 30px;
+  padding-right: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+.home-page #icon1_img {
+  background-image: url('../../../assets/Header/intro-btn.png');
+  padding-right: 0; 
+  width: 50px;
+  height: 60px;
+}
+
+#icon2_img {
+  background-image: url('../../../assets/Header/Vector-2.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 25px;
+  height: 25px;
+  padding-right: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+.info-page #icon2_img {
+  background-image: url('../../../assets/Header/info-btn.png');
+  padding-right: 0;
+  width: 50px;
+  height: 60px;
+}
+
+#icon3_img {
+  background-image: url('../../../assets/Header/Vector-1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 25px;
+  height: 25px;
+  padding-right: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+.sim-page #icon3_img {
+  background-image: url('../../../assets/Header/sim_btn.png');
+  padding-right: 0;
+  width: 50px;
+  height: 60px;
+}
+
+
+#icon4_img {
+  background-image: url('../../../assets/Header/Vector.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 25px;
+  height: 25px;
+  padding-right: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+.result-page #icon4_img {
+  background-image: url('../../../assets/Header/result-btn.png');
+  padding-right: 0;
+  width: 50px;
+  height: 60px;
 }

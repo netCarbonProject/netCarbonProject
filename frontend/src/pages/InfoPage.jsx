@@ -1,8 +1,18 @@
-import React from 'react';
-import '../components/common/css/Info_CSS.css'
-
+import React, {useEffect} from 'react';
+import '../components/common/css/Info_CSS.css' // css
+import IndustryUsageChart from '../components/charts/IndustryUsageChart';
+import UsageCompareChart from '../components/charts/UsageCompareChart';
+import EnergySourceChart from '../components/charts/EnergySourceChart';
+import RenewableChart from '../components/charts/RenewableChart';
 
 const InfoPage = () => {
+  useEffect(()=>{
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow=  'auto';
+    };
+  }, []);
+
   return (
     <div className="info-container">
       <div className="top-section">
@@ -10,13 +20,13 @@ const InfoPage = () => {
         <div className="vertical-divider" />
         <div className="right-top">
           <div className="top-charts">
-            <div className="chart">[ 업종별 전력 그래프 ]</div>
-            <div className="chart">[ 전력 사용량 비교 ]</div>
+            <div className="chart"><IndustryUsageChart /></div>
+            <div className="chart"><UsageCompareChart /></div>
           </div>
           <div className="horizontal-divider" />
           <div className="bottom-charts">
-            <div className="chart">[ 에너지원별 비율 ]</div>
-            <div className="chart">[ 신재생에너지 비율 ]</div>
+            <div className="chart"><EnergySourceChart /></div>
+            <div className="chart"><RenewableChart /></div>
           </div>
         </div>
       </div>
