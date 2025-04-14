@@ -1,7 +1,15 @@
 import React, { useRef } from 'react'; // React 선언 , useRef로 타겟지정
 import { useNavigate } from 'react-router-dom'; // 페이지 이동 함수
 
+
 import '../components/common/css/HomePage_CSS.css'; // css
+
+
+// 이미지
+import green_intro from '../assets/HomePage/intro_green.png';
+import carbon_intro from '../assets/HomePage/carbon_intro.png';
+import new_energy from '../assets/HomePage/new_energy.png';
+import solar_power from '../assets/HomePage/solar_power.png';
 
 
 // 이미지
@@ -14,12 +22,17 @@ import solar_power from '../assets/HomePage/solar_power.png';
 const HomePage = () => {
 
   // 스크롤 이동
+
+  // 스크롤 이동
   const section2Ref = useRef(null); 
   const section3Ref = useRef(null); 
 
   // 페이지 이동동
+
+  // 페이지 이동동
   const navigate = useNavigate(); 
 
+  //부드러운 스크롤
   //부드러운 스크롤
   const scrollTo = (ref) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });

@@ -1,40 +1,42 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // 페이지 이동 함수
+
 import '../css/Header_CSS.css';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 // 이미지 import (src/assets 경로 기준)
-// import icon from '../../../assets/Header/Icon.png';
-// import intro from '../../../assets/Header/intro.png';
-// import vector2 from '../../../assets/Header/Vector-2.png';
-// import vector1 from '../../../assets/Header/Vector-1.png';
-// import vector from '../../../assets/Header/Vector.png';
-import menu from '../../../assets/Header/menu.png';
-import vector2b from '../../../assets/Header/Vector2.png';
+import icon1 from '../../../assets/icon1.png';
+import intro from '../../../assets/intro.png';
+import vector2 from '../../../assets/Vector-2.png';
+import vector1 from '../../../assets/Vector-1.png';
+import vector from '../../../assets/Vector.png';
+import menu from '../../../assets/menu.png';
+import vector2b from '../../../assets/Vector2.png';
 
 const Header = () => {
   const navigate = useNavigate(); 
-  const location = useLocation();
-  // 페이지에 따라 className을 바꿔줌
-  const currentPath = location.pathname;
-
-  const pageClass =
-  currentPath === '/' ? 'home-page' :
-  currentPath === '/info' ? 'info-page' :
-  currentPath === '/simulation' ? 'sim-page' :
-  currentPath === '/result' ? 'result-page' :
-  'default-page';
-
+  
   return (
+    <header className={`header ${pageClass}`}>
     <header className={`header ${pageClass}`}>
       <div className="logo">
         <div className="logo-icon" />
         <div className="logo-title" />
+        <div className="logo-icon" />
+        <div className="logo-title" />
       </div>
       <div className="icons">
-        <button id="icon1_img" onClick={() => navigate('/')}></button>
-        <button id="icon2_img" onClick={() => navigate('/info')}></button>
-        <button id="icon3_img" onClick={() => navigate('/simulation')}></button>
-        <button id="icon4_img" onClick={() => navigate('/result')}></button>
+        <button id="Icon1_white">
+          <img src={icon1} alt="icon1" onClick={() => navigate('/')}/>
+        </button>
+        <button>
+          <img src={vector2} alt="vector2" onClick={() => navigate('/info')}/>
+        </button>
+        <button>
+          <img src={vector1} alt="vector1" onClick={() => navigate('/simulation')}/>
+        </button>
+        <button>
+          <img src={vector} alt="vector" />
+        </button>
         <div className="menu-group">
           <div><img src={menu} alt="menu" /></div>
           <div><img src={vector2b} alt="menu vector" /></div>

@@ -22,9 +22,13 @@ const InfoPage = () => {
           <div className="top-charts">
             <div className="chart"><IndustryUsageChart /></div>
             <div className="chart"><UsageCompareChart /></div>
+            <div className="chart"><IndustryUsageChart /></div>
+            <div className="chart"><UsageCompareChart /></div>
           </div>
           <div className="horizontal-divider" />
           <div className="bottom-charts">
+            <div className="chart"><EnergySourceChart /></div>
+            <div className="chart"><RenewableChart /></div>
             <div className="chart"><EnergySourceChart /></div>
             <div className="chart"><RenewableChart /></div>
           </div>
