@@ -1,12 +1,20 @@
 import React from 'react';
 import '../components/common/css/ResultPage_CSS.css';
 
+
 const ResultPage = () => {
   return (
     <div className="result-page-wrapper">
 
       <div className="top-section">
+        <div className='right-map'>
+
+        <div className='resullt-map-title'>
+          지도 시뮬레이션 결과
+        </div>
         <div className="result-map-placeholder">지도 시뮬레이션 결과</div>
+        
+        </div>
 
         <div className="simulation-info">
           <div className="result-stats">
@@ -15,7 +23,12 @@ const ResultPage = () => {
             <p>설치 면적: n m²</p>
             <p>예상 발전량: nnn MWh</p>
           </div>
-          <div className="donut-chart-placeholder">도넛 차트</div>
+          <div className='power_generation'> 
+            <h3>태양광 발전량</h3>
+          </div>
+          <div className="donut-chart-placeholder">
+            도넛 차트
+          </div>
         </div>
       </div>
 
