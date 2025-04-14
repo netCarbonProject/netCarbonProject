@@ -146,7 +146,7 @@ const SimulationPage = () => {
 
                         {/* 슬라이드 창 */}
                         {showAddressSlide && (
-                            <div className="address-slide open">
+                            <div className={`address-slide ${showAddressSlide ? 'open' : ''}`}>
                                 <div className="address-section">
                                     <div className="address-content">
                                         <h3>EnerGizer</h3>
