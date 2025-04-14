@@ -21,3 +21,6 @@ frontend/public/
 routes.jsx
 frontend/src/utils/api.js
 frontend/src/utils
+frontend/src/components/charts/
+frontend/src/components/map/
+frontend/src/result
