@@ -54,9 +54,6 @@
 }
 
 .open-panel-button img {
-}
-
-.open-panel-button img {
     width: 70px;
     height: 40px;
 }
@@ -65,10 +62,8 @@
 .popup-panel {
     position: absolute;
     top: 10px;
-    top: 10px;
     right: 20px;
     width: 480px;
-    height: 450px;
     height: 450px;
     background-color: #fff;
     border-radius: 16px;
@@ -125,9 +120,6 @@
 }
 
 .panel-image {
-}
-
-.panel-image {
     object-fit: contain;
     background: none;
 }
@@ -136,9 +128,6 @@
 .panel-small {
     width: 120px;
     height: auto;
-}
-
-.panel-large {
 }
 
 .panel-large {
@@ -169,15 +158,8 @@
 }
 
 .panel-label {
-}
-
-.panel-label {
     font-size: 14px;
     margin-bottom: 4px;
-}
-
-.panel-input,
-.panel-result-input {
 }
 
 .panel-input,
@@ -187,10 +169,6 @@
     border-radius: 8px;
     font-size: 14px;
     background-color: #fafafa;
-}
-
-/* 구분선 */
-.panel-divider {
 }
 
 /* 구분선 */
@@ -208,18 +186,12 @@
 }
 
 .chart-box {
-}
-
-.chart-box {
     height: 120px;
     background-color: #f0f0f0;
     border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.chart-placeholder-text {
 }
 
 .chart-placeholder-text {
