@@ -3,12 +3,12 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: auto;
+  overflow-y: auto; 
+  scroll-behavior: smooth;
 }
 
 .Home-container {
   width: 100%;
-  min-height: 100vh;
-  overflow: auto;
   padding-top: 80px; 
 }
 
@@ -17,6 +17,15 @@ html, body {
   position: relative; 
   overflow: hidden;
   text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  min-height: 100vh;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 #section1 .top-overlay {
@@ -39,7 +48,7 @@ html, body {
 
 .fullscreen-img {
   width: 100%;
-  height: 900px;       
+  height: 100vh;       
   object-fit: cover;
 }
 

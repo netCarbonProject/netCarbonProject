@@ -8,8 +8,8 @@ import solarpanel2 from '../assets/SimulationPage/solarpanel2.png';
 import simulation_button from '../assets/SimulationPage/simulation_button.png';
 import sunlight_btn from '../assets/SimulationPage/sunlight_btn.png';
 import slide_btn from '../assets/SimulationPage/slide_btn.png';
-import close_btn from '../assets/SimulationPage/close_btn.png'
-import simulation_close from '../assets/SimulationPage/simulation_btn2.png'
+import close_btn from '../assets/SimulationPage/close_btn.png';
+import simulation_close from '../assets/SimulationPage/simulation_btn2.png';
 
 import { useNavigate } from 'react-router-dom'; // 페이지 이동 함수
 
@@ -27,11 +27,11 @@ const SimulationPage = () => {
     const handleOpenPanel = () => setShowPanel(true);
     const handleClosePanel = () => setShowPanel(false);
 
-    // 페이지 이동동
+    // 페이지 이동
     const navigate = useNavigate(); 
 
-    // 슬라이드 버튼 열기/닫기기
-    const handleSlideToggle = () => setShowAddressSlide(!showAddressSlide); 
+    // 슬라이드 버튼 열기/닫기
+    const handleSlideToggle = () => setShowAddressSlide(prev => !prev); // 상태 반전 처리
 
     useEffect(() => {
         // 페이지 들어올 때 스크롤 막기
@@ -41,7 +41,7 @@ const SimulationPage = () => {
         return () => {
           document.body.classList.remove('no-scroll');
         };
-      }, []);
+    }, []);
 
     return (
         <div className="simulation-container">
@@ -51,7 +51,6 @@ const SimulationPage = () => {
                         <canvas id="simulation-canvas" className="simulation-canvas">
                             <NaverMap />
                         </canvas>
-
                         {/* 패널 팝업 */}
                         <div className="panel-button-topright">
                             <button className="open-panel-button" onClick={handleOpenPanel}>
@@ -66,7 +65,8 @@ const SimulationPage = () => {
                                     <div 
                                         className="close-button-area" 
                                         onClick={handleClosePanel}
-                                    ><img src={simulation_button} alt='설치 패널 닫기기'/>
+                                    >
+                                        <img src={simulation_button} alt='설치 패널 닫기기'/>
                                     </div>
                                     <h2>설치 패널 상세</h2>
                                     <div className="panel-content-row">
@@ -148,40 +148,38 @@ const SimulationPage = () => {
                         </div>
 
                         {/* 슬라이드 창 */}
-                        {showAddressSlide && (
-                            <div className={`address-slide ${showAddressSlide ? 'open' : ''}`}>
-                                <div className="address-section">
-                                    <div className="address-content">
-                                        <h3>EnerGizer</h3>
-                                        <input 
-                                            type="text" 
-                                            className="address-input" 
-                                            placeholder="상세주소를 입력하세요" 
-                                        />
+                        <div className={`address-slide ${showAddressSlide ? 'open' : ''}`}>
+                            <div className="address-section">
+                                <div className="address-content">
+                                    <h3>EnerGizer</h3>
+                                    <input 
+                                        type="text" 
+                                        className="address-input" 
+                                        placeholder="상세주소를 입력하세요" 
+                                    />
+                                </div>
+                                <div className="coordinates-section">
+                                    <div className='coordinates-title'>위도, 경도로 검색하기</div>
+                                    <div className="coordinate-input">
+                                        <label htmlFor="latitude">위도</label>
+                                        <input type="text" id="latitude" placeholder="위도 입력" />
                                     </div>
-                                    <div className="coordinates-section">
-                                        <div className='coordinates-title'>위도, 경도로 검색하기</div>
-                                        <div className="coordinate-input">
-                                            <label htmlFor="latitude">위도</label>
-                                            <input type="text" id="latitude" placeholder="위도 입력" />
-                                        </div>
-                                        <div className="coordinate-input">
-                                            <label htmlFor="longitude">경도</label>
-                                            <input type="text" id="longitude" placeholder="경도 입력" />
-                                        </div>
-                                    </div>
-                                    <div className="location-section">
-                                        <div className="location-box">
-                                            <div className='location-title'>장소</div>
-                                            <div></div>
-                                        </div>
+                                    <div className="coordinate-input">
+                                        <label htmlFor="longitude">경도</label>
+                                        <input type="text" id="longitude" placeholder="경도 입력" />
                                     </div>
                                 </div>
-                                <button className="close-slide" onClick={handleSlideToggle}>
-                                    <img src={close_btn} alt='닫기 버튼'/>
-                                </button>
+                                <div className="location-section">
+                                    <div className="location-box">
+                                        <div className='location-title'>장소</div>
+                                        <div></div>
+                                    </div>
+                                </div>
                             </div>
-                        )}
+                            <button className="close-slide" onClick={handleSlideToggle}>
+                                <img src={close_btn} alt='닫기 버튼'/>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

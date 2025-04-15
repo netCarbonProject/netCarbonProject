@@ -72,20 +72,33 @@
     z-index: 20;
     padding: 24px;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow: auto; /* 스크롤은 가능하지만 스크롤바는 보이지 않음 */
 }
 
 /* 팝업 내부 콘텐츠 세로 정렬 */
 .popup-panel-content {
     display: flex;
     flex-direction: column;
+    overflow: auto; 
+}
+
+/* 스크롤바 숨기기 */
+.popup-panel::-webkit-scrollbar,
+.popup-panel-content::-webkit-scrollbar {
+    width: 0px;  /* 수평 스크롤바도 숨기기 */
+    height: 0px;
+}
+
+.popup-panel::-webkit-scrollbar-thumb,
+.popup-panel-content::-webkit-scrollbar-thumb {
+    background-color: transparent;  /* thumb(스크롤바 잡는 부분)도 투명하게 처리 */
 }
 
 /* 닫기 버튼 위치 및 정렬 */
 .close-button-area {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 4px;
+    right: 19px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -222,7 +235,7 @@
 /* 슬라이드 열기 버튼 위치 */
 .address-slide-button {
     position: absolute;
-    top: 320px;           
+    top: 295px;           
     left: 0px;         
     z-index: 10;
 }
@@ -236,16 +249,14 @@
 /* 지역 슬라이드 패널 */
 .address-slide {
     position: fixed;
-    left: 0;
-    top: 80px;      
-    bottom: 5%;     
+    left: -250px; /* 처음에는 왼쪽 화면 밖에 위치 */
+    top: 80px;
+    bottom: 5%;
     width: 250px;
-    height: 770px; 
-    background-color: #fff;
-    box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 748px;
+    background-color: white;
     z-index: 20;
-    transform: translate(-100%, 0);
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
     box-sizing: border-box;
     pointer-events: none;
 }
@@ -254,7 +265,7 @@
 
 /* 슬라이드 열림 상태 */
 .address-slide.open {
-    transform: translate(0, 0);  
+    transform: translateX(250px); /* 오른쪽으로 이동 */
     opacity: 1;
     pointer-events: auto;
 }
@@ -374,7 +385,7 @@
 .sunlight-filter-button {
     position: fixed;
     right: 20px;
-    top: 150px;
+    bottom: 120px;
 }
 
 .filter-button {
