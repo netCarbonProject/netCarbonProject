@@ -19,9 +19,9 @@ const ResultPage = () => {
         <div className="simulation-info">
           <div className="result-stats">
             <h3>시뮬레이션 결과</h3>
-            <p>설치 개수: n개</p>
-            <p>설치 면적: n m²</p>
-            <p>예상 발전량: nnn MWh</p>
+            <p>설치 개수 :         n개</p>
+            <p>설치 면적 :         nn m^2</p>
+            <p>예상 발전량 :      nnn MWh</p>
           </div>
           <div className='power_generation'> 
             <h3>태양광 발전량</h3>
