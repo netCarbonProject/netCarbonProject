@@ -15,7 +15,6 @@ html, body {
 /* 각 섹션 설정 */
 .section {
   position: relative; 
-  min-height: 100vh;
   overflow: hidden;
   text-align: center;
 }
@@ -35,13 +34,13 @@ html, body {
   position: relative;
   z-index: 2;
   margin-top: 10rem;
+  margin-bottom: 5rem;
 }
 
 .fullscreen-img {
   width: 100%;
   height: auto;       
   object-fit: cover;
-  margin-top: -30;
 }
 
 .solar-img {
