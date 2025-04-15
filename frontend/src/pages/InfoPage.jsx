@@ -10,6 +10,8 @@ import chart_label2 from '../assets/InfoPage/chart_label2.png'
 import chart_label3 from '../assets/InfoPage/chart_label3.png'
 import chart_label4 from '../assets/InfoPage/chart_label4.png'
 
+import KoreaMap from '../components/location/KoreaMap1';
+
 const InfoPage = () => {
   useEffect(() => {
     // 페이지에 진입하면 body 스크롤 비활성화
@@ -29,7 +31,7 @@ const InfoPage = () => {
             <img src={mapImg} alt='지역별 전력 사용량 지도' className='map-label'/>
           </div>
           <div className='map-chart'>
-              [ 지역별 전력 사용량 지도 ]
+              <KoreaMap/>
           </div>
         </div>
         <div className="vertical-divider" />

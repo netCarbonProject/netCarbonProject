@@ -10,8 +10,9 @@ import sunlight_btn from '../assets/SimulationPage/sunlight_btn.png';
 import slide_btn from '../assets/SimulationPage/slide_btn.png';
 
 import { useNavigate } from 'react-router-dom'; // 페이지 이동 함수
-import VWorldMap from '../components/map/VWorldMap';
 
+// 지도
+import NaverMap from "../components/map/NaverMap";
 
 const SimulationPage = () => {
     // 패널 
@@ -46,7 +47,7 @@ const SimulationPage = () => {
                 <div className="simulation-map-area fullscreen-map">
                     <div className="simulation-map-wrapper">
                         <canvas id="simulation-canvas" className="simulation-canvas">
-                            <VWorldMap />
+                            <NaverMap />
                         </canvas>
 
                         {/* 패널 팝업 */}

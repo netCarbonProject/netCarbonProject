@@ -36,6 +36,7 @@ html, body {
   display: flex;
   min-height: 0;
   position: relative;
+  width: 550px;
 }
 
 /* 지도 위 텍스트 라벨 */
@@ -99,7 +100,7 @@ html, body {
   height: 350px;
   display: flex;
   justify-content: space-between;
-  margin: 40px 0 30px;
+  margin: 40px 0 0px;
 }
 
 /* 하단 차트 묶음 */
@@ -115,7 +116,7 @@ html, body {
 .horizontal-divider {
   height: 1px;
   background-color: #aaa;
-  margin: 30px 0;
+  margin: 5px 0 20px 0;
 }
 
 /* 차트 안의 캔버스 크기 고정 */
