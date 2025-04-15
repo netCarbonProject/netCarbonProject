@@ -57,14 +57,14 @@
 .result-stats {
   background-color: #f0f0f0;
   padding: 2rem 2rem 2rem 2rem;
-  height: 30vh;
+  height: 37vh;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   justify-content: flex-start;
   position: relative; 
-  margin-top: 7.2vh;
+  margin-top: 8.2vh;
 }
 
 .result-stats h3 {
@@ -77,7 +77,7 @@
 
 .donut-chart-placeholder {
   background-color: #f0f0f0;
-  height: 30vh;
+  height: 37vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,11 +85,12 @@
 }
 
 .power_generation {
-  margin-top: 8.1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .power_generation h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   text-align: center;
   margin: 0.5rem 0;
 }
@@ -168,7 +169,7 @@
 }
 
 .carbon-chart-placeholder {
-  min-height: 589px;
+  min-height: 470px;
   min-width: 500px;
   background-color: #e0e0e0;
   margin-top: 3.5rem;
@@ -194,7 +195,7 @@
 
 .line-chart-placeholder {
   background-color: #e9f4ff;
-  height: 60vh;
+  height: 77vh;
   border-radius: 1.2rem;
   display: flex;
   align-items: center;
@@ -204,7 +205,7 @@
 /* ─── 나무 효과 ─── */
 .tree-section {
   position: relative;
-  height: 70vh;
+  height: 77vh;
   background: url('../../../assets/ResultPage/grassy_field.png') no-repeat center center;
   background-size: cover;
   z-index: 0;
@@ -235,4 +236,5 @@
 
 .tree-effect-item p {
   margin: 0.5rem 0;
+  text-align: left;
 }

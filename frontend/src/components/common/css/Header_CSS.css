@@ -66,9 +66,10 @@ body::-webkit-scrollbar {
 }
 .home-page .logo-title {
   background-image: url('../../../assets/Header/intro.png');
+  width: 60px;
 }
 
-/*  */
+/* 대쉬보드 */
 .info-page .logo-icon {
   background-image: url('../../../assets/Header/icon2.png');
 }
@@ -89,10 +90,12 @@ body::-webkit-scrollbar {
 /* 결과 */
 .result-page .logo-icon {
   background-image: url('../../../assets/Header/icon4.png');
+  width: 30px;
 }
 
 .result-page .logo-title {
   background-image: url('../../../assets/Header/SimulationResult-logo.png');
+  width: 160px;
 }
 
 /* 아이콘 영역 */

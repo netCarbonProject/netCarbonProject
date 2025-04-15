@@ -77,7 +77,7 @@ const ResultPage = () => {
             <h2>나무를 N개 심은 것과 비슷한 효과에요!</h2>
             <div className="tree-effect">
               <div className="tree-effect-item">
-                <p>🌱 실제 나무 N그루를 심는다면?</p>
+                <h4>🌱 실제 나무 N그루를 심는다면?</h4>
                 <p>1그루 심는 데 평균 비용: 3천~5천원</p>
                 <p>심고 20년 이상 키워야 저 효과</p>
                 <p>도심지에선 땅 확보 자체가 어려움</p>
@@ -85,7 +85,7 @@ const ResultPage = () => {
               </div>
 
               <div className="tree-effect-item">
-                <p>⚡ 근데 태양광은?</p>
+                <h4>⚡ 근데 태양광은?</h4>
                 <p>설치 즉시 CO₂ 저감 시작</p>
                 <p>25년 이상 유지 가능</p>
                 <p>유지비 거의 없음</p>

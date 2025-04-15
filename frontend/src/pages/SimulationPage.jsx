@@ -8,6 +8,8 @@ import solarpanel2 from '../assets/SimulationPage/solarpanel2.png';
 import simulation_button from '../assets/SimulationPage/simulation_button.png';
 import sunlight_btn from '../assets/SimulationPage/sunlight_btn.png';
 import slide_btn from '../assets/SimulationPage/slide_btn.png';
+import close_btn from '../assets/SimulationPage/close_btn.png'
+import simulation_close from '../assets/SimulationPage/simulation_btn2.png'
 
 import { useNavigate } from 'react-router-dom'; // 페이지 이동 함수
 
@@ -64,7 +66,7 @@ const SimulationPage = () => {
                                     <div 
                                         className="close-button-area" 
                                         onClick={handleClosePanel}
-                                    >
+                                    ><img src={simulation_button} alt='설치 패널 닫기기'/>
                                     </div>
                                     <h2>설치 패널 상세</h2>
                                     <div className="panel-content-row">
@@ -176,7 +178,7 @@ const SimulationPage = () => {
                                     </div>
                                 </div>
                                 <button className="close-slide" onClick={handleSlideToggle}>
-                                    <img src={slide_btn} alt='닫기 버튼'/>
+                                    <img src={close_btn} alt='닫기 버튼'/>
                                 </button>
                             </div>
                         )}

@@ -14,7 +14,7 @@ html, body {
 
 /* 각 섹션 설정 */
 .section {
-  position: relative;  /* 버튼을 절대 위치로 배치할 기준 */
+  position: relative; 
   min-height: 100vh;
   overflow: hidden;
   text-align: center;

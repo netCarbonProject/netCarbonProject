@@ -84,8 +84,8 @@
 /* 닫기 버튼 위치 및 정렬 */
 .close-button-area {
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 5px;
+    right: 5px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -93,6 +93,7 @@
     justify-content: center;
     align-items: center;
 }
+
 
 /* 입력/이미지 영역 배치 */
 .panel-content-row {
@@ -221,9 +222,8 @@
 /* 슬라이드 열기 버튼 위치 */
 .address-slide-button {
     position: absolute;
-    bottom: 56%;
-    left: -5px;
-    transform: translateY(-50%);
+    top: 320px;           
+    left: 0px;         
     z-index: 10;
 }
 
@@ -237,7 +237,7 @@
 .address-slide {
     position: fixed;
     left: 0;
-    top: 8.5%;      
+    top: 80px;      
     bottom: 5%;     
     width: 250px;
     height: 770px; 
@@ -287,7 +287,7 @@
     font-size: 14px;
     text-align: right;
     position: absolute;
-    bottom: 50%;
+    bottom:390px;
     left: 105%;
     transform: translateX(-50%);
 }
