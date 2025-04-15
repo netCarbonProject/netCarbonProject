@@ -1,3 +1,4 @@
+/* 기본 설정 */
 html, body {
   height: 100%;
   margin: 0;
@@ -7,20 +8,40 @@ html, body {
   scroll-behavior: smooth;
 }
 
-.Home-container {
-  width: 100%;
-  padding-top: 80px; 
+/* 공통 이미지 스타일 - 여백 제거 */
+img, .fullscreen-img, .fullscreenA-img, .solar-img {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  line-height: 0;
 }
 
-/* 각 섹션 설정 */
+/* 섹션 간 미세한 틈 제거 */
+.section + .section {
+  margin-top: -2px;
+}
+
+/* 전체 컨테이너 설정 */
+.Home-container {
+  width: 100%;
+  padding-top: 80px;
+}
+
+/* 섹션 공통 스타일 */
 .section {
-  position: relative; 
+  position: relative;
   overflow: hidden;
   text-align: center;
   opacity: 0;
   transform: translateY(50px);
   transition: opacity 1s ease-out, transform 1s ease-out;
-  min-height: 100vh;
+  min-height: calc(100vh + 1px);  /* 오차 보정용 */
+  margin: 0;
+  padding: 0;
+  will-change: opacity, transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 .section.visible {
@@ -28,6 +49,16 @@ html, body {
   transform: translateY(0);
 }
 
+/* 배경 색상 클래스 */
+.section-white {
+  background-color: white;
+}
+
+.section-color {
+  background: linear-gradient(to bottom, #c0ddff, #d3edff);
+}
+
+/* 섹션1 오버레이 및 인트로 이미지 */
 #section1 .top-overlay {
   width: 100%;
   height: auto;
@@ -46,38 +77,44 @@ html, body {
   margin-bottom: 5rem;
 }
 
-.fullscreen-img {
+/* 전체화면 이미지 스타일 */
+.fullscreen-img,
+.fullscreenA-img,
+.solar-img {
   width: 100%;
-  height: 100vh;       
+  height: calc(100vh + 3px);
   object-fit: cover;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.fullscreenA-img {
+  background-color: #94b0d1;
 }
 
 .solar-img {
-  width: 100%;
-  height: 100vh;
-  object-fit: cover;
-  display: block;
   z-index: 1;
 }
 
+/* 버튼 그룹 */
 .button-group {
   position: absolute;
-  bottom: 5%;            
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 20px;
-  z-index: 2;          
+  z-index: 2;
 }
-
 
 .custom-btn {
   background: none;
   border: none;
   color: black;
-  font-size: 2rem;     
-  padding: 4px 10px;   
+  font-size: 2rem;
+  padding: 4px 10px;
   cursor: pointer;
   border-radius: 8px;
 }
-

@@ -17,7 +17,9 @@ const HomePage = () => {
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            entry.target.classList.add('visible');  // 섹션이 뷰포트에 들어오면 visible 클래스 추가
+          } else {
+            entry.target.classList.remove('visible');  // 섹션이 뷰포트를 벗어나면 visible 클래스 제거
           }
         });
       },
@@ -38,19 +40,19 @@ const HomePage = () => {
   return (
     <div className="Home-container">
       {/* Section 1 탄소 중립 */}
-      <section className="section" ref={el => (sectionRefs.current[0] = el)}>
+      <section className="section section1 section-white" ref={el => (sectionRefs.current[0] = el)}>
         <img src={green_intro} alt="배경 상단 이미지" className="top-overlay" />
         <img src={carbon_intro} alt="탄소중립 소개" className="intro-image clickable" />
       </section>
 
       {/* Section 2 신재생 에너지 소개 */}
-      <section className="section" ref={el => (sectionRefs.current[1] = el)}>
-        <img src={new_energy} alt="신재생 에너지" className="fullscreen-img clickable" />
+      <section className="section section2 section-color" ref={el => (sectionRefs.current[1] = el)}>
+        <img src={new_energy} alt="신재생 에너지" className="fullscreenA-img clickable" />
       </section>
 
       {/* Section 3 태양광 에너지 */}
-      <section className="section" ref={el => (sectionRefs.current[2] = el)}>
-        <img src={solar_power} alt="태양광 관련" className="fullscreen-img solar-img" />
+      <section className="section section3 section-color" ref={el => (sectionRefs.current[2] = el)}>
+        <img src={solar_power} alt="태양광 관련" className="fullscreenA-img solar-img" />
         <div className="button-group">
           <button className="custom-btn" onClick={() => navigate('/info')}>
             더 알아보기 →
