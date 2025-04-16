@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../components/common/css/HomePage_CSS.css';
 
-// 이미지
+// 이미지 임포트
 import green_intro from '../assets/HomePage/intro_green.png';
 import carbon_intro from '../assets/HomePage/carbon_intro.png';
 import new_energy from '../assets/HomePage/new_energy.png';
@@ -10,26 +10,29 @@ import solar_power from '../assets/HomePage/solar_power.png';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const sectionRefs = useRef([]); // section 참조 저장
+  const sectionRefs = useRef([]); // 각 섹션의 참조를 저장할 ref
 
   useEffect(() => {
+    // IntersectionObserver를 사용하여 섹션이 화면에 들어오면 'visible' 클래스 추가
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');  // 섹션이 뷰포트에 들어오면 visible 클래스 추가
+            entry.target.classList.add('visible');  // 섹션이 뷰포트에 들어오면 'visible' 클래스 추가
           } else {
-            entry.target.classList.remove('visible');  // 섹션이 뷰포트를 벗어나면 visible 클래스 제거
+            entry.target.classList.remove('visible');  // 섹션이 뷰포트를 벗어나면 'visible' 클래스 제거
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 } // 10% 이상 보일 때 'visible' 클래스를 추가
     );
 
+    // 각 섹션을 관찰
     sectionRefs.current.forEach(section => {
       if (section) observer.observe(section);
     });
 
+    // 컴포넌트 언마운트 시 IntersectionObserver를 정리
     return () => {
       sectionRefs.current.forEach(section => {
         if (section) observer.unobserve(section);
@@ -39,20 +42,22 @@ const HomePage = () => {
 
   return (
     <div className="Home-container">
-      {/* Section 1 탄소 중립 */}
+      {/* Section 1: 탄소 중립 섹션 */}
       <section className="section section1 section-white" ref={el => (sectionRefs.current[0] = el)}>
         <img src={green_intro} alt="배경 상단 이미지" className="top-overlay" />
         <img src={carbon_intro} alt="탄소중립 소개" className="intro-image clickable" />
       </section>
 
-      {/* Section 2 신재생 에너지 소개 */}
+      {/* Section 2: 신재생 에너지 소개 섹션 */}
       <section className="section section2 section-color" ref={el => (sectionRefs.current[1] = el)}>
         <img src={new_energy} alt="신재생 에너지" className="fullscreenA-img clickable" />
       </section>
 
-      {/* Section 3 태양광 에너지 */}
+      {/* Section 3: 태양광 에너지 섹션 */}
       <section className="section section3 section-color" ref={el => (sectionRefs.current[2] = el)}>
         <img src={solar_power} alt="태양광 관련" className="fullscreenA-img solar-img" />
+        
+        {/* 버튼 그룹: '더 알아보기' 및 '시뮬레이션 체험하기' 버튼 */}
         <div className="button-group">
           <button className="custom-btn" onClick={() => navigate('/info')}>
             더 알아보기 →

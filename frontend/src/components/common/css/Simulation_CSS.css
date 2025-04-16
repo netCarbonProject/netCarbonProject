@@ -41,8 +41,8 @@
 
 /* 우측 상단 패널 열기 버튼 위치 */
 .panel-button-topright {
-    position: absolute;
-    top: 20px;
+    position: fixed;
+    top: 100px;
     right: 20px;
     z-index: 10;
 }
@@ -61,8 +61,8 @@
 
 /* ---------- 팝업 패널 ---------- */
 .popup-panel {
-    position: absolute;
-    top: 20px;
+    position: fixed;
+    top: 100px;
     right: 20px;
     width: 480px;
     height: 450px;
@@ -72,10 +72,10 @@
     z-index: 20;
     padding: 24px;
     box-sizing: border-box;
-    overflow: auto; /* 스크롤은 가능하지만 스크롤바는 보이지 않음 */
+    overflow: auto;
 }
 
-/* 팝업 내부 콘텐츠 세로 정렬 */
+/* 팝업 내부 */
 .popup-panel-content {
     display: flex;
     flex-direction: column;
@@ -97,7 +97,7 @@
 /* 닫기 버튼 위치 및 정렬 */
 .close-button-area {
     position: absolute;
-    top: 4px;
+    top: 5px;
     right: 19px;
     width: 30px;
     height: 30px;
@@ -107,6 +107,10 @@
     align-items: center;
 }
 
+.close-btn {
+    width: 40px;
+    height: 40px;
+}
 
 /* 입력/이미지 영역 배치 */
 .panel-content-row {
@@ -237,7 +241,7 @@
     position: absolute;
     top: 295px;           
     left: 0px;         
-    z-index: 10;
+    /* z-index: 30; */
 }
 
 .slide-button {
@@ -249,16 +253,18 @@
 /* 지역 슬라이드 패널 */
 .address-slide {
     position: fixed;
-    left: -250px; /* 처음에는 왼쪽 화면 밖에 위치 */
+    left: -250px;
     top: 80px;
-    bottom: 5%;
     width: 250px;
-    height: 748px;
+    height: min(calc(100vh - 80px), 748px); 
     background-color: white;
     z-index: 20;
+    overflow-y: auto;
+    overflow-x: hidden;
     transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
     box-sizing: border-box;
-    pointer-events: none;
+    pointer-events: auto;
+    overflow: visible;
 }
 
 
@@ -291,16 +297,38 @@
 
 /* 슬라이드 닫기 버튼 */
 .close-slide {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #000;
-    font-size: 14px;
-    text-align: right;
     position: absolute;
-    bottom:390px;
-    left: 105%;
+    top: 295px;
+    right: -46px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    /* z-index: 99999; */
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+/* 슬라이드가 열리면 버튼이 제자리로 슬라이드 인 */
+.address-slide.open .close-slide {
     transform: translateX(-50%);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 슬라이드가 닫힐 때 닫기 버튼이 천천히 사라지도록 지연 */
+.address-slide:not(.open) .close-slide {
+    transform: translateX(-250px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease 0.3s, transform 0.3s ease 0.3s;
 }
 
 /* 슬라이드 내부 input */

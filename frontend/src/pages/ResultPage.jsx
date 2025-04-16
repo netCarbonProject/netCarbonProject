@@ -34,7 +34,7 @@ const ResultPage = () => {
       <div className="top-section" ref={el => (sectionRefs.current[0] = el)}>
         <div className="right-map">
           <div className="resullt-map-title">지도 시뮬레이션 결과</div>
-          <div className="result-map-placeholder">지도 시뮬레이션 결과</div>
+          <div className="result-map-placeholder">지도 시뮬레이션 결과 내용</div>
         </div>
         <div className="simulation-info">
           <div className="result-stats">
@@ -43,10 +43,12 @@ const ResultPage = () => {
             <p>설치 면적 : nn m²</p>
             <p>예상 발전량 : nnn MWh</p>
           </div>
-          <div className="power_generation">
-            <h3>태양광 발전량</h3>
+          <div className='donut-chart-group'>
+            <div className="power_generation">
+              <h3>태양광 발전량</h3>
+            </div>
+            <div className="donut-chart-placeholder">도넛 차트</div>
           </div>
-          <div className="donut-chart-placeholder">도넛 차트</div>
         </div>
       </div>
 
@@ -96,18 +98,18 @@ const ResultPage = () => {
             <div className="tree-effect">
               <div className="tree-effect-item">
                 <h3>🌱 실제 나무 N그루를 심는다면?</h3>
-                <p>1그루 심는 데 평균 비용: 3천~5천원</p>
-                <p>심고 20년 이상 키워야 저 효과</p>
-                <p>도심지에선 땅 확보 자체가 어려움</p>
-                <p>유지관리도 필요함 (물, 병충해 등)</p>
+                <p>• 1그루 심는 데 평균 비용: 3천~5천원</p>
+                <p>• 심고 20년 이상 키워야 저 효과</p>
+                <p>• 도심지에선 땅 확보 자체가 어려움</p>
+                <p>• 유지관리도 필요함 (물, 병충해 등)</p>
               </div>
 
               <div className="tree-effect-item">
                 <h3>⚡ 근데 태양광은?</h3>
-                <p>설치 즉시 CO₂ 저감 시작</p>
-                <p>25년 이상 유지 가능</p>
-                <p>유지비 거의 없음</p>
-                <p>옥상, 공장 지붕, 버려진 땅 다 활용 가능</p>
+                <p>• 설치 즉시 CO₂ 저감 시작</p>
+                <p>• 25년 이상 유지 가능</p>
+                <p>• 유지비 거의 없음</p>
+                <p>• 옥상, 공장 지붕, 버려진 땅 다 활용 가능</p>
               </div>
             </div>
           </div>

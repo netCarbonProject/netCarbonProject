@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'; // React 선언
-
 import '../components/common/css/Simulation_CSS.css'; // css
-
 // 이미지
 import solarpanel1 from '../assets/SimulationPage/solarpanel1.png';
 import solarpanel2 from '../assets/SimulationPage/solarpanel2.png';
@@ -10,9 +8,7 @@ import sunlight_btn from '../assets/SimulationPage/sunlight_btn.png';
 import slide_btn from '../assets/SimulationPage/slide_btn.png';
 import close_btn from '../assets/SimulationPage/close_btn.png';
 import simulation_close from '../assets/SimulationPage/simulation_btn2.png';
-
 import { useNavigate } from 'react-router-dom'; // 페이지 이동 함수
-
 // 지도
 import NaverMap from "../components/map/NaverMap";
 
@@ -33,6 +29,9 @@ const SimulationPage = () => {
     // 슬라이드 버튼 열기/닫기
     const handleSlideToggle = () => setShowAddressSlide(prev => !prev); // 상태 반전 처리
 
+    // 슬라이드 닫기 처리
+    const handleSlideClose = () => setShowAddressSlide(false); // 슬라이드 닫기
+
     useEffect(() => {
         // 페이지 들어올 때 스크롤 막기
         document.body.classList.add('no-scroll');
@@ -48,9 +47,10 @@ const SimulationPage = () => {
             <div className="simulation-body">
                 <div className="simulation-map-area fullscreen-map">
                     <div className="simulation-map-wrapper">
-                        <canvas id="simulation-canvas" className="simulation-canvas">
+                        <div id="simulation-canvas" className="simulation-canvas">
                             <NaverMap />
-                        </canvas>
+                        </div>
+
                         {/* 패널 팝업 */}
                         <div className="panel-button-topright">
                             <button className="open-panel-button" onClick={handleOpenPanel}>
@@ -66,7 +66,7 @@ const SimulationPage = () => {
                                         className="close-button-area" 
                                         onClick={handleClosePanel}
                                     >
-                                        <img src={simulation_button} alt='설치 패널 닫기기'/>
+                                        <img src={simulation_button} alt='설치 패널 닫기기' className='close-btn'/>
                                     </div>
                                     <h2>설치 패널 상세</h2>
                                     <div className="panel-content-row">
@@ -176,7 +176,9 @@ const SimulationPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button className="close-slide" onClick={handleSlideToggle}>
+
+                            {/* 닫기 버튼이 부드럽게 보이고 사라짐 */}
+                            <button className="close-slide" onClick={handleSlideClose}>
                                 <img src={close_btn} alt='닫기 버튼'/>
                             </button>
                         </div>

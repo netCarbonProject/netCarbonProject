@@ -6,6 +6,11 @@ html, body {
   overflow: auto;
   overflow-y: auto; 
   scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none; /* 스크롤바를 숨깁니다 */
 }
 
 /* 공통 이미지 스타일 - 여백 제거 */
@@ -15,18 +20,42 @@ img, .fullscreen-img, .fullscreenA-img, .solar-img {
   padding: 0;
   border: none;
   line-height: 0;
+  width: 100%;
+  height: auto;
 }
 
-/* 섹션 간 미세한 틈 제거 */
+img,
+.fullscreen-img,
+.fullscreenA-img,
+.solar-img,
+.intro-image,
+.top-overlay {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
 .section + .section {
-  margin-top: -2px;
+  margin-top: -10px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /* 전체 컨테이너 설정 */
 .Home-container {
-  width: 100%;
+  width: calc(100% - 20px);
   padding-top: 80px;
-  background: linear-gradient(to bottom, #ffffff 45%, #aacadb 50%, #5d6b77 70%, #95b1d2 73%)
+  margin-right: 10px;
+  margin-left: 10px;
+  background: linear-gradient(to bottom, #ffffff 35%, #aacadb 46%, #5d6b77 66%, #95b1d2 71%);
+  overflow-x: visible;
+  box-sizing: content-box;
 }
 
 /* 섹션 공통 스타일 */
@@ -37,9 +66,11 @@ img, .fullscreen-img, .fullscreenA-img, .solar-img {
   opacity: 0;
   transform: translateY(50px);
   transition: opacity 1s ease-out, transform 1s ease-out;
-  min-height: calc(100vh + 1px);  /* 오차 보정용 */
-  margin: 0;
+  min-height: 90vh;
+  margin-bottom: 10px;
   padding: 0;
+  width: 100%;
+  box-sizing: border-box;
   will-change: opacity, transform;
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -53,19 +84,33 @@ img, .fullscreen-img, .fullscreenA-img, .solar-img {
 /* 배경 색상 클래스 */
 section.section.section1.section-white.visible {
   background-color: white;
-}s
-
-.section-color {
-  background: linear-gradient(to bottom, #c0ddff, #d3edff);
 }
 
 .section1 {
-  position: relative;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 0px; /* carbon_intro 여백 조절 */
+  padding-top: 0px; 
+}
+
+.section2 {
+  position: relative; /* 섹션에 절대 위치를 적용할 수 있도록 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh; /* 섹션 높이를 100vh로 설정하여 전체 화면을 채우도록 함 */
+}
+
+.section2 .fullscreenA-img {
+  position: absolute; 
+  /* top: 50%;  */
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  height: auto;
+  object-fit: cover; 
+  z-index: 1; 
 }
 
 .top-overlay {
@@ -73,18 +118,23 @@ section.section.section1.section-white.visible {
   top: 0;
   left: 0;
   width: 100%;
-  height: 510px;
+  /* height: auto; */
+  max-height: 510px;
   object-fit: cover;
   z-index: 0;
+  pointer-events: none;
 }
 
 .intro-image {
-  width: 1400px;
-  height: 938px;
+  width: 100%;
+  max-width: 1400px;
+  height: auto; 
   object-fit: cover;
   z-index: 1;
   position: relative;
-  margin-top: 25rem;
+  margin: 20rem 2rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 /* 전체화면 이미지 스타일 */
@@ -92,12 +142,16 @@ section.section.section1.section-white.visible {
 .fullscreenA-img,
 .solar-img {
   width: 100%;
-  height: calc(100vh + 3px);
-  object-fit: cover;
+  height: 100%;
+  object-fit: cover; /* 이미지가 섹션을 덮도록 설정 */
   display: block;
   margin: 0;
   padding: 0;
   border: none;
+  position: absolute; /* 절대 위치 설정 */
+  top: 50%; /* 수직 중앙 */
+  left: 50%; /* 수평 중앙 */
+  transform: translate(-50%, -50%); /* 중앙 정렬을 위한 오프셋 */
 }
 
 
@@ -112,6 +166,7 @@ section.section.section1.section-white.visible {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   z-index: 2;
 }
@@ -120,8 +175,43 @@ section.section.section1.section-white.visible {
   background: none;
   border: none;
   color: black;
-  font-size: 2rem;
-  padding: 4px 10px;
+  font-size: 1.5rem;
+  padding: 6px 12px;
   cursor: pointer;
   border-radius: 8px;
 }
+
+@media (max-width: 1000px){
+  .section + .section {
+    margin-top: -50px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+
+/* @media (max-width: 1024px) {
+  .intro-image {
+    margin-top: 10rem;
+  }
+
+  .custom-btn {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-image {
+    margin-top: 6rem;
+  }
+
+  .top-overlay {
+    max-height: 280px;
+  }
+
+  .custom-btn {
+    font-size: 1rem;
+    padding: 4px 8px;
+  }
+} */
