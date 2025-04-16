@@ -1,39 +1,57 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../components/common/css/ResultPage_CSS.css';
 
-
 const ResultPage = () => {
+  const sectionRefs = useRef([]); // 섹션 참조 저장
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+          } else {
+            entry.target.classList.remove('animate');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+  
+    sectionRefs.current.forEach(section => {
+      if (section) observer.observe(section);
+    });
+  
+    return () => {
+      sectionRefs.current.forEach(section => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
+
   return (
     <div className="result-page-wrapper">
-
-      <div className="top-section">
-        <div className='right-map'>
-
-        <div className='resullt-map-title'>
-          지도 시뮬레이션 결과
+      <div className="top-section" ref={el => (sectionRefs.current[0] = el)}>
+        <div className="right-map">
+          <div className="resullt-map-title">지도 시뮬레이션 결과</div>
+          <div className="result-map-placeholder">지도 시뮬레이션 결과</div>
         </div>
-        <div className="result-map-placeholder">지도 시뮬레이션 결과</div>
-        
-        </div>
-
         <div className="simulation-info">
           <div className="result-stats">
             <h3>시뮬레이션 결과</h3>
-            <p>설치 개수 :         n개</p>
-            <p>설치 면적 :         nn m^2</p>
-            <p>예상 발전량 :      nnn MWh</p>
+            <p>설치 개수 : n개</p>
+            <p>설치 면적 : nn m²</p>
+            <p>예상 발전량 : nnn MWh</p>
           </div>
-          <div className='power_generation'> 
+          <div className="power_generation">
             <h3>태양광 발전량</h3>
           </div>
-          <div className="donut-chart-placeholder">
-            도넛 차트
-          </div>
+          <div className="donut-chart-placeholder">도넛 차트</div>
         </div>
       </div>
 
       {/* 탄소 저감 카드 & 차트 */}
-      <section className="carbon-section">
+      <section className="carbon-section" ref={el => (sectionRefs.current[1] = el)}>
         <div className="carbon-title">탄소를 N만큼 저감했어요!</div>
         <div className="carbon-layout">
           <div className="carbon-cards">
@@ -65,19 +83,19 @@ const ResultPage = () => {
       </section>
 
       {/* 미래 예측 절감량 */}
-      <section className="future-section">
+      <section className="future-section" ref={el => (sectionRefs.current[2] = el)}>
         <h2>앞으로 n만큼 더 절약할 수 있어요!</h2>
         <div className="line-chart-placeholder">기간별 예측 누적 탄소 저감량 그래프 공간</div>
       </section>
 
       {/* 나무 효과 - 텍스트 + 이미지 */}
-      <section className="tree-section">
+      <section className="tree-section" ref={el => (sectionRefs.current[3] = el)}>
         <div className="tree-content">
           <div className="tree-text">
             <h2>나무를 N개 심은 것과 비슷한 효과에요!</h2>
             <div className="tree-effect">
               <div className="tree-effect-item">
-                <h4>🌱 실제 나무 N그루를 심는다면?</h4>
+                <h3>🌱 실제 나무 N그루를 심는다면?</h3>
                 <p>1그루 심는 데 평균 비용: 3천~5천원</p>
                 <p>심고 20년 이상 키워야 저 효과</p>
                 <p>도심지에선 땅 확보 자체가 어려움</p>
@@ -85,7 +103,7 @@ const ResultPage = () => {
               </div>
 
               <div className="tree-effect-item">
-                <h4>⚡ 근데 태양광은?</h4>
+                <h3>⚡ 근데 태양광은?</h3>
                 <p>설치 즉시 CO₂ 저감 시작</p>
                 <p>25년 이상 유지 가능</p>
                 <p>유지비 거의 없음</p>

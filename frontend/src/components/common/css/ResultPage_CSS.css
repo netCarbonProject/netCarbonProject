@@ -4,6 +4,21 @@
   box-sizing: border-box;
 }
 
+.carbon-section,
+.future-section,
+.tree-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.carbon-section.animate,
+.future-section.animate,
+.tree-section.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ─── 지도 + 시뮬 결과 ─── */
 .top-section {
   display: flex;
