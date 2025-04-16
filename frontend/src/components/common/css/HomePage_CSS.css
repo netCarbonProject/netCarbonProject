@@ -26,6 +26,7 @@ img, .fullscreen-img, .fullscreenA-img, .solar-img {
 .Home-container {
   width: 100%;
   padding-top: 80px;
+  background: linear-gradient(to bottom, #ffffff 45%, #aacadb 50%, #5d6b77 70%, #95b1d2 73%)
 }
 
 /* 섹션 공통 스타일 */
@@ -50,31 +51,40 @@ img, .fullscreen-img, .fullscreenA-img, .solar-img {
 }
 
 /* 배경 색상 클래스 */
-.section-white {
+section.section.section1.section-white.visible {
   background-color: white;
-}
+}s
 
 .section-color {
   background: linear-gradient(to bottom, #c0ddff, #d3edff);
 }
 
-/* 섹션1 오버레이 및 인트로 이미지 */
-#section1 .top-overlay {
-  width: 100%;
-  height: auto;
-  display: block;
+.section1 {
+  position: relative;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0px; /* carbon_intro 여백 조절 */
+}
+
+.top-overlay {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  width: 100%;
+  height: 510px;
+  object-fit: cover;
+  z-index: 0;
 }
 
-#section1 .intro-image {
-  max-width: 60%;
+.intro-image {
+  width: 1400px;
+  height: 938px;
+  object-fit: cover;
+  z-index: 1;
   position: relative;
-  z-index: 2;
-  margin-top: 10rem;
-  margin-bottom: 5rem;
+  margin-top: 25rem;
 }
 
 /* 전체화면 이미지 스타일 */
@@ -90,9 +100,6 @@ img, .fullscreen-img, .fullscreenA-img, .solar-img {
   border: none;
 }
 
-.fullscreenA-img {
-  background-color: #94b0d1;
-}
 
 .solar-img {
   z-index: 1;
