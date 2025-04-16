@@ -188,30 +188,3 @@ section.section.section1.section-white.visible {
     padding-right: 0;
   }
 }
-
-
-/* @media (max-width: 1024px) {
-  .intro-image {
-    margin-top: 10rem;
-  }
-
-  .custom-btn {
-    font-size: 1.2rem;
-    padding: 5px 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .intro-image {
-    margin-top: 6rem;
-  }
-
-  .top-overlay {
-    max-height: 280px;
-  }
-
-  .custom-btn {
-    font-size: 1rem;
-    padding: 4px 8px;
-  }
-} */
