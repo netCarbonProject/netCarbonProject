@@ -14,7 +14,7 @@ html, body {
 }
 
 /* 공통 이미지 스타일 - 여백 제거 */
-img, .fullscreen-img, .fullscreenA-img, .solar-img {
+/* img, .fullscreen-img, .fullscreenA-img, .solar-img {
   display: block;
   margin: 0;
   padding: 0;
@@ -22,7 +22,7 @@ img, .fullscreen-img, .fullscreenA-img, .solar-img {
   line-height: 0;
   width: 100%;
   height: auto;
-}
+} */
 
 img,
 .fullscreen-img,
@@ -41,11 +41,11 @@ img,
   border: none;
 }
 
-.section + .section {
+/* .section + .section {
   margin-top: -10px;
   padding-left: 0;
   padding-right: 0;
-}
+} */
 
 /* 전체 컨테이너 설정 */
 .Home-container {
@@ -53,9 +53,10 @@ img,
   padding-top: 80px;
   margin-right: 10px;
   margin-left: 10px;
-  background: linear-gradient(to bottom, #ffffff 35%, #aacadb 46%, #5d6b77 66%, #95b1d2 71%);
+  background: linear-gradient(to bottom, #ffffff 43%, #aacadb 49%, #5d6b77 71%, #a6c2d8 75%);
   overflow-x: visible;
   box-sizing: content-box;
+  height: auto;
 }
 
 /* 섹션 공통 스타일 */
@@ -92,26 +93,82 @@ section.section.section1.section-white.visible {
   flex-direction: column;
   align-items: center;
   padding-top: 0px; 
+  position: relative;
+  min-height: 134vh;
 }
 
 .section2 {
+  /* margin-top: 50rem;s */
+  /* top: -20px; */
   position: relative; /* 섹션에 절대 위치를 적용할 수 있도록 설정 */
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 90vh; /* 섹션 높이를 100vh로 설정하여 전체 화면을 채우도록 함 */
+  margin-bottom: 0;
+  min-height: 100vh; 
+  background-image: url('../../../assets/HomePage/renewable_energy.png');
+  background-size: cover;
+  text-align: center;
+  background-repeat: no-repeat;
 }
 
+.text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 1000px;
+  text-align: left;
+}
+
+.underline {
+  width: 100px;           /* 선 길이 */
+  height: 1px;           /* 선 두께 */
+  background-color: #000000;  /* 선 색 */
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 1px;
+  /* border-radius: 2px;     양끝 둥글게 */
+}
+
+.text-overlay .text_title1 h2{
+  font-size: 2.8rem;
+  font-weight: normal;
+  /* margin-left: -15; */
+  padding-bottom: 10px;
+}
+
+/* .section2 .text-overlay {
+  padding-bottom: 300px;
+  padding-top: 130px;
+  text-align: left;
+  padding-left: -20px;
+  padding-left: 300px;
+}
+
+.section2 .text-overlay .text_title1 h2{
+  padding-bottom: 300px;
+  text-align: left;
+  padding-left: 8.3rem;
+  font-size: 2.5rem;
+}
+
+.section2 .text-overlay .text_1{
+  margin-top: 0px;
+} */
+/* 
 .section2 .fullscreenA-img {
   position: absolute; 
-  /* top: 50%;  */
+  top: 50%; 
+  top: 30rem;
   left: 50%; 
   transform: translate(-50%, -50%);
   max-width: 100%;
   height: auto;
   object-fit: cover; 
   z-index: 1; 
-}
+} */
 
 .top-overlay {
   position: absolute;
@@ -131,7 +188,7 @@ section.section.section1.section-white.visible {
   height: auto; 
   object-fit: cover;
   z-index: 1;
-  position: relative;
+  position: absolute;
   margin: 20rem 2rem;
   padding: 0 1rem;
   box-sizing: border-box;
@@ -159,6 +216,56 @@ section.section.section1.section-white.visible {
   z-index: 1;
 }
 
+/* 섹션 2 이후 다른 섹션에서는 이미지를 절대 위치 대신 상대 위치로 설정 */
+/* .section2 .fullscreenA-img {
+  position: relative; 이미지를 상대 위치로 설정
+  z-index: 1; 기본 z-index 설정
+} */
+
+.section3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  /* margin-top: 10; 기본적으로 섹션3 위에 있는 마진 제거 */
+  background-image: url('../../../assets/HomePage/solar_power_background.png');
+}
+
+
+.underline2{
+  width: 100px;           /* 선 길이 */
+  height: 1px;           /* 선 두께 */
+  background-color: #000000;  /* 선 색 */
+  margin-bottom: 20px;
+  margin-left: 1px;
+}
+
+.solar-text .text_title2 h2{
+  font-size: 2.8rem;
+  font-weight: normal;
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+/* .section3 img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+  padding: 0;
+  /* vertical-align: top; 
+} */
+
+.section3 .content {
+  margin: 0;
+  padding: 0;
+}
+
+.section3 .button-group {
+  margin-top: 0; 
+  padding: 0;
+}
+
 /* 버튼 그룹 */
 .button-group {
   position: absolute;
@@ -181,10 +288,35 @@ section.section.section1.section-white.visible {
   border-radius: 8px;
 }
 
-@media (max-width: 1000px){
+/* @media (max-width: 1000px){
   .section + .section {
     margin-top: -50px;
     padding-left: 0;
     padding-right: 0;
   }
+} */
+
+/* @media (max-width: 1000px) and (max-height: 760px) {
+  .intro-image{
+    margin: 2.8rem 2rem;
+  }
+} */
+
+
+@media(max-width: 768px){
+  .section1{
+    margin-top: 0;
+    margin-bottom: 0;
+    min-height: 29vh;
+  }
+
+  .section1 .intro-image {
+    margin-bottom: 0; /* 첫 번째 이미지와 두 번째 섹션 사이의 여백을 완전히 없앰 */
+    margin: 4rem 2rem;
+  }
+
+  
+
 }
+
+

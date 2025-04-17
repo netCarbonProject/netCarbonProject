@@ -151,7 +151,8 @@ body::-webkit-scrollbar {
 .home-page #icon1_img {
   background-image: url('../../../assets/Header/intro-btn.png');
   padding-right: 0; 
-  width: 50px;
+  min-width: 40px;
+  max-width: 50px;
   height: 60px;
 }
 
@@ -170,7 +171,8 @@ body::-webkit-scrollbar {
 .info-page #icon2_img {
   background-image: url('../../../assets/Header/info-btn.png');
   padding-right: 0;
-  width: 50px;
+  min-width: 40px;
+  max-width: 50px;
   height: 60px;
 }
 
@@ -189,7 +191,8 @@ body::-webkit-scrollbar {
 .sim-page #icon3_img {
   background-image: url('../../../assets/Header/sim_btn.png');
   padding-right: 0;
-  width: 50px;
+  min-width: 40px;
+  max-width: 50px;
   height: 60px;
 }
 
@@ -209,6 +212,7 @@ body::-webkit-scrollbar {
 .result-page #icon4_img {
   background-image: url('../../../assets/Header/result-btn.png');
   padding-right: 0;
-  width: 50px;
+  min-width: 40px;
+  max-width: 50px;
   height: 60px;
 }
