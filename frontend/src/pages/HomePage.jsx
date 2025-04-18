@@ -44,8 +44,26 @@ const HomePage = () => {
     <div className="Home-container">
       {/* Section 1: 탄소 중립 섹션 */}
       <section className="section section1 section-white" ref={el => (sectionRefs.current[0] = el)}>
-        <img src={green_intro} alt="배경 상단 이미지" className="top-overlay" />
-        <img src={carbon_intro} alt="탄소중립 소개" className="intro-image clickable" />
+        <div className='top-overlay'>
+        {/* <img src={green_intro} alt="배경 상단 이미지" className="top-overlay" /> */}
+        </div>
+        <div className='bottom-overlay'>
+          <div>
+          {/* <img src={carbon_intro} alt="탄소중립 소개" className="intro-image clickable" /> */}
+          <div className='intro'>
+            <div className='text_title3'>
+              <h2>탄소중립이란?</h2>
+            </div>
+            <div className='underline3'></div>
+            <div className='text_4'>
+              <p>*탄소중립은 대기 중 온실가스 농도가 인간 활동에 의해 더 증가되지 않도록 순배출량이 0이 되도록 하는 것으로 ‘넷제로(Net-Zero)’라고도 부른다. </p>
+              <p>특정 기간에 인간 활동에 의한 온실가스 배출량이 전 지구적 흡수량과 균형을 이룰 때 탄소중립이 달성된다.</p>
+            </div>
+          </div>
+          <div className='graph'></div>
+          </div>
+
+        </div>
       </section>
 
       {/* Section 2: 신재생 에너지 소개 섹션 */}
