@@ -310,20 +310,17 @@
   z-index: 1;
 }
 
-.tree-text {
-  text-align: center;
-  color: #000;
-}
-
 .tree-text h2 {
   font-size: 2rem;
+  text-align: center;
+  color: #000;
 }
 
 .tree-effect {
   display: flex;
   justify-content: space-around;
   flex-wrap: nowrap;
-  margin-top: 15vh;
+  margin-top: 12vh;
   gap: 2vw;
 }
 
@@ -342,4 +339,6 @@
 
 .tree-effect-item h3 {
   font-size: 2rem;
+  margin-left: 13rem;
+  min-width: 489px;
 }
