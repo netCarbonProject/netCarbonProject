@@ -27,9 +27,11 @@ const InfoPage = () => {
     <div className="info-container">
       <div className="info-top-section">
         <div className="left-map">
-          <div className='map-wrappers'>
-            <img src={mapImg} alt='지역별 전력 사용량 지도' className='map-label'/>
+        <div className='map-wrappers'>
+          <div className='map-label'>
+            <img src={mapImg} alt='지역별 전력 사용량 지도' />
           </div>
+        </div>
           <div className='map-chart'>
               <KoreaMap/>
           </div>

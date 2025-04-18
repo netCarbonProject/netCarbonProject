@@ -216,3 +216,56 @@ body::-webkit-scrollbar {
   max-width: 50px;
   height: 60px;
 }
+
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 10px; /* 좌우 패딩 확 줄이기 */
+  }
+
+  .logo-icon {
+    width: 30px;
+    height: 24px;
+  }
+
+  .logo-title {
+    width: 80px;
+    height: 24px;
+  }
+
+  /* 홈 intro 전용 로고 조정 */
+  .home-page .logo-title {
+    width: 50px;
+    height: 24px;
+  }
+
+  /* 아이콘 간격 조정 */
+  .icons {
+    gap: 12px;
+  }
+
+  .icons button img,
+  .icons div img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .icons .menu-group {
+    gap: 4px;
+  }
+
+  /* 아이콘 버튼들 높이 줄이기 */
+  .home-page #icon1_img,
+  .info-page #icon2_img,
+  .sim-page #icon3_img,
+  .result-page #icon4_img {
+    height: 40px;
+    min-width: 32px;
+    max-width: 40px;
+  }
+
+  #icon1_img, #icon2_img, #icon3_img, #icon4_img {
+    padding-right: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}

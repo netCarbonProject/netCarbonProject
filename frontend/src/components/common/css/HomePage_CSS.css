@@ -1,3 +1,7 @@
+/* * {
+  outline: 1px solid red !important;
+} */
+
 /* 기본 설정 */
 html, body {
   height: 100%;
@@ -33,11 +37,11 @@ img,
 .Home-container {
   width: calc(100% - 20px);
   padding-top: 80px;
-  margin-right: 10px;
+  margin-right: 0; /* 오른쪽 여백을 0으로 설정 */
   margin-left: 10px;
   background: linear-gradient(to bottom, #ffffff 43%, #aacadb 49%, #5d6b77 71%, #a6c2d8 75%);
   overflow-x: visible;
-  box-sizing: content-box;
+  box-sizing: border-box; /* 전체 크기 포함 */
   height: auto;
 }
 
@@ -264,18 +268,25 @@ section.section.section1.section-white.visible {
 
 @media (max-width: 768px) {
   .Home-container {
-    padding-top: 60px;
-    margin-left: 5px;
-    margin-right: 5px;
+    padding: 60px 10px 0 10px; /* 패딩으로 여백 유지 */
+    width: 100%;
+    margin: 0 auto;
   }
 
   .section1,
   .section2,
   .section3 {
     min-height: 100vh;
-    /* padding: 20px 0; */
     background-size: cover;
     background-position: center;
+  }
+
+  .section2 {
+    margin-top: -138px;
+  }
+
+  .section3 {
+    margin-top: 0;
   }
 
   .text-overlay {
@@ -316,7 +327,7 @@ section.section.section1.section-white.visible {
     flex-direction: column;
     gap: 12px;
     bottom: 3%;
-    min-width: 15rem;
+    width: 15rem;
   }
 
   .custom-btn {
