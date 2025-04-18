@@ -54,11 +54,6 @@
     cursor: pointer;
 }
 
-.open-panel-button img {
-    width: 70px;
-    height: 40px;
-}
-
 /* ---------- 팝업 패널 ---------- */
 .popup-panel {
     position: fixed;
@@ -95,16 +90,21 @@
 }
 
 /* 닫기 버튼 위치 및 정렬 */
-.close-button-area {
-    position: absolute;
-    top: 5px;
-    right: 19px;
-    width: 30px;
-    height: 30px;
+/* .close-button-area {
+    width: ;
+} */
+
+.close-button-area img{
+    position: fixed;
+    top: 6.3rem;
+    right: 20px;
+    width: 67px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9999;
 }
 
 .close-btn {
@@ -225,7 +225,7 @@
 }
 
 /* 완료 버튼 / AI 배치 버튼 스타일 */
-.complete-button, .ai-input-button {
+.complete-button, .ai-input-button, .clear-ai-button {
     background-color: black;
     color: white;
     padding: 8px 16px;
@@ -233,6 +233,9 @@
     border: none;
     cursor: pointer;
 }
+
+/*  */
+
 
 /* ---------- 슬라이드 패널 영역 ---------- */
 
