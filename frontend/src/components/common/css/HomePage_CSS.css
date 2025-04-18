@@ -150,7 +150,7 @@ section.section.section1.section-white.visible {
 }
 
 .intro {
-  margin-top: 5rem;
+  margin-top: 4rem;
   margin-left: 7rem;
 }
 
@@ -185,7 +185,7 @@ section.section.section1.section-white.visible {
   height: 39vh;
   align-items: center;
   margin-left: 15rem;
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 
 
@@ -232,6 +232,7 @@ section.section.section1.section-white.visible {
   margin: 0;
   background-image: url('../../../assets/HomePage/solar_power_background.png');
   background-repeat: no-repeat;
+  min-height: 100vh;
 }
 
 
