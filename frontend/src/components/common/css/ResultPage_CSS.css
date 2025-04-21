@@ -34,7 +34,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .resullt-map-title {
@@ -343,7 +343,6 @@
   min-width: 489px;
 }
 
-
 /* ─── 모바일 대응 스타일 ─── */
 @media (max-width: 768px) {
 
@@ -360,11 +359,16 @@
     gap: 1.5rem;
     flex-wrap: nowrap;
     justify-content: space-between;
+    margin-top: 3rem;
+  }
+
+  .top-section {
+    gap: 0;
+    /* flex-wrap: nowrap; flex-wrap을 nowrap으로 변경 */
   }
 
   .donut-chart-group {
     margin-top: 3rem;
-    /* max-width: 145px; */
   }
 
   .power_generation h3{
@@ -394,7 +398,7 @@
   }
 
   .result-map-placeholder {
-    max-height: 60vh;
+    min-height: 46vh;
   }
 
   .result-stats, .donut-chart-placeholder { 
@@ -402,117 +406,96 @@
   }
 
   .donut-chart-placeholder {
-    min-height: 19vh;
+    min-height: 24vh;
+  }
+
+  .carbon-title {
+    font-size: 1.5rem;
+    margin-top: 5rem;
+  }
+
+  .future-section h2{
+    font-size: 1.5rem;
+    margin-top: 5rem;
+  }
+
+  .card-text {
+    font-size: 1rem;
+    font-weight: bolder;
+  }
+  
+  .carbon-amount {
+    font-size: 0.8rem;
+  }
+
+  .carbon-card, .carbon-chart-placeholder{
+    min-height: 135px;
+  }
+
+  .carbon-chart-placeholder {
+    min-height: 293px;
+  }
+
+  .carbon-cards {
+    gap: 1.5rem;
+  }
+
+  .carbon-card.solar {
+    min-height: 293px;
+  }
+
+  .carbon-right{
+    gap: 0;
+  }
+
+  .tree-section h2 {
+    font-size: 1.5rem; /* 폰트 크기 조정 */
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  /* 나무 효과 텍스트 크기 및 여백 */
+  .tree-effect-item h3 {
+    font-size: 18px; /* 폰트 크기 조정 */
+    margin-bottom: 1rem;
+    margin-left: 0;
+    overflow-wrap: break-word; /* 텍스트가 넘칠 때 줄 바꿈 */
+  }
+
+  /* 나무 효과 텍스트 크기 및 정렬 */
+  .tree-effect-item p {
+    font-size: 11px; /* 폰트 크기 조정 */
+    text-align: left;
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+    margin-left: 0;
+  }
+
+  /* 나무 효과 아이템 간의 여백 및 정렬 */
+  .tree-effect {
+    display: block;
+    margin-top: 2rem;
+  }
+
+  .tree-effect-item {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* 트리 콘텐츠를 모바일 화면에 맞게 레이아웃 조정 */
+  .tree-content {
+    padding: 0 1rem; /* 좌우 패딩 추가 */
+  }
+
+  /* 모바일에서는 텍스트가 잘 보이도록 패딩 추가 */
+  .tree-text {
+    padding: 1rem 0;
+  }
+
+  /* 글씨가 화면에 제대로 나오는지 확인하기 위해 overflow 설정 */
+  .tree-text, .tree-effect-item {
+    overflow-wrap: break-word; /* 텍스트가 넘칠 때 줄 바꿈 */
+    word-wrap: break-word; /* 긴 단어가 넘어가지 않도록 설정 */
   }
 
 }
-  /* 페이지 전체 여백 조정 */
-  /* .result-page-wrapper {
-    padding: 6vw 4vw;
-  } */
-
-  /* 상단 섹션 수직 정렬 */
-  /* .top-section {
-    flex-direction: column;
-    gap: 3vh; /* 간격을 줄여서 두 섹션 사이의 거리를 더 좁히기 
-    margin-bottom: 2vh; /* 간격을 줄여서 섹션 간의 여백을 줄이기 
-  } */
-
-  /* 지도 및 시뮬레이션 정보 전체 너비로 */
-  /* .right-map,
-  .simulation-info {
-    width: 100%;
-    min-width: unset;
-    height: auto;
-  } */
-
-  /* 지도 제목 크기 */
-  /* .resullt-map-title {
-    font-size: 1.3rem;
-    margin: 1.2em 0 0.5em 0;
-  } */
-
-  /* 지도 placeholder 크기 */
-  /* .result-map-placeholder {
-    max-height: 55vh;
-    font-size: 1.2rem;
-  } */
-
-  /* 시뮬레이션 정보 블럭 - 가로 정렬, 줄바꿈 허용
-  .simulation-info {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-top: 0;  /* 여백을 0으로 수정 */
-  /* } */
-/* 
-  .result-stats,
-  .donut-chart-group {
-    width: 48%;
-    max-width: 48%;
-    flex: 0 0 48%;  
-    box-sizing: border-box;
-    padding: 1rem;
-    background-color: #f2f2f2;
-    border-radius: 10px;
-  } */
-
-  /* .donut-chart-group {
-    margin-top: 5.9rem;
-  } */
-
-  /* 시뮬레이션 텍스트 */
-  /* .result-stats h3,
-  .power_generation h3 {
-    font-size: 1.2rem;
-    top: -1.8rem;
-  } */
-
-  /* .power_generation h3 {
-    width: 122px;
-    margin-top: -2.8rem;
-  } */
-/* 
-  .result-stats p {
-    font-size: 1rem;
-  } */
-
-  /* 탄소 저감 카드 & 차트 간격 조정 */
-  /* .carbon-section {
-    margin-top: 2vh; 섹션 사이의 간격을 줄이기 위해 margin-top을 줄임
-  } */
-
-  /* .carbon-title {
-    font-size: 1.5rem;
-    margin-bottom: 1vh; /* 간격을 줄여서 타이틀과 카드 간의 여백을 줄임 
-  } */
-/* 
-  .carbon-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem; /* 카드를 세로로 배치하면서 간격을 줄임
-  } */
-/* 
-  .carbon-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  } */
-
-  /* .carbon-card,
-  .carbon-right {
-    width: 100%; /* 카드 및 차트를 전체 너비로 설정 
-    margin: 0; /* 여백을 제거 
-  } */
-
-  /* 탄소 카드 내용 크기 조정 */
-  /* .carbon-card {
-    font-size: 1rem;
-    padding: 1rem;
-    background-color: #f2f2f2;
-    border-radius: 10px;
-  } */
-
-/* } */

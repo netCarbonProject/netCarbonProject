@@ -3,27 +3,29 @@ import '../components/common/css/ResultPage_CSS.css';
 
 const ResultPage = () => {
   const sectionRefs = useRef([]); // 섹션 참조 저장
-
   useEffect(() => {
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
+      (entries) => {
+        entries.forEach((entry) => {
+          // 한 번 애니메이션이 적용되면 더 이상 변경하지 않도록 처리
+          if (entry.isIntersecting && !entry.target.classList.contains('animate')) {
             entry.target.classList.add('animate');
-          } else {
+          } else if (!entry.isIntersecting && entry.target.classList.contains('animate')) {
             entry.target.classList.remove('animate');
           }
         });
       },
-      { threshold: 0.1 }
+      {
+        threshold: 0.25, // 화면에 더 많은 부분이 들어와야 애니메이션이 시작됨
+      }
     );
   
-    sectionRefs.current.forEach(section => {
+    sectionRefs.current.forEach((section) => {
       if (section) observer.observe(section);
     });
   
     return () => {
-      sectionRefs.current.forEach(section => {
+      sectionRefs.current.forEach((section) => {
         if (section) observer.unobserve(section);
       });
     };
