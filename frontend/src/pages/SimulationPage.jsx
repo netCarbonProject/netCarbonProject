@@ -7,7 +7,7 @@ import simulation_button from "../assets/SimulationPage/simulation_button.png";
 import sunlight_btn from "../assets/SimulationPage/sunlight_btn.png";
 import slide_btn from "../assets/SimulationPage/slide_btn.png";
 import close_btn from "../assets/SimulationPage/close_btn.png";
-import simulation_close from "../assets/SimulationPage/simulation_btn2.png";
+// import simulation_close from "../assets/SimulationPage/simulation_btn2.png";
 import { useNavigate } from "react-router-dom";
 import NaverMap from "../components/map/NaverMap";
 
@@ -168,10 +168,13 @@ const SimulationPage = () => {
             {showPanel && (
               <div className="popup-panel">
                 <div className="popup-panel-content">
-                  <div className="close-button-area" onClick={handleClosePanel}>
-                    <img src={simulation_button} alt="설치 패널 닫기" />
+                  <div className="close-btn-layout">
+                    <h2>패널 설정</h2>
+                    <div className="close-button-area" onClick={handleClosePanel}>
+                      <img src={simulation_button} alt="설치 패널 닫기" />
+                    </div>  
                   </div>
-                  <h2>설치 패널 상세</h2>
+                  {/* <h2>설치 패널 상세</h2> */}
                   <div className="panel-content-row">
                     <div className="panel-image-selection">
                       <div className="panel-image-box">
