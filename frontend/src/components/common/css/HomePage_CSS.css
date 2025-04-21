@@ -37,7 +37,6 @@ img,
 .Home-container {
   width: calc(100% - 20px);
   padding-top: 80px;
-  margin-right: 0; /* 오른쪽 여백을 0으로 설정 */
   margin-left: 10px;
   background: linear-gradient(to bottom, #ffffff 43%, #aacadb 49%, #5d6b77 71%, #a6c2d8 75%);
   overflow-x: visible;
@@ -266,11 +265,11 @@ section.section.section1.section-white.visible {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 420px) {
   .Home-container {
-    padding: 60px 10px 0 10px; /* 패딩으로 여백 유지 */
-    width: 100%;
-    margin: 0 auto;
+    padding-top: 44px;
+    width: calc(100% - 20px); /* 좌우 10px씩 마진 확보 */
+    margin: 0 10px;
   }
 
   .section1,
@@ -343,7 +342,7 @@ section.section.section1.section-white.visible {
   .bottom-overlay {
     width: 79%;
     height: auto;
-    margin: 5rem auto;
+    margin: 10rem auto;
   }
 
   .intro {

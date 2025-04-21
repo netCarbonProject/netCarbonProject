@@ -450,3 +450,28 @@
 body.no-scroll {
     overflow: hidden !important;
 }
+
+@media (max-width: 420px) {
+    .simulation-container {
+        padding-top: 46px;
+    }
+
+    .panel-button-topright{
+        bottom: 186px;
+        /* right: 5px; */
+        top: auto;
+    }
+
+    .popup-panel {
+        top: auto;
+        right: 0;
+        width: 100%;
+        border-radius: initial;
+        bottom: 111px;
+    }
+
+    .close-button-area img {
+        top: 52px;
+        right: 5px;
+    }
+}
