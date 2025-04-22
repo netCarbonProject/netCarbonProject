@@ -361,6 +361,7 @@
         top: 0;
         height: 48px;
         background: white;
+        padding-bottom: 2px
     }
 
     .address-slide.open {
@@ -400,22 +401,25 @@
     .address_mobile {
         position: fixed;
         top: 34px;
-        width: 85%;
+        width: 90%;
         background-color: white;
         padding: 12.5px 0px 1px 0px;
     }
 
     .address-input {
         border-radius: initial;
-        width: 303px;
+        width: 308px;
+        border: none;
+        background-color: white;
     }
 
     .address-search-button-mobile {
         border-radius: inherit;
+        border: none;
     }
 
     .slide-button {
-        margin-top: 11px;
+        margin-top: 10px;
     }
 
     .close-slide img {
