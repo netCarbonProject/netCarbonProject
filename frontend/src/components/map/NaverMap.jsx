@@ -5,6 +5,7 @@ import close_btn from "../../assets/SimulationPage/close_btn.png";
 import slide_btn_mobile from "../../assets/SimulationPage/slide_btn_mobile.png"
 import open_btn_mobile from "../../assets/SimulationPage/slide_btn_mobile_open.png"
 import shadow_btn from "../../assets/SimulationPage/shadow_btn.png"
+import close_shadow_btn from "../../assets/SimulationPage/close_shadow_btnw.png"
 
 import "../common/css/NaverMap_CSS.css";
 
@@ -14,11 +15,23 @@ const NaverMap = () => {
   const [loaded, setLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
-  
+  const [showShadowPopup, setShowShadowPopup] = useState(false);
+  const toggleShadowPopup = () => setShowShadowPopup(prev => !prev);
+
   const [showAddressSlide, setShowAddressSlide] = useState(false);
   const handleSlideToggle = () => setShowAddressSlide(!showAddressSlide);
 
   const [isMobile, setIsMobile] = useState(false);  // 상태 정의
+
+  const [selectedHour, setSelectedHour] = useState(16); // 초기값은 16시
+
+  const handleClosePopup = () => {
+    setShowShadowPopup(false);
+  };
+
+  const handleTimeChange = (e) => {
+    setSelectedHour(Number(e.target.value));
+  };
 
   useEffect(() => {
       const checkMobile = () => {
@@ -156,7 +169,6 @@ const NaverMap = () => {
                 </div>
             }
             <div className="coordinates-section">
-              <div className="coordinates-title">위도, 경도로 검색하기</div>
                 <div className="coordinate-input-wrapper">
                   <div className="coordinate-input">
                     <label htmlFor="latitude">위도</label>
@@ -179,15 +191,53 @@ const NaverMap = () => {
           </button>
         </div>
       )}
-
-      
       
       <div className="shadow-chk-btn">
-        <button className="shadow-button">
+        <button className="shadow-button" onClick={toggleShadowPopup}>
           <img src={shadow_btn} alt="그림자 버튼" />
         </button>
       </div>
-      
+
+      {showShadowPopup && (
+         <div className="shadow-popup" onClick={(e) => e.stopPropagation()}>
+          <div className="close-area" onClick={() => setShowShadowPopup(false)}>
+            <img src={close_shadow_btn} alt="그림자 분석 닫기"/>
+          </div>
+          <div className="popup-header">
+            그림자 분석
+            {/* <button className="close-button" onClick={handleClosePopup}>×</button> */}
+          </div>
+          <div className="popup-content">
+            <label htmlFor="interval">분석시간간격</label>
+            <select id="interval">
+              <option value="15">15분</option>
+              <option value="30">30분</option>
+              <option value="60">60분</option>
+            </select>
+
+            <label htmlFor="time-slider">시간별 그림자</label>
+            <div className="time-slider">
+              <span className="time-display">
+                {String(selectedHour).padStart(2, "0")}:00
+              </span>
+              <input
+                type="range"
+                id="time-slider"
+                min="0"
+                max="23"
+                step="1"
+                value={selectedHour}
+                onChange={handleTimeChange}
+              />
+            </div>
+
+            <div className="popup-buttons">
+              <button className="select-button">지점선택</button>
+              <button className="reset-button">초기화</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
