@@ -99,7 +99,7 @@
 .address-input {
     padding: 12px 0px 12px 6px;
     border: 2px solid #1a2665;
-    border-right: none;
+    /* border-right: none; */
     border-radius: 8px 0 0 8px;
     background-color: #f5f5f5;
     font-size: 14px;
@@ -113,15 +113,25 @@
     /* padding: 12px 16px; */
     border: 2px solid #1a2665;
     /* border: none; */
+    /* border-left: none; */
     border-radius: 0 8px 8px 0;
     background-color: #ffffff;
     font-size: 14px;
-    height: 44px;
+    height: 45px;
     box-shadow: none;
     cursor: pointer;
     width: 45px;
     padding-bottom: 2px;
 }
+
+.address-search-button:hover {
+    /* border: 1px solid white;  흰색 테두리 */
+    /* color: #aaa; */
+    outline: none;
+    /* box-shadow: none;         그림자 없애기 */
+    /* border-left: none; */
+    box-shadow: 0 -1px 0 white, 0 1px 0 white, 1px 0 0 white;
+  }
 
 
 .address-content .address-input::placeholder {
