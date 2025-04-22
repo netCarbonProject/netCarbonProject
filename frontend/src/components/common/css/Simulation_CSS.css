@@ -257,186 +257,10 @@
     cursor: pointer;
 }
 
-/*  */
-
-
-/* ---------- 슬라이드 패널 영역 ---------- */
-
-/* 슬라이드 열기 버튼 위치 */
-.address-slide-button {
-    position: absolute;
-    top: 295px;           
-    left: 0px;         
-}
-
-.slide-button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-/* 지역 슬라이드 패널 */
-.address-slide {
-    position: fixed;
-    left: -250px;
-    top: 80px;
-    width: 250px;
-    height: min(calc(100vh - 80px), 748px); 
-    background-color: white;
-    z-index: 20;
-    overflow-y: auto;
-    overflow-x: hidden;
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease;
-    box-sizing: border-box;
-    pointer-events: auto;
-    overflow: visible;
-}
-
-
-
-/* 슬라이드 열림 상태 */
-.address-slide.open {
-    transform: translateX(250px); /* 오른쪽으로 이동 */
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* 슬라이드 안 콘텐츠 스타일 */
-.address-content {
-    display: flex;
-    flex-direction: column;
-    background-color: #324DDD;
-    padding: 20px;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 16px;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-}
-
-.address-content p {
-    font-size: 14px;
-    color: #555;
-}
-
-/* 슬라이드 닫기 버튼 */
-.close-slide {
-    position: absolute;
-    top: 295px;
-    right: -46px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    width: auto;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s ease;
-    border: none;
-    outline: none;
-    background: transparent;
-}
-
-/* 슬라이드가 열리면 버튼이 제자리로 슬라이드 인 */
-.address-slide.open .close-slide {
-    transform: translateX(-50%);
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* 슬라이드가 닫힐 때 닫기 버튼이 천천히 사라지도록 지연 */
-.address-slide:not(.open) .close-slide {
-    transform: translateX(-250px);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease 0.3s, transform 0.3s ease 0.3s;
-}
-
-/* 슬라이드 내부 input */
-.address-content .address-input {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    background-color: #f5f5f5;
-    color: #333;
-    width: 200px;
-    margin-top: 0;
-}
-
-.address-content .address-input::placeholder {
-    color: #aaa;
-}
-
-.address-content h3 {
-    font-size: 20px;
-    color: #ffffff;
-    margin-bottom: 0;
-}
-
-/* 위도 경도 섹션 */
-.coordinates-section {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-    background-color: #D9D9D9;
-}
-
-.coordinates-title {
-    color: #888;
-    text-decoration: underline;
-    font-size: 15px;
-}
-
-.coordinate-input {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.coordinate-input input {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    background-color: #f5f5f5;
-    width: 160px;
-}
-
-/* 위치 박스 */
-.location-section {
-    display: flex;
-    flex-direction: column;
-}
-
-.location-box {
-    height: 300px;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 8px;
-}
-
-.location-title {
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    background-color: white;
-    border-bottom: 1px solid #C0B2B2;
-    padding-bottom: 5px;
-}
-
 /* 햇빛 필터 버튼 */
 .sunlight-filter-button {
     position: fixed;
-    right: 20px;
+    right: 17px;
     bottom: 120px;
 }
 
@@ -457,8 +281,8 @@ body.no-scroll {
     }
 
     .panel-button-topright{
-        bottom: 186px;
-        /* right: 5px; */
+        bottom: 16rem;
+        right: 15px;
         top: auto;
     }
 
@@ -467,11 +291,12 @@ body.no-scroll {
         right: 0;
         width: 100%;
         border-radius: initial;
-        bottom: 111px;
+        top: 490px;
+        height: 305px;
     }
 
     .close-button-area img {
-        top: 52px;
+        top: 490px;
         right: 5px;
     }
 }

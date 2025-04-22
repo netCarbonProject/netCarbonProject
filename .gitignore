@@ -22,7 +22,7 @@ routes.jsx
 frontend/src/utils/api.js
 frontend/src/utils
 frontend/src/components/charts/
-frontend/src/components/map/
+# frontend/src/components/map/
 frontend/src/result
 frontend/src/simulation
 frontend/src/pages/TestPage.jsx

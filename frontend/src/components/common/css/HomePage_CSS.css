@@ -268,7 +268,7 @@ section.section.section1.section-white.visible {
 @media (max-width: 420px) {
   .Home-container {
     padding-top: 44px;
-    width: calc(100% - 20px); /* 좌우 10px씩 마진 확보 */
+    width: calc(100% - 20px);
     margin: 0 10px;
   }
 

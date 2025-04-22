@@ -5,9 +5,9 @@ import solarpanel1 from "../assets/SimulationPage/solarpanel1.png";
 import solarpanel2 from "../assets/SimulationPage/solarpanel2.png";
 import simulation_button from "../assets/SimulationPage/simulation_button.png";
 import sunlight_btn from "../assets/SimulationPage/sunlight_btn.png";
-import slide_btn from "../assets/SimulationPage/slide_btn.png";
-import close_btn from "../assets/SimulationPage/close_btn.png";
-// import simulation_close from "../assets/SimulationPage/simulation_btn2.png";
+import simulation_btn_mobile from "../assets/SimulationPage/simulation_btn_mobile.png"
+
+
 import { useNavigate } from "react-router-dom";
 import NaverMap from "../components/map/NaverMap";
 
@@ -16,6 +16,17 @@ const SimulationPage = () => {
   const [showAddressSlide, setShowAddressSlide] = useState(false);
   const [aiDetections, setAiDetections] = useState([]);
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 420);
+    };
+  
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     document.body.classList.add("no-scroll");
@@ -161,7 +172,7 @@ const SimulationPage = () => {
 
             <div className="panel-button-topright">
               <button className="open-panel-button" onClick={handleOpenPanel}>
-                <img src={simulation_button} alt="패널 보기 버튼" />
+                <img src={isMobile ? simulation_btn_mobile : simulation_button} alt="패널 보기 버튼" />
               </button>
             </div>
 
@@ -270,58 +281,6 @@ const SimulationPage = () => {
                 <img src={sunlight_btn} alt="일조량 버튼" />
               </button>
             </div>
-
-            <div className="address-slide-button">
-              <button className="slide-button" onClick={handleSlideToggle}>
-                <img src={slide_btn} alt="상세주소 버튼" />
-              </button>
-            </div>
-
-            {showAddressSlide && (
-              <div
-                className={`address-slide ${showAddressSlide ? "open" : ""}`}
-              >
-                <div className="address-section">
-                  <div className="address-content">
-                    <h3>EnerGizer</h3>
-                    <input
-                      type="text"
-                      className="address-input"
-                      placeholder="상세주소를 입력하세요"
-                    />
-                  </div>
-                  <div className="coordinates-section">
-                    <div className="coordinates-title">
-                      위도, 경도로 검색하기
-                    </div>
-                    <div className="coordinate-input">
-                      <label htmlFor="latitude">위도</label>
-                      <input
-                        type="text"
-                        id="latitude"
-                        placeholder="위도 입력"
-                      />
-                    </div>
-                    <div className="coordinate-input">
-                      <label htmlFor="longitude">경도</label>
-                      <input
-                        type="text"
-                        id="longitude"
-                        placeholder="경도 입력"
-                      />
-                    </div>
-                  </div>
-                  <div className="location-section">
-                    <div className="location-box">
-                      <div className="location-title">장소</div>
-                    </div>
-                  </div>
-                </div>
-                <button className="close-slide" onClick={handleSlideToggle}>
-                  <img src={close_btn} alt="닫기 버튼" />
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>

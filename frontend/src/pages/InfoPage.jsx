@@ -14,15 +14,19 @@ import KoreaMap from '../components/location/KoreaMap1';
 
 const InfoPage = () => {
   useEffect(() => {
-    // 페이지에 진입하면 body 스크롤 비활성화
-    document.body.style.overflow = 'hidden';
-
-    // 페이지에서 나가면 다시 스크롤 활성화
+    const updateOverflow = () => {
+      const isMobile = window.innerWidth <= 420;
+      document.body.style.overflow = isMobile ? 'auto' : 'hidden';
+    };
+  
+    updateOverflow();
+    window.addEventListener('resize', updateOverflow);
+  
     return () => {
       document.body.style.overflow = 'auto';
+      window.removeEventListener('resize', updateOverflow);
     };
   }, []);
-
   return (
     <div className="info-container">
       <div className="info-top-section">
