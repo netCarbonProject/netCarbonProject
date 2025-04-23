@@ -5,9 +5,10 @@ import close_btn from "../../assets/SimulationPage/close_btn.png";
 import slide_btn_mobile from "../../assets/SimulationPage/slide_btn_mobile.png"
 import open_btn_mobile from "../../assets/SimulationPage/slide_btn_mobile_open.png"
 import shadow_btn from "../../assets/SimulationPage/shadow_btn.png"
-import close_shadow_btn from "../../assets/SimulationPage/close_shadow_btnw.png"
-
+import play_btn from "../../assets/SimulationPage/play_btn.png"
+import stop_btn from "../../assets/SimulationPage/stop_btn.png"
 import "../common/css/NaverMap_CSS.css";
+import "../common/css/VMap.css";
 
 const NaverMap = () => {
   const mapRef = useRef(null);
@@ -200,9 +201,9 @@ const NaverMap = () => {
 
       {showShadowPopup && (
          <div className="shadow-popup" onClick={(e) => e.stopPropagation()}>
-          <div className="close-area" onClick={() => setShowShadowPopup(false)}>
+          {/* <div className="close-area" onClick={() => setShowShadowPopup(false)}>
             X
-          </div>
+          </div> */}
           <div className="popup-header">
             그림자 분석
             {/* <button className="close-button" onClick={handleClosePopup}>×</button> */}
@@ -221,34 +222,45 @@ const NaverMap = () => {
             </div>
           </div>
           <div className="popup-content">
-            <label htmlFor="interval">분석시간간격</label>
-            <select id="interval">
-              <option value="15">15분</option>
-              <option value="30">30분</option>
-              <option value="60">60분</option>
-            </select>
+            <div className="analysis_time">
+              <label htmlFor="interval">분석시간간격</label>
+              <select id="interval">
+                <option value="15">15분</option>
+                <option value="30">30분</option>
+                <option value="60">60분</option>
+              </select>
+            </div>
+            <div className="time-slider-label">
+              <label htmlFor="time-slider">시간별 그림자</label>
+            </div>
 
-            <label htmlFor="time-slider">시간별 그림자</label>
-            <div className="time-slider">
+            <div className="time-header">
               <span className="time-display">
                 {String(selectedHour).padStart(2, "0")}:00
               </span>
-              <input
-                type="range"
-                id="time-slider"
-                min="0"
-                max="23"
-                step="1"
-                value={selectedHour}
-                onChange={handleTimeChange}
-              />
-            </div>
-            
-            <div className="Time_zone_playback">
-              <button className="time_play">플레이</button>
-              <button className="stop_time">중지</button>
+              <div className="Time_zone_playback">
+                <button className="time_play">
+                  <img src={play_btn} alt="재생버튼"/>
+                </button>
+                <button className="stop_time">
+                  <img src={stop_btn} alt="일시 정지 버튼"/>
+                </button>
+              </div>
             </div>
 
+            <div className="time-slider-container">
+              <div className="time-slider">
+                <input
+                  type="range"
+                  id="time-slider"
+                  min="0"
+                  max="23"
+                  step="1"
+                  value={selectedHour}
+                  onChange={handleTimeChange}
+                />
+              </div>
+            </div>
             <div className="popup-buttons">
               <button className="select-button">지점선택</button>
               <button className="reset-button">초기화</button>
