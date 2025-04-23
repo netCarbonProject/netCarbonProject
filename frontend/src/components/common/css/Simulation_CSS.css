@@ -34,7 +34,7 @@
 /* 캔버스 영역 (그리기용 등) */
 .simulation-canvas {
     width: 100%;
-    height: 100%;
+    height: 85%;
     display: block;
     background-color: #e0e0e0;
 }
@@ -261,7 +261,7 @@
 .sunlight-filter-button {
     position: fixed;
     right: 17px;
-    bottom: 120px;
+    bottom: 10rem;
 }
 
 .filter-button {
@@ -281,7 +281,7 @@ body.no-scroll {
     }
 
     .panel-button-topright{
-        bottom: 16rem;
+        bottom: 18rem;
         right: 15px;
         top: auto;
     }
@@ -299,4 +299,15 @@ body.no-scroll {
         top: 490px;
         right: 5px;
     }
+}
+
+/* NaverMap / 3D Map 전환 버튼튼 */
+.switch-button{
+    position: absolute;
+    bottom: 14rem;
+    right: 15px; 
+    z-index: 10;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }

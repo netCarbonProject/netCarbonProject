@@ -1,15 +1,9 @@
-import React, { useState,useEffect } from 'react';
-import '../css/Header_CSS.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "../css/Header_CSS.css";
+import { useNavigate, useLocation } from "react-router-dom";
 
-// 이미지 import (src/assets 경로 기준)
-// import icon from '../../../assets/Header/Icon.png';
-// import intro from '../../../assets/Header/intro.png';
-// import vector2 from '../../../assets/Header/Vector-2.png';
-// import vector1 from '../../../assets/Header/Vector-1.png';
-// import vector from '../../../assets/Header/Vector.png';
-import menu from '../../../assets/Header/menu.png';
-import vector2b from '../../../assets/Header/Vector2.png';
+import menu from "../../../assets/Header/menu.png";
+import vector2b from "../../../assets/Header/Vector2.png";
 
 const Header = () => {
   const navigate = useNavigate(); 
