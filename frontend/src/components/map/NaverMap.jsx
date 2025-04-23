@@ -201,11 +201,24 @@ const NaverMap = () => {
       {showShadowPopup && (
          <div className="shadow-popup" onClick={(e) => e.stopPropagation()}>
           <div className="close-area" onClick={() => setShowShadowPopup(false)}>
-            <img src={close_shadow_btn} alt="그림자 분석 닫기"/>
+            X
           </div>
           <div className="popup-header">
             그림자 분석
             {/* <button className="close-button" onClick={handleClosePopup}>×</button> */}
+          </div>
+          <div className="sunshine_days">
+            <div className="analysis_date">
+              분석 기준 일자
+            </div>
+            <div className="sunshine_hours">
+              <div className="sunrise_date">일출시간 N/A</div>
+              <div className="sunset_time">일몰 시간 N/A</div>
+            </div>
+            <div className="sunlight">
+              <div className="total_sunlight">총 일조량 N/A</div>
+              <div className="continuous_sunlight">연속 일조량(최대) N/A</div>
+            </div>
           </div>
           <div className="popup-content">
             <label htmlFor="interval">분석시간간격</label>
@@ -229,6 +242,11 @@ const NaverMap = () => {
                 value={selectedHour}
                 onChange={handleTimeChange}
               />
+            </div>
+            
+            <div className="Time_zone_playback">
+              <button className="time_play">플레이</button>
+              <button className="stop_time">중지</button>
             </div>
 
             <div className="popup-buttons">

@@ -133,16 +133,6 @@
     box-shadow: 0 -1px 0 white, 0 1px 0 white, 1px 0 0 white;
 }
 
-/*
-.address-search-button-mobile:hover {
-    /* border: 1px solid white;  흰색 테두리 */
-    /* color: #aaa; */
-  /*  outline: none;*/    
-  /* box-shadow: none;         그림자 없애기 */
-    /* border-left: none;
-    box-shadow: 0 -2px 0 white, 0 2px 0 white, 2px 0 0 white;
-} */
-
 
 .address-content .address-input::placeholder {
     color: #aaa;
@@ -205,7 +195,7 @@
 }
 
 
-
+/* 그림자 */
 .shadow-button{
     position: absolute;
     bottom: 12rem;
@@ -230,6 +220,60 @@
     box-sizing: border-box;
 }
 
+.sunshine_days {
+    display: flex;
+    flex-direction: column;
+}
+  
+  .analysis_date,
+  .sunshine_hours,
+  .sunlight {
+    font-size: 14px;
+}
+
+.analysis_date {
+    font-weight: bold;
+    font-size: medium;
+    margin-bottom: 10px;
+}
+
+.sunshine_hours {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.sunrise_date,
+.sunset_time {
+    font-size: 14px;
+    white-space: nowrap; 
+}
+
+.sunlight {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+  
+.total_sunlight,
+.continuous_sunlight {
+    font-size: 14px;
+}
+
+/* .sunlight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+.total_sunlight,
+.continuous_sunlight {
+    font-size: 14px;
+    white-space: nowrap;
+} */
+
+
+
 /* 상단 제목과 닫기버튼 */
 .popup-header {
     position: relative;
@@ -243,25 +287,6 @@
     display: block;
     margin-top: 10px;
 }
-
-/* 닫기 버튼 */
-/* .close-button {
-    position: absolute;
-    top: -8px;  /* 약간 위로 띄우기 
-    right: -8px; /* 오른쪽 바깥쪽 여유 
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
-    border-radius: 50%;
-} */
 
 /* 오른쪽 위 닫기 영역 */
 .close-area img {
@@ -325,6 +350,7 @@
 .reset-button {
     background: #666;   
 }
+
 
 
 
