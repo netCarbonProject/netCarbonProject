@@ -62,6 +62,9 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
   // 모바일 버전
   const [isMobile, setIsMobile] = useState(false); // 상태 정의
 
+  // 모바일 추가
+  const [isMapReady, setIsMapReady] = useState(false);
+
   // 일사량 필터 설정
   const geoJsonLayerRef = useRef([]);
   const geoJsonRef = useRef(korea);
@@ -108,6 +111,8 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
       });
 
       mapRef.current.map = map;
+      // 모바일 추가
+      setIsMapReady(true); 
 
       // 추
       window.naverMap = map;
@@ -277,6 +282,12 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
   // 📌 장소 or 좌표 통합 검색
   const handleCombinedSearch = () => {
     const map = mapRef.current.map;
+    // 추가
+    if (!map) {
+      console.warn("Map is not initialized yet.");
+      return;
+    }
+
     const lat = parseFloat(centerLat);
     const lon = parseFloat(centerLon);
 
@@ -300,7 +311,14 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
   };
 
   const handleSelectLocation = (place) => {
+    // 모바일 체크 추가
+    if (!isMapReady || !mapRef.current?.map) {
+      console.warn("🛑 Map is not ready yet!");
+      return;
+    }
+
     const map = mapRef.current.map;
+
     const pos = new window.naver.maps.LatLng(place.y, place.x);
     map.setCenter(pos);
     map.setZoom(17);
@@ -345,7 +363,7 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
           >
             검색
           </button>
-          
+
           {/* 추가 */}
           {showRecent && recentSearches.length > 0 && (
             <ul className="recent-search-list">
@@ -384,7 +402,7 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
                   />
 
                   {/* 모바일 전용 추가 */}
-                  {isMobile && showAddressSlide && searchResults.length > 0 && (
+                  {isMobile && showAddressSlide && searchResults.length > 0 && isMapReady && (
                     <ul className="search-result-list">
                       {searchResults.map((place, idx) => (
                         <li key={idx} onClick={() => handleSelectLocation(place)}>
@@ -395,7 +413,7 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
                       ))}
                     </ul>
                   )}
-                  
+
                   <button
                     className="address-search-button"
                     onClick={handleCombinedSearch}
