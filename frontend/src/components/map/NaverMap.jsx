@@ -244,8 +244,15 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
               title: place.place_name,
             });
 
+            // ✅ InfoWindow 추가
+            const infoWindow = new window.naver.maps.InfoWindow({
+              content: `<div style="padding:8px;font-size:14px;">${place.place_name}</div>`,
+            });
+
             // 📍 마커 클릭 시 지도 중심 이동 + 줌 설정
             window.naver.maps.Event.addListener(marker, "click", () => {
+              // 추가
+              infoWindow.open(map, marker);
               map.setCenter(position);
               map.setZoom(17);
             });
@@ -314,15 +321,46 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
         </button>
       </div>
 
-      {/* 모바일 버전 검색창 */}
+      {/* 모바일 버전 검색창 수정 */}
       {isMobile && (
         <div className="address_mobile">
           <input
             type="text"
             className="address-input"
-            placeholder="상세주소를 입력하세요"
+            // 여기부터
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => setShowRecent(true)}
+            onBlur={() => setTimeout(() => setShowRecent(false), 200)}
+            placeholder="장소를 입력하세요"
           />
-          <button className="address-search-button-mobile">검색</button>
+          {/* 여기도 추가 */}
+          <button
+            className="address-search-button-mobile"
+            onClick={() => {
+              handleCombinedSearch();       // 검색 실행
+              setShowAddressSlide(true);   // 슬라이드 열기
+            }}
+          >
+            검색
+          </button>
+          
+          {/* 추가 */}
+          {showRecent && recentSearches.length > 0 && (
+            <ul className="recent-search-list">
+              {recentSearches.map((item, idx) => (
+                <li
+                  key={idx}
+                  onClick={() => {
+                    setSearchQuery(item);
+                  }}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
 
@@ -345,6 +383,27 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
                     placeholder="장소를 입력하세요"
                   />
 
+                  {/* 모바일 전용 추가 */}
+                  {isMobile && showAddressSlide && searchResults.length > 0 && (
+                    <ul className="search-result-list">
+                      {searchResults.map((place, idx) => (
+                        <li key={idx} onClick={() => handleSelectLocation(place)}>
+                          {place.place_name}
+                          <br />
+                          <small>{place.road_address_name || place.address_name}</small>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  
+                  <button
+                    className="address-search-button"
+                    onClick={handleCombinedSearch}
+                  >
+                    검색
+                  </button>
+
+                  {/* 위치 수정 */}
                   {showRecent && recentSearches.length > 0 && (
                     <ul className="recent-search-list">
                       {recentSearches.map((item, idx) => (
@@ -359,14 +418,9 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
                       ))}
                     </ul>
                   )}
-                  <button
-                    className="address-search-button"
-                    onClick={handleCombinedSearch}
-                  >
-                    검색
-                  </button>
                 </div>
               </div>
+
             )}
 
             <div className="coordinates-section">

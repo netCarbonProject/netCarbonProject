@@ -177,7 +177,7 @@
 }
 
 .location-box {
-    height: 353px;
+    height: auto;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -296,5 +296,9 @@
 
     .location-box {
         height: 500px;
+    }
+
+    ul.search-result-list {
+        margin-top: -471px;
     }
 }
