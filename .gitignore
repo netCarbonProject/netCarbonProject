@@ -22,7 +22,6 @@ routes.jsx
 frontend/src/utils/api.js
 frontend/src/utils
 frontend/src/components/charts/
-frontend/src/components/common/css/Legend.css
 frontend/src/components/common/layouts/Layout.jsx
 frontend/src/result
 frontend/src/simulation
