@@ -693,47 +693,69 @@ const SimulationPage = () => {
                         />
                         <div className="panel-size">198cm x 99cm</div>
                       </div>
+
+                      <div className="panel-custom">
+                        <button>커스텀</button>
+                      </div>
                     </div>
                     <div className="panel-form-section">
-                      <div className="panel-info">
-                        <label className="panel-label">설치 개수</label>
-                        <input
-                          type="number"
-                          value={placedPanels.length}
-                          className="panel-input"
-                          readOnly
-                        />
-                      </div>
-                      <div className="panel-info">
-                        <label className="panel-label">설치 면적</label>
-                        <input
-                          type="text"
-                          value={`${totalArea.toFixed(2)} ㎡`}
-                          className="panel-result-input"
-                          readOnly
-                        />
-                      </div>
-                      <div className="panel-info">
-                        <label className="panel-label">실제 설치 가능 수</label>
-                        <input
-                          type="text"
-                          value={`${Math.floor(totalArea / 2)} 개`}
-                          className="panel-input"
-                          readOnly
-                        />
-                      </div>
-                      <div className="panel-info">
-                        <label className="panel-label">
-                          예상 에너지 생산량
-                        </label>
-                        <input
-                          type="text"
-                          value={`${(Math.floor(totalArea / 2) * 3.5).toFixed(
-                            1
-                          )} kWh`}
-                          className="panel-result-input"
-                          readOnly
-                        />
+                      <div className="panel-stats-row">
+                        <div className="panel-installation">
+                          <div className="panel-info">
+                            <label className="panel-label">설치 개수</label>
+                            <input
+                              type="number"
+                              value={placedPanels.length}
+                              className="panel-input"
+                              readOnly
+                            />
+                          </div>
+                          <div className="panel-info">
+                            <label className="panel-label">설치 면적</label>
+                            <input
+                              type="text"
+                              value={`${totalArea.toFixed(2)} ㎡`}
+                              className="panel-result-input"
+                              readOnly
+                            />
+                          </div>
+                          <div className="panel-info">
+                            <label className="panel-label">실제 설치 가능 수</label>
+                            <input
+                              type="text"
+                              value={`${Math.floor(totalArea / 2)} 개`}
+                              className="panel-input"
+                              readOnly
+                            />
+                          </div>
+                        </div>
+                        <div className="panel-estimate-box">
+                          <div className="panel-info">
+                            <label className="panel-label">
+                              일간 에너지 생산량
+                            </label>
+                            <input
+                              type="text"
+                              value={`${(Math.floor(totalArea / 2) * 3.5).toFixed(
+                                1
+                              )} kWh`}
+                              className="panel-day-input"
+                              readOnly
+                            />
+                          </div>
+                          <div className="panel-info">
+                            <label className="panel-label">
+                              주간 에너지 생산량
+                            </label>
+                            <input type="text" className="panel-week-input"></input>
+                          </div>
+                          <div className="panel-info">
+                            <label className="panel-label">
+                              월간 에너지 생산량
+                            </label>
+                            <input type="text" className="panel-month-input"></input>
+                          </div>
+                        </div>
                       </div>
                       <div className="panel-info">
                         <label className="panel-label">설치 목록</label>
@@ -747,7 +769,7 @@ const SimulationPage = () => {
                               <button
                                 onClick={() =>
                                   handleRightClick(
-                                    { preventDefault: () => {} },
+                                    { preventDefault: () => { } },
                                     i
                                   )
                                 }
@@ -758,21 +780,6 @@ const SimulationPage = () => {
                           ))}
                         </ul>
                       </div>
-                    </div>
-                  </div>
-
-                  <hr className="panel-divider" />
-
-                  <div className="chart-wrapper">
-                    <div className="chart-box">
-                      <span className="chart-placeholder-text">
-                        AI 추천 vs 사용자 발전량 차트 공간
-                      </span>
-                    </div>
-                    <div className="chart-box">
-                      <span className="chart-placeholder-text">
-                        설치 일치율 차트 공간
-                      </span>
                     </div>
                   </div>
 

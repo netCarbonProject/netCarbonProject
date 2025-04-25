@@ -57,10 +57,10 @@
 /* ---------- 팝업 패널 ---------- */
 .popup-panel {
     position: fixed;
-    top: 100px;
+    top: 160px;
     right: 20px;
-    width: 480px;
-    height: 450px;
+    width: 367px;
+    height: 557px;
     background-color: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
@@ -68,14 +68,14 @@
     padding: 24px;
     padding-top: 0;
     box-sizing: border-box;
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 /* 팝업 내부 */
 .popup-panel-content {
     display: flex;
     flex-direction: column;
-    overflow: auto; 
+    /* overflow: auto;  */
 }
 
 /* 스크롤바 숨기기 */
@@ -93,7 +93,7 @@
 /* 닫기 버튼 이미지 스타일 */
 .close-button-area img{
     position: fixed;
-    top: 6.25rem;
+    top: 10rem;
     right: 20px;
     width: 67px;
     height: 40px;
@@ -113,7 +113,7 @@
 /* 닫기 박스 */
 .close-btn-layout {
     background-color: white;
-    width: 480px;
+    width: 367px;
     height: 41px;
     z-index: 999999;
     margin-left: -24px;
@@ -136,7 +136,7 @@
 /* 입력/이미지 영역 배치 */
 .panel-content-row {
     display: flex;
-    flex-direction: row;
+    flex-direction:column;
     justify-content: space-between;
     gap: 16px;
     margin-bottom: 16px;
@@ -146,9 +146,9 @@
 /* 이미지 선택 영역 */
 .panel-image-selection {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 16px;
-    width: 50%;
+    width: 85%;
     align-items: center;
 }
 
@@ -188,13 +188,16 @@
     flex-direction: column;
     justify-content: center;
     gap: 12px;
-    width: 50%;
+    width: 100%;
 }
 
 /* 입력 라벨 및 인풋 스타일 */
 .panel-info {
     display: flex;
     flex-direction: column;
+    /* width: fit-content; 
+    flex: none;          */
+    min-width: auto;    
 }
 
 .panel-label {
@@ -204,41 +207,45 @@
 }
 
 .panel-input,
-.panel-result-input {
-    padding: 8px;
+.panel-result-input,
+.panel-day-input, 
+.panel-week-input, 
+.panel-month-input{
+    width: 148px;       
+    padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 14px;
     background-color: #fafafa;
 }
 
-/* 구분선 */
-.panel-divider {
-    margin: 16px 0;
-    border: 0;
-    border-top: 1px solid #ddd;
-}
-
-/* ---------- 차트 영역 ---------- */
-.chart-wrapper {
+/* 설치 정보 박스 */
+.panel-installation,
+.panel-estimate-box {
     display: flex;
     flex-direction: column;
+    width: 50%;
     gap: 12px;
 }
 
-.chart-box {
-    height: 120px;
-    background-color: #f0f0f0;
+ul.panel-list {
+    border: 1px solid #ccc;
+    min-width: 314px;
+    height: 89px;
     border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: #fafafa;
+    overflow-y: auto;
+    padding-right: 10px;
 }
 
-.chart-placeholder-text {
-    font-size: 13px;
-    color: #777;
+/* 패널 설치 영역/ 에너지 생산량 */
+.panel-stats-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    justify-content: space-between;
 }
+
 
 /* ---------- 버튼 영역 ---------- */
 .complete-button-wrapper {
@@ -260,8 +267,8 @@
 /* 햇빛 필터 버튼 */
 .sunlight-filter-button {
     position: fixed;
-    right: 17px;
-    bottom: 10rem;
+    right: 213px;
+    top: 100px;
 }
 
 .filter-button {
@@ -304,8 +311,8 @@ body.no-scroll {
 /* NaverMap / 3D Map 전환 버튼튼 */
 .switch-button{
     position: absolute;
-    bottom: 14rem;
-    right: 15px; 
+    top: 16px;
+    right: 117px;
     z-index: 10;
     background-color: transparent;
     border: none;
