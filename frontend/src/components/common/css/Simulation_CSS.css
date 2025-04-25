@@ -129,8 +129,8 @@
 .close-btn-layout h2{ 
     margin-top: 6px;
     margin-left: 8px;
-    font-size: 20px; /* 글씨 사이즈 */
-    font-weight: 550; /* 굵기 사이즈 */
+    font-size: 22px; 
+    font-weight: 550; 
 }
 
 /* 입력/이미지 영역 배치 */

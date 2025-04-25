@@ -636,7 +636,7 @@ const SimulationPage = () => {
             <div className="panel-button-topright">
               <button
                 className="open-panel-button"
-                onClick={() => setShowPanel(true)}
+                onClick={() => setShowPanel(prev => !prev)}
               >
                 <img
                   src={isMobile ? simulation_btn_mobile : simulation_button}
@@ -651,12 +651,12 @@ const SimulationPage = () => {
                 <div className="popup-panel-content">
                   <div className="close-btn-layout">
                     <h2>패널 설정</h2>
-                    <div
+                    {/* <div
                       className="close-button-area"
                       onClick={() => setShowPanel(false)}
                     >
                       <img src={simulation_button} alt="설치 패널 닫기" />
-                    </div>
+                    </div> */}
                   </div>
                   {/* <h2>설치 패널 상세</h2> */}
                   <div className="panel-content-row">
