@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import html2canvas from "html2canvas";
 import "../components/common/css/Simulation_CSS.css";
 import solarpanel1 from "../assets/SimulationPage/solarpanel1.png";
@@ -11,6 +11,9 @@ import shadow_btn from "../assets/SimulationPage/shadow_btn.png";
 import { useNavigate } from "react-router-dom";
 import NaverMap from "../components/map/NaverMap";
 import VMap from "../components/map/VMap";
+
+//추
+import LoadingAnimation from "./LodingAnimation";
 
 const SimulationPage = () => {
   const [showPanel, setShowPanel] = useState(false);
@@ -26,7 +29,6 @@ const SimulationPage = () => {
   const [centerLat, setCenterLat] = useState("");
   const [centerLon, setCenterLon] = useState("");
 
-  // 추추
   const [showSolarOverlay, setShowSolarOverlay] = useState(false);
   const [placingPanel, setPlacingPanel] = useState(null);
   const [placingSize, setPlacingSize] = useState({ width: 0, height: 0 });
@@ -40,8 +42,15 @@ const SimulationPage = () => {
   const placingPanelRef = useRef(placingPanel);
   const [aiPlacementMode, setAiPlacementMode] = useState(false);
   const polygonRefs = useRef([]); // 🔵 모든 생성된 Polygon 저장
+  //추
+  const [isLoading, setIsLoading] = useState(false);
+  const [energyOutput, setEnergyOutput] = useState({
+    daily: "0.0",
+    weekly: "0.0",
+    monthly: "0.0",
+    yearly: "0.0",
+  });
 
-  // 추
   const cmToPx = (cm) => cm * 0.5;
   const MIN_WIDTH = 100;
   const MIN_HEIGHT = 40;
@@ -49,6 +58,151 @@ const SimulationPage = () => {
   const MAX_HEIGHT = 250;
 
   const [totalArea, setTotalArea] = useState(0);
+
+  // 수정
+  const computeDistance = useCallback((lat1, lng1, lat2, lng2) => {
+    const toRad = (val) => (val * Math.PI) / 180;
+    const R = 6371000;
+    const dLat = toRad(lat2 - lat1);
+    const dLng = toRad(lng2 - lng1);
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }, []);
+
+
+  const getPixelToMeterRatio = useCallback(() => {
+    const map = window.naverMap;
+    const proj = map.getProjection();
+    const center = map.getCenter();
+    const offsetLat = center.lat() + 0.0001;
+    const pixel1 = proj.fromCoordToPoint(center);
+    const pixel2 = proj.fromCoordToPoint(new window.naver.maps.LatLng(offsetLat, center.lng()));
+    const pixelDistance = Math.abs(pixel2.y - pixel1.y);
+    const meterDistance = computeDistance(center.lat(), center.lng(), offsetLat, center.lng());
+    const ratio = window.devicePixelRatio || 1;
+    return (meterDistance / pixelDistance) / ratio;
+  }, [computeDistance]);
+
+  const loadStationCSV = useCallback(async () => {
+    const res = await fetch("/data/station.csv");
+    const text = await res.text();
+    const rows = text.trim().split("\n").slice(1);
+    return rows.map((r) => {
+      const [code, lat, lon, radiation] = r.split(",");
+      return {
+        code,
+        lat: parseFloat(lat),
+        lon: parseFloat(lon),
+        radiation: parseFloat(radiation),
+      };
+    });
+  }, []);
+
+  const findClosestStation = useCallback((lat, lon, stations) => {
+    let closest = null;
+    let minDist = Infinity;
+    for (const s of stations) {
+      const d = computeDistance(lat, lon, s.lat, s.lon);
+      if (d < minDist) {
+        minDist = d;
+        closest = s;
+      }
+    }
+    return closest;
+  }, [computeDistance]);
+
+  const calculateEnergyProduction = useCallback((totalArea, radiationMJ) => {
+    // 🔐 방어 코드: 면적 또는 일사량이 없으면 0으로 처리
+    if (!totalArea || !radiationMJ) {
+      return {
+        daily: "0.0",
+        weekly: "0.0",
+        monthly: "0.0",
+        yearly: "0.0",
+      };
+    }
+
+    const radiationKWh = radiationMJ * 0.278;
+    const panelCount = Math.floor(totalArea / 2);
+    const panelEfficiency = 0.18;
+
+    const daily = panelCount * radiationKWh * panelEfficiency;
+    const weekly = daily * 7;
+    const monthly = daily * 30;
+    const yearly = [...Array(12)].reduce((sum, _, i) => {
+      const degradation = 1 - i * 0.005;
+      return sum + daily * 30 * degradation;
+    }, 0);
+
+    return {
+      daily: daily.toFixed(1),
+      weekly: weekly.toFixed(1),
+      monthly: monthly.toFixed(1),
+      yearly: yearly.toFixed(1),
+    };
+  }, []);
+
+
+  const handleCalculateProduction = useCallback(async () => {
+    const map = window.naverMap; // ✅ 선언이 필요함
+    if (!map || !map.getCenter) return;
+
+    const center = map.getCenter();
+    const lat = center.lat();
+    const lon = center.lng();
+
+    const stations = await loadStationCSV();
+    const closest = findClosestStation(lat, lon, stations);
+    const result = calculateEnergyProduction(totalArea, closest.radiation);
+
+    setEnergyOutput(result);
+  }, [totalArea, loadStationCSV, findClosestStation, calculateEnergyProduction]);
+
+  useEffect(() => {
+    handleCalculateProduction();
+  }, [totalArea, handleCalculateProduction]);
+
+  // ✅ 패널 면적 계산: 픽셀 면적 * (1px당 m)^2 * 보정계수 → 실제 m^2
+  useEffect(() => {
+    const map = window.naverMap;
+    if (!map || !map.getProjection) return;
+    const pxToMeter = getPixelToMeterRatio();
+
+    const correctionFactor = 425.7 / 283.27; // 🔧 실측 면적 / getAreaSize 기준값
+
+    const total = placedPanels.reduce((sum, panel) => {
+      const pixelArea = panel.width * panel.height;
+      const realArea = pixelArea * (pxToMeter ** 2) * correctionFactor; // 💡 보정 적용
+      return sum + realArea;
+    }, 0);
+
+    setTotalArea(total);
+  }, [placedPanels, getPixelToMeterRatio]);
+
+  // ✅ placingPanel 상태를 ref에 동기화
+  useEffect(() => {
+    placingPanelRef.current = placingPanel;
+  }, [placingPanel]);
+
+  // ✅ AI 배치 모드에 따라 지도 드래그/휠 설정
+  useEffect(() => {
+    const map = window.naverMap;
+    if (!map) return;
+    if (aiPlacementMode) {
+      map.setOptions({ scrollWheel: false, draggable: false });
+    } else {
+      map.setOptions({ scrollWheel: true, draggable: true });
+    }
+  }, [aiPlacementMode]);
+
+  // ✅ AI 배치 종료 시 설치 대기 패널 초기화
+  useEffect(() => {
+    if (!aiPlacementMode && placingPanel) {
+      setPlacingPanel(null);
+    }
+  }, [aiPlacementMode, placingPanel]);
 
   // 모바일 화면 체크
   useEffect(() => {
@@ -73,7 +227,7 @@ const SimulationPage = () => {
       setAiDetections([]);
     };
   }, []);
-
+  /*
   useEffect(() => {
     const map = window.naverMap;
     if (!map || !map.getProjection) return;
@@ -128,6 +282,52 @@ const SimulationPage = () => {
 
     setTotalArea(total);
   }, [placedPanels]);
+  */
+
+  useEffect(() => {
+    const map = window.naverMap;
+    if (!map || !map.getProjection || !canvasRef.current) return;
+
+    const proj = map.getProjection();
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+
+    let total = 0;
+
+    placedPanels.forEach((panel) => {
+      const { x, y, width, height, rotation } = panel;
+      const rad = (rotation * Math.PI) / 180;
+
+      const corners = [
+        { dx: -width / 2, dy: -height / 2 },
+        { dx: width / 2, dy: -height / 2 },
+        { dx: width / 2, dy: height / 2 },
+        { dx: -width / 2, dy: height / 2 },
+      ].map(({ dx, dy }) => {
+        const rotatedX = dx * Math.cos(rad) - dy * Math.sin(rad);
+        const rotatedY = dx * Math.sin(rad) + dy * Math.cos(rad);
+        return new window.naver.maps.Point(
+          x + rotatedX + canvasRect.left,
+          y + rotatedY + canvasRect.top
+        );
+      });
+
+      const geoCoords = corners.map((pt) =>
+        proj.fromPageXYToCoord(
+          new window.naver.maps.Point(pt.x, pt.y)
+        )
+      );
+
+      const polygon = new window.naver.maps.Polygon({ paths: geoCoords, map });
+      const area = polygon.getAreaSize();
+      polygon.setMap(null);
+
+      total += area;
+    });
+
+    const finalArea = total / 1.37; // 약 35% 과대 보정
+    setTotalArea(finalArea);
+  }, [placedPanels]);
+
 
   useEffect(() => {
     placingPanelRef.current = placingPanel;
@@ -280,6 +480,7 @@ const SimulationPage = () => {
     };
   }, [dragIndex, resizeIndex, isShiftPressed, placedPanels]);
 
+  /*
   const tooltipRef = useRef(null);
 
   const showTooltip = (panel) => {
@@ -358,6 +559,7 @@ const SimulationPage = () => {
       tooltipRef.current = null;
     }
   };
+  */
 
   // ✅ 패널 설치
   const handleMapClick = (e) => {
@@ -433,10 +635,16 @@ const SimulationPage = () => {
     )?.name;
   };
 
-  // ✅ AI 추론 캡처 및 전송
+  // ✅ AI 추론 캡처 및 전송 - 로딩 기능 수정
   const handleAIInference = async () => {
+    setIsLoading(true); // 🔄 로딩 시작
+
     const mapElement = document.querySelector(".simulation-canvas");
-    if (!mapElement) return alert("지도를 찾을 수 없습니다.");
+    if (!mapElement) {
+      alert("지도를 찾을 수 없습니다.");
+      setIsLoading(false);
+      return;
+    }
 
     const canvas = await html2canvas(mapElement, {
       useCORS: true,
@@ -455,20 +663,13 @@ const SimulationPage = () => {
     croppedCanvas.height = cropHeight;
 
     const ctx = croppedCanvas.getContext("2d");
-    ctx.drawImage(
-      canvas,
-      cropX,
-      0,
-      cropWidth,
-      cropHeight,
-      0,
-      0,
-      cropWidth,
-      cropHeight
-    );
+    ctx.drawImage(canvas, cropX, 0, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
     croppedCanvas.toBlob(async (blob) => {
-      if (!blob) return;
+      if (!blob) {
+        setIsLoading(false);
+        return;
+      }
       const formData = new FormData();
       formData.append("image", blob, "cropped_map.png");
 
@@ -494,14 +695,19 @@ const SimulationPage = () => {
         const lat = center.lat();
         const lng = center.lng();
         console.log("현재 지도 중심 위도/경도:", lat, lng);
+
       } catch (error) {
         console.error("AI 요청 실패:", error);
+      } finally {
+        setIsLoading(false); // 🔄 로딩 종료
       }
     }, "image/png");
   };
 
+
   return (
     <div className="simulation-container">
+      {isLoading && <LoadingAnimation />}
       <div className="simulation-body">
         <div className="simulation-map-area fullscreen-map">
           <div className="simulation-map-wrapper">
@@ -607,8 +813,10 @@ const SimulationPage = () => {
                       else handleDragStart(idx);
                     }}
                     onContextMenu={(e) => handleRightClick(e, idx)}
-                    onMouseEnter={() => showTooltip(panel)}
-                    onMouseLeave={hideTooltip}
+                  /*
+                  onMouseEnter={() => showTooltip(panel)}
+                  onMouseLeave={hideTooltip}
+                  */
                   />
                 );
               })}
@@ -651,12 +859,6 @@ const SimulationPage = () => {
                 <div className="popup-panel-content">
                   <div className="close-btn-layout">
                     <h2>패널 설정</h2>
-                    {/* <div
-                      className="close-button-area"
-                      onClick={() => setShowPanel(false)}
-                    >
-                      <img src={simulation_button} alt="설치 패널 닫기" />
-                    </div> */}
                   </div>
                   {/* <h2>설치 패널 상세</h2> */}
                   <div className="panel-content-row">
@@ -692,71 +894,66 @@ const SimulationPage = () => {
                           }}
                         />
                         <div className="panel-size">198cm x 99cm</div>
-                      </div>
-
-                      <div className="panel-custom">
-                        <button>커스텀</button>
+                        <div className="panel-custom">
+                         <button>커스텀</button>
+                       </div>
                       </div>
                     </div>
-                    <div className="panel-form-section">
-                      <div className="panel-stats-row">
-                        <div className="panel-installation">
-                          <div className="panel-info">
-                            <label className="panel-label">설치 개수</label>
-                            <input
-                              type="number"
-                              value={placedPanels.length}
-                              className="panel-input"
-                              readOnly
-                            />
-                          </div>
-                          <div className="panel-info">
-                            <label className="panel-label">설치 면적</label>
-                            <input
-                              type="text"
-                              value={`${totalArea.toFixed(2)} ㎡`}
-                              className="panel-result-input"
-                              readOnly
-                            />
-                          </div>
-                          <div className="panel-info">
-                            <label className="panel-label">실제 설치 가능 수</label>
-                            <input
-                              type="text"
-                              value={`${Math.floor(totalArea / 2)} 개`}
-                              className="panel-input"
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                        <div className="panel-estimate-box">
-                          <div className="panel-info">
-                            <label className="panel-label">
-                              일간 에너지 생산량
-                            </label>
-                            <input
-                              type="text"
-                              value={`${(Math.floor(totalArea / 2) * 3.5).toFixed(
-                                1
-                              )} kWh`}
-                              className="panel-day-input"
-                              readOnly
-                            />
-                          </div>
-                          <div className="panel-info">
-                            <label className="panel-label">
-                              주간 에너지 생산량
-                            </label>
-                            <input type="text" className="panel-week-input"></input>
-                          </div>
-                          <div className="panel-info">
-                            <label className="panel-label">
-                              월간 에너지 생산량
-                            </label>
-                            <input type="text" className="panel-month-input"></input>
-                          </div>
-                        </div>
-                      </div>
+                    <div className="panel-stats-row">
+                         <div className="panel-installation">
+                           <div className="panel-info">
+                             <label className="panel-label">설치 개수</label>
+                             <input
+                               type="number"
+                               value={placedPanels.length}
+                               className="panel-input"
+                               readOnly
+                             />
+                           </div>
+                           <div className="panel-info">
+                             <label className="panel-label">설치 면적</label>
+                             <input
+                               type="text"
+                               value={`${totalArea.toFixed(2)} ㎡`}
+                               className="panel-result-input"
+                               readOnly
+                             />
+                           </div>
+                           <div className="panel-info">
+                             <label className="panel-label">실제 설치 가능 수</label>
+                             <input
+                               type="text"
+                               value={`${Math.floor(totalArea / 2)} 개`}
+                               className="panel-input"
+                               readOnly
+                             />
+                           </div>
+                         </div>
+                         <div className="panel-estimate-box">
+                           <div className="panel-info">
+                             <label className="panel-label">
+                               일간 에너지 생산량
+                             </label>
+                             <input
+                               type="text"
+                               value={`${energyOutput.daily} kWh`}
+                               className="panel-day-input"
+                               readOnly
+                             />
+                           </div>
+                           <div className="panel-info">
+                             <label className="panel-label">
+                               월간 에너지 생산량
+                             </label>
+                             <input type="text" value={`${energyOutput.monthly} kWh`} className="panel-week-input"></input>
+                           </div>
+                           <div className="panel-info">
+                             <label className="panel-label">
+                               연간 에너지 생산량
+                             </label>
+                             <input type="text" value={`${energyOutput.yearly} kWh`} className="panel-month-input"></input>
+                           </div>
+                         </div>
                       <div className="panel-info">
                         <label className="panel-label">설치 목록</label>
                         <ul className="panel-list">
@@ -841,6 +1038,40 @@ const SimulationPage = () => {
                 <img src={sunlight_btn} alt="일조량 버튼" />
               </button>
             </div>
+
+            {/* 🔳 AI 자동배치 모드일 때만 비활성화 레이어 추가 */}
+            {aiPlacementMode && (
+              <>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "10%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.4)",
+                    zIndex: 2000,
+                    pointerEvents: "auto",
+                    cursor: "not-allowed",
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                ></div>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    width: "10%",
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.4)",
+                    zIndex: 2000,
+                    pointerEvents: "auto",
+                    cursor: "not-allowed",
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                ></div>
+              </>
+            )}
           </div>
         </div>
       </div>
