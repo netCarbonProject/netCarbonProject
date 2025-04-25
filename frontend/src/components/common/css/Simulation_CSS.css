@@ -288,9 +288,8 @@ body.no-scroll {
     }
 
     .panel-button-topright{
-        bottom: 18rem;
         right: 15px;
-        top: auto;
+        top: 97px;
     }
 
     .popup-panel {
@@ -305,6 +304,11 @@ body.no-scroll {
     .close-button-area img {
         top: 490px;
         right: 5px;
+    }
+
+    .switch-button {
+        top: 50px !important;
+        right: 112px !important; 
     }
 }
 
