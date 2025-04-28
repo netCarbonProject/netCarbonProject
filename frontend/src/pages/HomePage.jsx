@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import '../components/common/css/HomePage_CSS.css';
 
 // 이미지 임포트
-// import green_intro from '../assets/HomePage/intro_green.png';
-// import carbon_intro from '../assets/HomePage/carbon_intro.png';
-// import new_energy from '../assets/HomePage/new_energy.png';
-// import solar_power from '../assets/HomePage/solar_power.png';
+import green_intro from '../assets/HomePage/intro_green.png';
+import carbon_intro from '../assets/HomePage/carbon_intro.png';
+import new_energy from '../assets/HomePage/new_energy.png';
+import solar_power from '../assets/HomePage/solar_power.png';
 
 const HomePage = () => {
   const navigate = useNavigate();

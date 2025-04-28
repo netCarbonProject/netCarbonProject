@@ -26,8 +26,8 @@ frontend/src/components/common/layouts/Layout.jsx
 frontend/src/result
 frontend/src/simulation
 frontend/src/pages/TestPage.jsx
-frontend/src/components/location/KoreaMap.css
-frontend/src/components/location/KoreaMap1.jsx
+# frontend/src/components/location/KoreaMap.css
+# frontend/src/components/location/KoreaMap1.jsx
 frontend/src/components/location/TL_SCCO_CTPRVN.json
 TL_SCCO_CTPRVN.json
 LodingAnimation.jsx

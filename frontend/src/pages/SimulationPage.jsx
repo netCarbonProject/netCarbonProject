@@ -58,6 +58,7 @@ const SimulationPage = () => {
   const MAX_HEIGHT = 250;
 
   const [totalArea, setTotalArea] = useState(0);
+  const [aiMaskArea, setAiMaskArea] = useState(0);
 
   // 수정
   const computeDistance = useCallback((lat1, lng1, lat2, lng2) => {
@@ -84,6 +85,48 @@ const SimulationPage = () => {
     const ratio = window.devicePixelRatio || 1;
     return (meterDistance / pixelDistance) / ratio;
   }, [computeDistance]);
+
+  const calculateAIMaskArea = useCallback(() => {
+    const map = window.naverMap;
+    if (!map || !map.getProjection || !canvasRef.current) return;
+  
+    const proj = map.getProjection();
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+  
+    let totalMaskArea = 0;
+  
+    aiDetections.forEach((det) => {
+      if (det.box && det.box.length === 4) {
+        const offsetX = window.innerWidth * 0.1;
+        const x1 = det.box[0] + offsetX + canvasRect.left;
+        const y1 = det.box[1] + canvasRect.top;
+        const x2 = det.box[2] + offsetX + canvasRect.left;
+        const y2 = det.box[3] + canvasRect.top;
+  
+        // 박스 4개 모서리 계산
+        const corners = [
+          new window.naver.maps.Point(x1, y1),
+          new window.naver.maps.Point(x2, y1),
+          new window.naver.maps.Point(x2, y2),
+          new window.naver.maps.Point(x1, y2),
+        ];
+  
+        const geoCoords = corners.map((pt) =>
+          proj.fromPageXYToCoord(pt)
+        );
+  
+        const polygon = new window.naver.maps.Polygon({ paths: geoCoords, map });
+        const area = polygon.getAreaSize();
+        polygon.setMap(null);
+  
+        totalMaskArea += area;
+      }
+    });
+  
+    const finalArea = totalMaskArea / 1.37; // 🔥 패널이랑 똑같이 35% 보정 적용
+    setAiMaskArea(finalArea);
+  }, [aiDetections]);
+  
 
   const loadStationCSV = useCallback(async () => {
     const res = await fetch("/data/station.csv");
@@ -227,62 +270,7 @@ const SimulationPage = () => {
       setAiDetections([]);
     };
   }, []);
-  /*
-  useEffect(() => {
-    const map = window.naverMap;
-    if (!map || !map.getProjection) return;
 
-    polygonRefs.current.forEach((p) => p.setMap(null)); // 🧹 기존 polygon 제거
-    polygonRefs.current = []; // 🔄 초기화
-
-    const proj = map.getProjection();
-
-    const total = placedPanels.reduce((sum, panel) => {
-      const { x, y, width, height, rotation } = panel;
-      const center = { x, y };
-      const rad = (rotation * Math.PI) / 180;
-
-      const corners = [
-        { dx: -width / 2, dy: -height / 2 },
-        { dx: width / 2, dy: -height / 2 },
-        { dx: width / 2, dy: height / 2 },
-        { dx: -width / 2, dy: height / 2 },
-      ].map(({ dx, dy }) => {
-        const rotatedX = dx * Math.cos(rad) - dy * Math.sin(rad);
-        const rotatedY = dx * Math.sin(rad) + dy * Math.cos(rad);
-        return new window.naver.maps.Point(
-          center.x + rotatedX,
-          center.y + rotatedY
-        );
-      });
-
-      const canvasRect = canvasRef.current.getBoundingClientRect();
-      const geoCoords = corners.map((pt) => {
-        const pageX = pt.x + canvasRect.left;
-        const pageY = pt.y + canvasRect.top;
-        return proj.fromPageXYToCoord(
-          new window.naver.maps.Point(pageX, pageY)
-        );
-      });
-
-      const polygon = new window.naver.maps.Polygon({
-        paths: geoCoords,
-        map: map,
-        strokeColor: "#00f",
-        strokeWeight: 3,
-        fillOpacity: 0.1,
-      });
-
-      polygonRefs.current.push(polygon); // ✅ 이 줄이 필요함!!
-      const area = polygon.getAreaSize();
-      polygon.setMap(null); // 👈 실제 지우기
-
-      return sum + area;
-    }, 0);
-
-    setTotalArea(total);
-  }, [placedPanels]);
-  */
 
   useEffect(() => {
     const map = window.naverMap;
@@ -480,86 +468,37 @@ const SimulationPage = () => {
     };
   }, [dragIndex, resizeIndex, isShiftPressed, placedPanels]);
 
-  /*
-  const tooltipRef = useRef(null);
-
-  const showTooltip = (panel) => {
-    const map = window.naverMap;
-    if (!map) return;
-
-    const { x, y, width, height, rotation } = panel;
-    const center = { x, y };
-    const rad = (rotation * Math.PI) / 180;
-
-    const corners = [
-      { dx: -width / 2, dy: -height / 2 },
-      { dx: width / 2, dy: -height / 2 },
-      { dx: width / 2, dy: height / 2 },
-      { dx: -width / 2, dy: height / 2 },
-    ].map(({ dx, dy }) => {
-      const rotatedX = dx * Math.cos(rad) - dy * Math.sin(rad);
-      const rotatedY = dx * Math.sin(rad) + dy * Math.cos(rad);
-      return new window.naver.maps.Point(
-        center.x + rotatedX,
-        center.y + rotatedY
-      );
-    });
-
-    const canvasRect = document
-      .getElementById("naver-map")
-      .getBoundingClientRect();
-    const proj = map.getProjection();
-    const geoCoords = corners.map((pt) =>
-      proj.fromPageXYToCoord(
-        new window.naver.maps.Point(
-          pt.x + canvasRect.left,
-          pt.y + canvasRect.top
-        )
-      )
-    );
-
-    // const polygon = new window.naver.maps.Polygon({ paths: geoCoords });
-    // const area = polygon.getAreaSize();
-
-    const polygon = new window.naver.maps.Polygon({
-      paths: geoCoords,
-      map: map, // ✅ 필수: 이게 있어야 getAreaSize가 작동함
-      strokeColor: "#00f",
-      fillOpacity: 0.1,
-      strokeWeight: 1,
-    });
-
-    polygonRefs.current.push(polygon); // ✅ 배열에 저장
-    const area = polygon.getAreaSize();
-    polygon.setMap(null); // ✅ 지도에 그렸던 것 제거
-
-    if (tooltipRef.current) tooltipRef.current.close();
-
-    tooltipRef.current = new window.naver.maps.InfoWindow({
-      content: `<div style="background:#fff;border:1px solid #333;padding:4px 8px;font-size:12px;">면적: ${area.toFixed(
-        2
-      )}㎡</div>`,
-      pixelOffset: new window.naver.maps.Point(0, -10),
-    });
-
-    // geoCoords가 아닌 패널 중심을 LatLng로 변환해서 InfoWindow에 사용
-    const centerCoord = proj.fromPageXYToCoord(
-      new window.naver.maps.Point(
-        center.x + canvasRect.left,
-        center.y + canvasRect.top
-      )
-    );
-
-    tooltipRef.current.open(map, centerCoord); // ⬅ 중심에 표시
-  };
-
-  const hideTooltip = () => {
-    if (tooltipRef.current) {
-      tooltipRef.current.close();
-      tooltipRef.current = null;
+  // ✅ AI 결과가 갱신될 때마다 면적 계산
+  useEffect(() => {
+    if (aiDetections.length > 0) {
+      calculateAIMaskArea();
+    } else {
+      setAiMaskArea(0);
     }
+  }, [aiDetections, calculateAIMaskArea]);
+
+  const handleCaptureAndNavigate = async () => {
+    const mapElement = document.querySelector(".simulation-canvas");
+    if (!mapElement) return;
+
+    const canvas = await html2canvas(mapElement, {
+      useCORS: true,
+      width: mapElement.offsetWidth,
+      height: mapElement.offsetHeight,
+    });
+
+    const imageData = canvas.toDataURL("image/png");
+
+    navigate("/result", {
+      state: {
+        panelCount: placedPanels.length,
+        area: totalArea.toFixed(2),
+        energy: energyOutput,
+        image: imageData, // ✅ 이미지 base64 추가
+        aiMaskArea: aiMaskArea.toFixed(2), // ✅ 추가!
+      },
+    });
   };
-  */
 
   // ✅ 패널 설치
   const handleMapClick = (e) => {
@@ -654,8 +593,8 @@ const SimulationPage = () => {
 
     const fullWidth = canvas.width;
     const fullHeight = canvas.height;
-    const cropX = fullWidth * 0.1;
-    const cropWidth = fullWidth * 0.8;
+    const cropX = fullWidth * 0.2;
+    const cropWidth = fullWidth * 0.6;
     const cropHeight = fullHeight;
 
     const croppedCanvas = document.createElement("canvas");
@@ -704,6 +643,7 @@ const SimulationPage = () => {
     }, "image/png");
   };
 
+  
 
   return (
     <div className="simulation-container">
@@ -738,8 +678,8 @@ const SimulationPage = () => {
                 style={{
                   position: "absolute",
                   top: 0,
-                  left: "10%",
-                  width: "80%",
+                  left: "20%",
+                  width: "60%",
                   height: "100%",
                   border: "2px dashed red",
                   backgroundColor: "rgba(0, 0, 0, 0.1)",
@@ -762,7 +702,7 @@ const SimulationPage = () => {
                 }}
               >
                 {aiDetections.map((det, idx) => {
-                  const offsetX = window.innerWidth * 0.1;
+                  const offsetX = window.innerWidth * 0.2;
                   return (
                     <g key={idx}>
                       <rect
@@ -895,65 +835,74 @@ const SimulationPage = () => {
                         />
                         <div className="panel-size">198cm x 99cm</div>
                         <div className="panel-custom">
-                         <button>커스텀</button>
-                       </div>
+                          <button>커스텀</button>
+                        </div>
                       </div>
                     </div>
                     <div className="panel-stats-row">
-                         <div className="panel-installation">
-                           <div className="panel-info">
-                             <label className="panel-label">설치 개수</label>
-                             <input
-                               type="number"
-                               value={placedPanels.length}
-                               className="panel-input"
-                               readOnly
-                             />
-                           </div>
-                           <div className="panel-info">
-                             <label className="panel-label">설치 면적</label>
-                             <input
-                               type="text"
-                               value={`${totalArea.toFixed(2)} ㎡`}
-                               className="panel-result-input"
-                               readOnly
-                             />
-                           </div>
-                           <div className="panel-info">
-                             <label className="panel-label">실제 설치 가능 수</label>
-                             <input
-                               type="text"
-                               value={`${Math.floor(totalArea / 2)} 개`}
-                               className="panel-input"
-                               readOnly
-                             />
-                           </div>
-                         </div>
-                         <div className="panel-estimate-box">
-                           <div className="panel-info">
-                             <label className="panel-label">
-                               일간 에너지 생산량
-                             </label>
-                             <input
-                               type="text"
-                               value={`${energyOutput.daily} kWh`}
-                               className="panel-day-input"
-                               readOnly
-                             />
-                           </div>
-                           <div className="panel-info">
-                             <label className="panel-label">
-                               월간 에너지 생산량
-                             </label>
-                             <input type="text" value={`${energyOutput.monthly} kWh`} className="panel-week-input"></input>
-                           </div>
-                           <div className="panel-info">
-                             <label className="panel-label">
-                               연간 에너지 생산량
-                             </label>
-                             <input type="text" value={`${energyOutput.yearly} kWh`} className="panel-month-input"></input>
-                           </div>
-                         </div>
+                      <div className="panel-installation">
+                        <div className="panel-info">
+                          <label className="panel-label">설치 개수</label>
+                          <input
+                            type="number"
+                            value={placedPanels.length}
+                            className="panel-input"
+                            readOnly
+                          />
+                        </div>
+                        <div className="panel-info">
+                          <label className="panel-label">설치 면적</label>
+                          <input
+                            type="text"
+                            value={`${totalArea.toFixed(2)} ㎡`}
+                            className="panel-result-input"
+                            readOnly
+                          />
+                        </div>
+                        <div className="panel-info">
+                          <label className="panel-label">실제 설치 가능 수</label>
+                          <input
+                            type="text"
+                            value={`${Math.floor(totalArea / 2)} 개`}
+                            className="panel-input"
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                      <div className="panel-estimate-box">
+                        <div className="panel-info">
+                          <label className="panel-label">
+                            일간 에너지 생산량
+                          </label>
+                          <input
+                            type="text"
+                            value={`${energyOutput.daily} kWh`}
+                            className="panel-day-input"
+                            readOnly
+                          />
+                        </div>
+                        <div className="panel-info">
+                          <label className="panel-label">
+                            월간 에너지 생산량
+                          </label>
+                          <input type="text" value={`${energyOutput.monthly} kWh`} className="panel-week-input" readOnly></input>
+                        </div>
+                        <div className="panel-info">
+                          <label className="panel-label">
+                            연간 에너지 생산량
+                          </label>
+                          <input type="text" value={`${energyOutput.yearly} kWh`} className="panel-month-input" readOnly></input>
+                        </div>
+                        <div className="panel-info">
+                          <label className="panel-label">AI 추천 면적</label>
+                          <input
+                            type="text"
+                            value={`${aiMaskArea.toFixed(2)} ㎡`}
+                            className="panel-input"
+                            readOnly
+                          />
+                        </div>
+                      </div>
                       <div className="panel-info">
                         <label className="panel-label">설치 목록</label>
                         <ul className="panel-list">
@@ -1010,7 +959,7 @@ const SimulationPage = () => {
                     </button>
                     <button
                       className="complete-button"
-                      onClick={() => navigate("/result")}
+                      onClick={handleCaptureAndNavigate}
                     >
                       배치 완료
                     </button>

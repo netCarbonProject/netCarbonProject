@@ -34,7 +34,7 @@
 /* 캔버스 영역 (그리기용 등) */
 .simulation-canvas {
     width: 100%;
-    height: 85%;
+    height: 100%;
     display: block;
     background-color: #e0e0e0;
 }
@@ -44,7 +44,7 @@
     position: fixed;
     top: 100px;
     right: 20px;
-    z-index: 10;
+    z-index: 3001;
 }
 
 /* 패널 열기 버튼 스타일 */
@@ -59,13 +59,13 @@
     position: fixed;
     top: 160px;
     right: 20px;
-    width: 367px;
-    height: 557px;
+    width: 350px;
+    height: 614px;
     background-color: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    z-index: 20;
-    padding: 24px;
+    z-index: 3000;
+    padding: 16px;
     padding-top: 0;
     box-sizing: border-box;
     /* overflow: auto; */
@@ -116,7 +116,7 @@
     width: 367px;
     height: 41px;
     z-index: 999999;
-    margin-left: -24px;
+    margin-left: -16px;
     position: fixed;
     /* border-bottom: 1px solid #e0e0e0; 은은한 라인 */
     box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* 아주 부드러운 그림자 */
@@ -195,8 +195,6 @@
 .panel-info {
     display: flex;
     flex-direction: column;
-    /* width: fit-content; 
-    flex: none;          */
     min-width: auto;    
 }
 
@@ -210,8 +208,8 @@
 .panel-result-input,
 .panel-day-input, 
 .panel-week-input, 
-.panel-month-input{
-    width: 148px;       
+.panel-month-input {
+    width: 148px;
     padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -224,8 +222,8 @@
 .panel-estimate-box {
     display: flex;
     flex-direction: column;
-    width: 50%;
     gap: 12px;
+    flex: 1;
 }
 
 ul.panel-list {
@@ -238,15 +236,33 @@ ul.panel-list {
     padding-right: 10px;
 }
 
-/* 패널 설치 영역/ 에너지 생산량 */
+/* 패널 설치 영역 / 에너지 생산량 */
 .panel-stats-row {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; /* 컬럼이 넘어가면 자동으로 줄 바꿈 */
     gap: 20px;
     justify-content: space-between;
 }
 
-
+/* 설치 목록 섹션 */
+.panel-info ul {
+    display: block;
+    margin-top: 12px;
+    padding-left: 0;
+}
+.panel-info li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.panel-info button {
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: white;
+}
 /* ---------- 버튼 영역 ---------- */
 .complete-button-wrapper {
     display: flex;
@@ -262,6 +278,8 @@ ul.panel-list {
     border-radius: 8px;
     border: none;
     cursor: pointer;
+    z-index: 3001;
+    pointer-events: auto; /* 버튼이 클릭 가능하도록 설정 */
 }
 
 /* 햇빛 필터 버튼 */
@@ -269,12 +287,14 @@ ul.panel-list {
     position: fixed;
     right: 213px;
     top: 100px;
+    z-index: 3001;
 }
 
 .filter-button {
     background: transparent;
     border: none;
     cursor: pointer;
+    z-index: 3001;
 }
 
 /* 스크롤 방지 */
@@ -288,8 +308,9 @@ body.no-scroll {
     }
 
     .panel-button-topright{
+        bottom: 18rem;
         right: 15px;
-        top: 97px;
+        top: auto;
     }
 
     .popup-panel {
@@ -305,11 +326,6 @@ body.no-scroll {
         top: 490px;
         right: 5px;
     }
-
-    .switch-button {
-        top: 50px !important;
-        right: 112px !important; 
-    }
 }
 
 /* NaverMap / 3D Map 전환 버튼튼 */
@@ -317,7 +333,7 @@ body.no-scroll {
     position: absolute;
     top: 16px;
     right: 117px;
-    z-index: 10;
+    z-index: 3001;
     background-color: transparent;
     border: none;
     cursor: pointer;
