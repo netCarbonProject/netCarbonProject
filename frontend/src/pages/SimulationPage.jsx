@@ -28,6 +28,8 @@ const SimulationPage = () => {
   // 지도 좌표 동기화
   const [centerLat, setCenterLat] = useState("");
   const [centerLon, setCenterLon] = useState("");
+  const [customWidth, setCustomWidth] = useState("");
+  const [customHeight, setCustomHeight] = useState("");
 
   const [showSolarOverlay, setShowSolarOverlay] = useState(false);
   const [placingPanel, setPlacingPanel] = useState(null);
@@ -42,7 +44,7 @@ const SimulationPage = () => {
   const placingPanelRef = useRef(placingPanel);
   const [aiPlacementMode, setAiPlacementMode] = useState(false);
   const polygonRefs = useRef([]); // 🔵 모든 생성된 Polygon 저장
-  //추
+
   const [isLoading, setIsLoading] = useState(false);
   const [energyOutput, setEnergyOutput] = useState({
     daily: "0.0",
@@ -270,6 +272,12 @@ const SimulationPage = () => {
       setAiDetections([]);
     };
   }, []);
+
+  // // 시뮬 페이지 다녀오기 위한 체크
+  // useEffect(() => {
+  //   sessionStorage.setItem("placedPanels", JSON.stringify(placedPanels));
+  // }, [placedPanels]);
+  
 
 
   useEffect(() => {
@@ -803,7 +811,7 @@ const SimulationPage = () => {
                   {/* <h2>설치 패널 상세</h2> */}
                   <div className="panel-content-row">
                     <div className="panel-image-selection">
-                      <div className="panel-image-box">
+                      {/* <div className="panel-image-box">
                         <img
                           src={solarpanel1}
                           alt="패널1"
@@ -818,7 +826,7 @@ const SimulationPage = () => {
                           }}
                         />
                         <div className="panel-size">165cm x 99cm</div>
-                      </div>
+                      </div> */}
                       <div className="panel-image-box">
                         <img
                           src={solarpanel2}
@@ -834,9 +842,11 @@ const SimulationPage = () => {
                           }}
                         />
                         <div className="panel-size">198cm x 99cm</div>
-                        <div className="panel-custom">
-                          <button>커스텀</button>
-                        </div>
+                      </div>
+                      <div className="panel-image-box">
+                        <button className="panel-custom">
+                          커스텀
+                        </button>
                       </div>
                     </div>
                     <div className="panel-stats-row">
@@ -893,39 +903,16 @@ const SimulationPage = () => {
                           </label>
                           <input type="text" value={`${energyOutput.yearly} kWh`} className="panel-month-input" readOnly></input>
                         </div>
-                        <div className="panel-info">
-                          <label className="panel-label">AI 추천 면적</label>
-                          <input
-                            type="text"
-                            value={`${aiMaskArea.toFixed(2)} ㎡`}
-                            className="panel-input"
-                            readOnly
-                          />
-                        </div>
+
                       </div>
                       <div className="panel-info">
-                        <label className="panel-label">설치 목록</label>
-                        <ul className="panel-list">
-                          {placedPanels.map((p, i) => (
-                            <li key={i}>
-                              {p.src.includes("solarpanel1")
-                                ? "패널1"
-                                : "패널2"}{" "}
-                              - 회전: {p.rotation}°
-                              <button
-                                onClick={() =>
-                                  handleRightClick(
-                                    { preventDefault: () => { } },
-                                    i
-                                  )
-                                }
-                              >
-                                X
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                          <label className="panel-label panel-label-energy">
+                            설치율
+                          </label>
+                          <div className="energy-generation">
+                            
+                          </div>
+                        </div>
                     </div>
                   </div>
 
@@ -996,7 +983,7 @@ const SimulationPage = () => {
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    width: "10%",
+                    width: "20%",
                     height: "100%",
                     backgroundColor: "rgba(0, 0, 0, 0.4)",
                     zIndex: 2000,
@@ -1010,7 +997,7 @@ const SimulationPage = () => {
                     position: "absolute",
                     top: 0,
                     right: 0,
-                    width: "10%",
+                    width: "20%",
                     height: "100%",
                     backgroundColor: "rgba(0, 0, 0, 0.4)",
                     zIndex: 2000,

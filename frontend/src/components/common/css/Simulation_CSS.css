@@ -60,7 +60,7 @@
     top: 160px;
     right: 20px;
     width: 350px;
-    height: 614px;
+    height: 658px;
     background-color: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
@@ -113,7 +113,7 @@
 /* 닫기 박스 */
 .close-btn-layout {
     background-color: white;
-    width: 367px;
+    width: 350px;
     height: 41px;
     z-index: 999999;
     margin-left: -16px;
@@ -139,8 +139,8 @@
     flex-direction:column;
     justify-content: space-between;
     gap: 16px;
-    margin-bottom: 16px;
-    margin-top: 56px;
+    margin-bottom: 10px;
+    margin-top: 39px;
 }
 
 /* 이미지 선택 영역 */
@@ -150,6 +150,7 @@
     gap: 16px;
     width: 85%;
     align-items: center;
+    /* margin-top: -17px; */
 }
 
 /* 이미지 박스 및 정렬 */
@@ -162,6 +163,11 @@
 .panel-image {
     object-fit: contain;
     background: none;
+}
+
+.panel-custom {
+    width: 114px;
+    height: 90px;
 }
 
 /* 이미지 크기 설정 */
@@ -203,18 +209,26 @@
     margin-bottom: 4px;
     font-weight: 500;
 }
+.panel-label-energy{
+    text-align: center;
+}
 
 .panel-input,
 .panel-result-input,
 .panel-day-input, 
 .panel-week-input, 
-.panel-month-input {
+.panel-month-input,.energy-generation {
     width: 148px;
     padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 14px;
     background-color: #fafafa;
+}
+
+.energy-generation {
+    width: 19.8rem;
+    height: 200px;
 }
 
 /* 설치 정보 박스 */
@@ -228,26 +242,25 @@
 
 ul.panel-list {
     border: 1px solid #ccc;
-    min-width: 314px;
-    height: 89px;
+    min-width: 154px;
+    height: 97px;
     border-radius: 8px;
     background-color: #fafafa;
     overflow-y: auto;
-    padding-right: 10px;
 }
 
 /* 패널 설치 영역 / 에너지 생산량 */
 .panel-stats-row {
     display: flex;
-    flex-wrap: wrap; /* 컬럼이 넘어가면 자동으로 줄 바꿈 */
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
     justify-content: space-between;
 }
 
 /* 설치 목록 섹션 */
 .panel-info ul {
     display: block;
-    margin-top: 12px;
+    /* margin-top: 12px; */
     padding-left: 0;
 }
 .panel-info li {

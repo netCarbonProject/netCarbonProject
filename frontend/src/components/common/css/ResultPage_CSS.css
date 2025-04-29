@@ -12,6 +12,10 @@
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
+.future-section, .tree-section {
+  min-height: 100vh;
+}
+
 .carbon-section.animate,
 .future-section.animate,
 .tree-section.animate {
@@ -23,7 +27,7 @@
 .top-section {
   display: flex;
   gap: 1.5vw;
-  margin-bottom: 5vh;
+  margin-bottom: 30vh;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start
@@ -34,7 +38,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .resullt-map-title {
@@ -45,15 +49,16 @@
 }
 
 .result-map-placeholder {
-  flex: 2;
+  height: 50rem;
+  width: 68rem;
   background-color: #e0e0e0;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
-  max-height: 87vh;
-  max-width: 100%;
+  min-height: 87vh;
+  border-radius: 1rem;
 }
 
 .simulation-info {
@@ -130,12 +135,13 @@
   flex-direction: column;
   background-color: #f0f0f0;
   border-radius: 1rem;
-  margin-top: 8.5rem;
+  margin-top: 2.5rem;
 }
 
 /* ─── 탄소 절감 ─── */
 .carbon-section {
-  min-height: 60vh;
+  min-height: 72vh;
+  margin-bottom: 30vh;
 }
 
 .carbon-title {
@@ -178,7 +184,7 @@
   justify-content: center;
   align-items: center;
   background-color: #dd323b85;
-  min-height: 138px;
+  min-height: 141px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: default;
@@ -219,31 +225,55 @@
 }
 
 /* ─── 미래 예측 ─── */
-.future-section {
+/* .future-section {
   text-align: center;
   padding: 2rem;
   border-radius: 1rem;
+  margin-top: 2rem;
+} */
+
+/* future-section을 flex로 설정하여 내부 요소들이 크기에 맞게 조정되도록 */
+.future-section {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: flex-start;  /* 콘텐츠가 시작 부분에 위치하도록 */
+  padding: 2rem;
+  /* margin-top: 2rem; */
+  /* max-height: 600px;  기본 높이 제한 */
+  max-height: 640px;
+  height: auto;
 }
+
+/* animate가 적용될 때 */
+/* .future-section.animate {
+  /* height: 400px;  높이를 고정 */
+  /* max-height: 400px;
+} */
 
 .future-section h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
   margin-top: 6rem;
+  max-height: 640px;
 }
 
-.line-chart-placeholder {
+/* .line-chart-placeholder {
   background-color: #e9f4ff;
   height: 75vh;
   border-radius: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
+
+
 
 .future-section.animate {
   padding-top: 0px;
   padding-left: 0px;
   padding-right: 0px;
+  max-height: 640px;
 }
 
 
@@ -251,10 +281,13 @@
 /* ─── 나무 효과 ─── */
 .tree-section {
   position: relative;
-  height: 90vh;
+  min-height: 90vh;
   background: url('../../../assets/ResultPage/grassy_field.png') no-repeat center center;
   background-size: cover;
   z-index: 0;
+  overflow: visible;
+  margin-left: -3vw;
+  margin-right: -3vw;
 }
 
 .tree-content {
@@ -312,7 +345,7 @@
     gap: 1.5rem;
     flex-wrap: nowrap;
     justify-content: space-between;
-    margin-top: 3rem;
+    margin-top: -109px;
   }
 
   .top-section {
@@ -340,9 +373,10 @@
   }
 
   .result-stats p{
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     margin-right: 51px;
     margin-top: 0;
+    margin-bottom: 2px;
   }
 
   .right-map{
@@ -350,7 +384,10 @@
   }
 
   .result-map-placeholder {
-    min-height: 51vh;
+    max-height: 31vh;
+    min-height: auto;
+    width: 23rem;
+    object-fit: contain;
   }
 
   .result-stats, .donut-chart-placeholder { 
@@ -360,6 +397,9 @@
 
   .donut-chart-placeholder {
     min-height: 17vh;
+  }
+  .carbon-section {
+    margin-top: 109px;
   }
 
   .carbon-title {
@@ -382,7 +422,7 @@
   }
 
   .carbon-card, .carbon-chart-placeholder{
-    min-height: 135px;
+    min-height: 147px;
   }
 
   .carbon-chart-placeholder {

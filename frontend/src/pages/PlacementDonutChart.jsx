@@ -16,6 +16,9 @@ const PlacementDonutChart = ({ area, aiMaskArea }) => {
     { name: "남은 면적", value: 100 - cappedRatio },
   ];
 
+  // 모바일 기준 판단
+  const isMobile = window.innerWidth <= 480;
+
   return (
     <div style={{
       width: "100%",

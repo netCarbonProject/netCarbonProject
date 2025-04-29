@@ -41,7 +41,6 @@ const Header = () => {
     setMenuOpen(false);  // 메뉴가 클릭되면 닫히도록
   };
 
-
   // const isMobile = window.innerWidth <= 808;
 
   return (

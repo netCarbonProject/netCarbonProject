@@ -47,7 +47,7 @@ const FutureCarbonChart = ({ treeEquivalent }) => {
         padding: "2rem",
         borderRadius: "16px",
         position: "relative",
-        marginTop: "12rem",
+        // marginTop: "12rem",
       }}
     >
       {/* 타이틀 */}
