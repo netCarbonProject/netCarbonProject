@@ -783,7 +783,7 @@ const SimulationPage = () => {
                   height: placingSize.height,
                   transform: `translate(-50%, -50%) rotate(${placingRotation}deg)`,
                   pointerEvents: "none",
-                  zIndex: 2000,
+                  zIndex: 3001,
                 }}
               />
             )}
@@ -811,13 +811,13 @@ const SimulationPage = () => {
                   {/* <h2>설치 패널 상세</h2> */}
                   <div className="panel-content-row">
                     <div className="panel-image-selection">
-                      {/* <div className="panel-image-box">
+                      {/* <div className="panel-image-box"> // 1번째 패널
                         <img
                           src={solarpanel1}
                           alt="패널1"
                           className="panel-image panel-small"
                           onClick={() => {
-                            if (!aiPlacementMode) return; // ✅ AI 모드 아닐 땐 무시
+                            if (!aiPlacementMode) return; 
                             setPlacingPanel(solarpanel1);
                             setPlacingSize({
                               width: cmToPx(165),

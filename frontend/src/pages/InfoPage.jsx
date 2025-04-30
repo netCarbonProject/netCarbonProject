@@ -15,7 +15,7 @@ import KoreaMap from '../components/location/KoreaMap1';
 const InfoPage = () => {
   useEffect(() => {
     const updateOverflow = () => {
-      const isMobile = window.innerWidth <= 420;
+      const isMobile = window.innerWidth <= 1300;
       document.body.style.overflow = isMobile ? 'auto' : 'hidden';
     };
   

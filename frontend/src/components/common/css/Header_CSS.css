@@ -263,7 +263,7 @@ body::-webkit-scrollbar {
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 550px) {
   .header {
     padding: 10px 10px; /* 좌우 패딩 확 줄이기 */
   }

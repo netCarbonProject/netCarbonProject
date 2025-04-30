@@ -188,10 +188,10 @@ const ResultPage = () => {
                 src={croppedImage}
                 alt="시뮬레이션 결과 이미지"
                 style={{
-                  width: "100%",          // 부모 div의 크기 맞춰 이미지 크기
-                  height: "100%",         // 부모 div의 크기 맞춰 이미지 크기
-                  objectFit: "cover",     // 비율 유지하면서 꽉 채우기
-                  objectPosition: "center", // 이미지 중앙 맞추기
+                  width: "100%",          
+                  height: "100%",         
+                  objectFit: "fill",     
+                  objectPosition: "center", 
                   borderRadius: "1rem",
                   // clipPath: "polygon(20% 0, 80% 0, 80% 100%, 20% 100%)", 
                 }}
@@ -267,8 +267,8 @@ const ResultPage = () => {
               </div>
 
               <div className="carbon-chart-placeholder">
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={chartData}>
+                <ResponsiveContainer width="100%" height={300} padding={20}>
+                  <BarChart data={chartData} margin={{ top: 20, left: 40, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis unit=" kg" />
@@ -300,7 +300,7 @@ const ResultPage = () => {
         <div className="tree-content">
           <div className="tree-text">
             <h2>나무를 {treeEquivalent.toLocaleString()}그루 심은 것과 비슷한 효과에요!</h2>
-            <p>
+            <p className='tree-down'>
               (석탄 발전 대비 연간 탄소 절감량 기준, 나무 1그루는 연간 약 20kg CO₂를 흡수합니다.)
             </p>
             <div className="tree-effect">

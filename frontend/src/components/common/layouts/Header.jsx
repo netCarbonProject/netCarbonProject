@@ -13,11 +13,11 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // 화면 크기를 체크하여 메뉴를 모바일에서만 사용할 수 있게 함
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 420);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 420);
+      setIsMobile(window.innerWidth <= 550);
     };
 
     window.addEventListener('resize', handleResize);
@@ -79,7 +79,7 @@ const Header = () => {
               className={currentPath === '/info' ? 'active' : ''}
               onClick={() => handleNav('/info')}
             >
-              더 알아보기
+              대시보드
             </button>
             <button
               className={currentPath === '/simulation' ? 'active' : ''}

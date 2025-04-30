@@ -345,7 +345,6 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
           <input
             type="text"
             className="address-input"
-            // 여기부터
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -353,12 +352,11 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
             onBlur={() => setTimeout(() => setShowRecent(false), 200)}
             placeholder="장소를 입력하세요"
           />
-          {/* 여기도 추가 */}
           <button
             className="address-search-button-mobile"
             onClick={() => {
               handleCombinedSearch();       // 검색 실행
-              setShowAddressSlide(true);   // 슬라이드 열기
+              setShowAddressSlide(prev => !prev);    // 슬라이드 열기
             }}
           >
             검색
@@ -417,6 +415,7 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
                   <button
                     className="address-search-button"
                     onClick={handleCombinedSearch}
+                    
                   >
                     검색
                   </button>

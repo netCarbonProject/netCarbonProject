@@ -315,15 +315,16 @@ body.no-scroll {
     overflow: hidden !important;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 550px) {
     .simulation-container {
         padding-top: 46px;
     }
 
     .panel-button-topright{
-        bottom: 18rem;
-        right: 15px;
+        bottom: 31rem;
+        right: 0px;
         top: auto;
+        z-index: 30003;
     }
 
     .popup-panel {
@@ -332,12 +333,26 @@ body.no-scroll {
         width: 100%;
         border-radius: initial;
         top: 490px;
-        height: 305px;
+        height: 392px;
+        z-index: 30002;
+        overflow: auto;
     }
 
     .close-button-area img {
         top: 490px;
         right: 5px;
+    }
+    
+    .sunlight-filter-button{
+        bottom: 25rem;
+        top: auto;
+        right: 3px !important;
+    }
+
+    .switch-button{
+        top: auto !important;
+        right: 0 !important;
+        bottom: 28rem ;
     }
 }
 

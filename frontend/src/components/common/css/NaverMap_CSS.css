@@ -196,7 +196,7 @@
 
 
 
-@media (max-width: 420px) {
+@media (max-width: 550px) {
     .address-slide {
         position: fixed;
         left: 0;
@@ -268,14 +268,14 @@
     .address_mobile {
         position: fixed;
         top: 35px;
-        width: 90%;
+        width: 100%;
         background-color: white;
         padding: 12.5px 0px 1px 0px;
     }
 
     .address-input {
         border-radius: initial;
-        width: 308px;
+        width: 298px;
         border: none;
         background-color: white;
     }
