@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import html2canvas from "html2canvas";
 import "../components/common/css/Simulation_CSS.css";
-import solarpanel1 from "../assets/SimulationPage/solarpanel1.png";
+// import solarpanel1 from "../assets/SimulationPage/solarpanel1.png";
 import solarpanel2 from "../assets/SimulationPage/solarpanel2.png";
 import simulation_button from "../assets/SimulationPage/simulation_button.png";
 import simulation_btn_mobile from "../assets/SimulationPage/simulation_btn_mobile.png";
 import sunlight_btn from "../assets/SimulationPage/sunlight_btn.png";
+import sunlight_btn_mobile from "../assets/SimulationPage/sunlight_btn_mobile.png";
 import shadow_btn from "../assets/SimulationPage/shadow_btn.png";
+import shadow_btn_mobile from "../assets/SimulationPage/shadow_btn_mobile.png";
 
 import { useNavigate } from "react-router-dom";
 import NaverMap from "../components/map/NaverMap";
@@ -28,8 +30,8 @@ const SimulationPage = () => {
   // 지도 좌표 동기화
   const [centerLat, setCenterLat] = useState("");
   const [centerLon, setCenterLon] = useState("");
-  const [customWidth, setCustomWidth] = useState("");
-  const [customHeight, setCustomHeight] = useState("");
+  // const [customWidth, setCustomWidth] = useState("");
+  // const [customHeight, setCustomHeight] = useState("");
 
   const [showSolarOverlay, setShowSolarOverlay] = useState(false);
   const [placingPanel, setPlacingPanel] = useState(null);
@@ -252,7 +254,7 @@ const SimulationPage = () => {
   // 모바일 화면 체크
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 420);
+      setIsMobile(window.innerWidth <= 550);
     };
 
     checkMobile();
@@ -586,6 +588,17 @@ const SimulationPage = () => {
   const handleAIInference = async () => {
     setIsLoading(true); // 🔄 로딩 시작
 
+    // 검색창 숨기기
+    const mobileSearch = document.querySelector(".address_mobile");
+    const slideSearch = document.querySelector(".address-slide");
+    const originalMobileDisplay = mobileSearch?.style.display;
+    const originalSlideDisplay = slideSearch?.style.display;
+    if (mobileSearch) mobileSearch.style.display = "none";
+    if (slideSearch) slideSearch.style.display = "none";
+
+    // ✅ 프레임 한 번 기다려서 화면이 완전히 업데이트된 후 캡처
+    await new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve, 50)));
+
     const mapElement = document.querySelector(".simulation-canvas");
     if (!mapElement) {
       alert("지도를 찾을 수 없습니다.");
@@ -647,6 +660,11 @@ const SimulationPage = () => {
         console.error("AI 요청 실패:", error);
       } finally {
         setIsLoading(false); // 🔄 로딩 종료
+        
+        // 검색 창 복원
+        if (mobileSearch) mobileSearch.style.display = originalMobileDisplay || "";
+        if (slideSearch) slideSearch.style.display = originalSlideDisplay || "";
+
       }
     }, "image/png");
   };
@@ -961,7 +979,7 @@ const SimulationPage = () => {
                 className="switch-button"
                 onClick={() => setUseVMap((prev) => !prev)}
               >
-                <img src={shadow_btn} alt="맵 전환 버튼" />
+                <img src={isMobile ? shadow_btn_mobile : shadow_btn} alt="맵 전환 버튼" />
               </button>
             </div>
 
@@ -971,7 +989,7 @@ const SimulationPage = () => {
                 className="filter-button"
                 onClick={() => setShowSolarOverlay((prev) => !prev)}
               >
-                <img src={sunlight_btn} alt="일조량 버튼" />
+                <img src={isMobile ? sunlight_btn_mobile : sunlight_btn} alt="일조량 버튼" />
               </button>
             </div>
 

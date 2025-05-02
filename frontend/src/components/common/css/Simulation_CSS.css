@@ -299,7 +299,7 @@ ul.panel-list {
 .sunlight-filter-button {
     position: fixed;
     right: 213px;
-    top: 100px;
+    top: 101px;
     z-index: 3001;
 }
 
@@ -346,12 +346,12 @@ body.no-scroll {
     .sunlight-filter-button{
         bottom: 25rem;
         top: auto;
-        right: 3px !important;
+        right: 5px !important;
     }
 
     .switch-button{
         top: auto !important;
-        right: 0 !important;
+        right: 5px !important;
         bottom: 28rem ;
     }
 }
@@ -359,7 +359,7 @@ body.no-scroll {
 /* NaverMap / 3D Map 전환 버튼튼 */
 .switch-button{
     position: absolute;
-    top: 16px;
+    top: 21px;
     right: 117px;
     z-index: 3001;
     background-color: transparent;

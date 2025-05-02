@@ -282,7 +282,7 @@
 /* ─── 나무 효과 ─── */
 .tree-section {
   position: relative;
-  min-height: 90vh;
+  min-height: 100vh;
   background: url('../../../assets/ResultPage/grassy_field.png') no-repeat center center;
   background-size: cover;
   z-index: 0;

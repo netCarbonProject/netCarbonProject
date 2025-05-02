@@ -74,7 +74,7 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
   // 모바일 버전 확인
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 420);
+      setIsMobile(window.innerWidth <= 550);
     };
 
     checkMobile();
