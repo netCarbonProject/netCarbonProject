@@ -1,32 +1,41 @@
-import React, { useEffect } from 'react'; // useEffect 추가
+import React, { useEffect, useState } from 'react'; // useState 추가
 import '../components/common/css/Info_CSS.css';
 import IndustryUsageChart from '../components/charts/IndustryUsageChart';
 import UsageCompareChart from '../components/charts/UsageCompareChart';
 import EnergySourceChart from '../components/charts/EnergySourceChart';
 import RenewableChart from '../components/charts/RenewableChart';
 import mapImg from '../assets/InfoPage/2page_map.png'
+
 import chart_label1 from '../assets/InfoPage/chart_label1.png'
 import chart_label2 from '../assets/InfoPage/chart_label2.png'
 import chart_label3 from '../assets/InfoPage/chart_label3.png'
 import chart_label4 from '../assets/InfoPage/chart_label4.png'
 
+import chart_label3_m from '../assets/InfoPage/chart_label3-m.png' 
+import chart_label4_m from '../assets/InfoPage/chart_label4_m.png'
+
 import KoreaMap from '../components/location/KoreaMap1';
 
 const InfoPage = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1300);
+
   useEffect(() => {
     const updateOverflow = () => {
-      const isMobile = window.innerWidth <= 1300;
-      document.body.style.overflow = isMobile ? 'auto' : 'hidden';
+      const isMobileView = window.innerWidth <= 1300;
+      setIsMobile(isMobileView); // 상태 업데이트
+      document.body.style.overflow = isMobileView ? 'auto' : 'hidden';
     };
-  
+
     updateOverflow();
     window.addEventListener('resize', updateOverflow);
-  
+
     return () => {
       document.body.style.overflow = 'auto';
       window.removeEventListener('resize', updateOverflow);
     };
   }, []);
+
+
   return (
     <div className="info-container">
       <div className="info-top-section">
@@ -59,11 +68,11 @@ const InfoPage = () => {
 
           <div className="bottom-charts">
             <div className='chartC'>
-              <div className='chart_label3'> <img src={chart_label3} alt='국내 에너지원별 발전 비율'/> </div>
+              <div className='chart_label3'> <img src={ isMobile ? chart_label3_m : chart_label3} alt='국내 에너지원별 발전 비율'/> </div>
               <div className="chart"><EnergySourceChart /></div>
             </div>
             <div className='chartD'>
-              <div className='chart_label4'> <img src={chart_label4} alt='신재생 에너지 사용 비율'/> </div>
+              <div className='chart_label4'> <img src={ isMobile ? chart_label4_m : chart_label4} alt='신재생 에너지 사용 비율'/> </div>
               <div className="chart"><RenewableChart /></div>
             </div>
           </div>

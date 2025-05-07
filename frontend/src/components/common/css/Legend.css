@@ -42,3 +42,15 @@
     margin-right: 6px;
     border: 1px solid #999;
   }
+
+  @media (max-width: 550px){
+    .sunlight-values{
+      right: 192px;
+      left: 10px;
+    }
+
+    .legend-box{
+      right: 218px;
+    }
+    
+  }

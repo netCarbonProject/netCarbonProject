@@ -58,7 +58,6 @@ const Header = () => {
             <button id="icon4_img" onClick={() => navigate('/result')}></button>
           </>
         )}
-        {/* 메뉴 버튼은 PC에서도 보이지만, 클릭 이벤트는 모바일에서만 활성화 */}
         <div className="menu-group">
           {!isMobile && (
             <>

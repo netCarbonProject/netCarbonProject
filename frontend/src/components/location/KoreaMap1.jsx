@@ -3,6 +3,7 @@ import "./KoreaMap.css";
 import CountUp from 'react-countup';
 
 const KoreaMap = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1400);
   const [popup, setPopup] = useState(null);
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [regionPowerData, setRegionPowerData] = useState({});
@@ -46,6 +47,16 @@ const KoreaMap = () => {
   useEffect(() => {
     loadPowerData();
   }, []);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1400);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
 
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,7 +170,7 @@ const KoreaMap = () => {
     }
 
     return {
-      transform: `translate(${selectedRegion.dx}px, ${selectedRegion.dy}px) scale(1.2)`,
+      transform: `translate(${selectedRegion.dx+100}px, ${selectedRegion.dy}px) scale(1.2)`,
       transition: "transform 0.5s ease, opacity 0.5s ease",
       transformOrigin: "center",
       fillOpacity,
@@ -359,8 +370,6 @@ const KoreaMap = () => {
         <div
           style={{
             position: "absolute",
-            top: "-70px",
-            left: "50%",
             transform: "translateX(-50%)",
             background: "#222",
             color: "white",
@@ -369,7 +378,9 @@ const KoreaMap = () => {
             fontWeight: "bold",
             boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
             zIndex: 30,
-            transition: "opacity 0.3s ease"
+            transition: "opacity 0.3s ease",
+            ...(isMobile 
+              ? { top: "9PX", left: "50%"} : {top: "-70px", left: "50%"})
           }}
         >
           {selectedRegion.name} 분석 중...
@@ -380,8 +391,6 @@ const KoreaMap = () => {
       <div
         style={{
           position: "absolute",
-          top: "180px",
-          left: "20px",
           background: "white",
           padding: "12px 18px",
           borderRadius: "10px",
@@ -395,6 +404,9 @@ const KoreaMap = () => {
           transform: selectedRegion ? "translateX(-100px)" : "translateX(0)",
           opacity: selectedRegion ? 0 : 1,
           pointerEvents: selectedRegion ? "none" : "auto",
+          ...(isMobile
+            ? { top: "4px", left: "77px", width: "221px" }
+            : { top: "180px", left: "20px" })
         }}
       >
         <div style={{ fontWeight: "bold", marginBottom: "8px", color: "#4caf50" }}>📊 전국 전력 사용량</div>
@@ -412,7 +424,7 @@ const KoreaMap = () => {
           className="popup"
           style={{
             position: "fixed",
-            left: `${fixedX - 160}px`,
+            ...(isMobile ? {width: "323px",left: `${fixedX - 240}px`}: {width: "340px",left: `${fixedX - 160}px`}),
             top: `${fixedY + 300}px`,
             background: "rgba(255, 255, 255, 0.85)",
             backdropFilter: "blur(10px)",
@@ -420,8 +432,7 @@ const KoreaMap = () => {
             padding: "20px",
             borderRadius: "12px",
             boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
-            zIndex: 10,
-            width: "340px",
+            zIndex: 50,
             maxHeight: "350px",
             display: "flex",
             flexDirection: "column"
@@ -443,8 +454,7 @@ const KoreaMap = () => {
       {/* 색상 범례 (지도 내부 고정형) */}
       <div style={{
         position: "absolute",
-        bottom: "80px",
-        left: "60%",
+        ...(isMobile ? {bottom: "37px", left: "43%"}:{bottom: "80px", left: "60%",}),
         transform: "translateX(-30%)",
         backgroundColor: "white",
         padding: "6px 12px",

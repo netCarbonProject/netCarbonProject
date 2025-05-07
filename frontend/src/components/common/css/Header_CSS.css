@@ -110,7 +110,7 @@ body::-webkit-scrollbar {
 .icons button {
   background: none;
   border: none;
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 4px;
   outline: none;      
   box-shadow: none;   
@@ -206,7 +206,7 @@ body::-webkit-scrollbar {
   height: 25px;
   padding-right: 40px;
   border: none;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .result-page #icon4_img {
@@ -340,6 +340,28 @@ body::-webkit-scrollbar {
     background-image: url('../../../assets/Header/intro_w.png');
   }
   
-  
+  .sim-page.menu-open .logo-icon {
+    background-image: url('../../../assets/Header/Icon4_btn_w2.png');
+  }
+
+  .sim-page.menu-open .logo-title {
+    background-image: url('../../../assets/Header/Simulation_btn_w.png');
+  }
+
+  .info-page.menu-open .logo-icon {
+    background-image: url('../../../assets/Header/Icon2-w.png');
+  }
+
+  .info-page.menu-open .logo-title {
+    background-image: url('../../../assets/Header/Dashboard-logo-w.png');
+  }
+
+  .result-page.menu-open .logo-icon {
+    background-image: url('../../../assets/Header/Icon4-w.png');
+  }
+
+  .result-page.menu-open .logo-title {
+    background-image: url('../../../assets/Header/SimulationResult-logo-w.png');
+  }
 
 }

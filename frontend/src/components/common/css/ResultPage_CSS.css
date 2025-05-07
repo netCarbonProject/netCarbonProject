@@ -140,7 +140,7 @@
 
 /* ─── 탄소 절감 ─── */
 .carbon-section {
-  min-height: 72vh;
+  min-height: 100vh;
   margin-bottom: 20vh;
 }
 
@@ -283,8 +283,8 @@
 .tree-section {
   position: relative;
   min-height: 100vh;
-  background: url('../../../assets/ResultPage/grassy_field.png') no-repeat center center;
-  background-size: cover;
+  background: url('../../../assets/ResultPage/grassy_field.png')  no-repeat center bottom;
+  background-size: 100% 79vh;
   z-index: 0;
   overflow: visible;
   margin-left: -3vw;
@@ -295,6 +295,7 @@
   position: relative;
   padding: 2rem;
   z-index: 1;
+  padding-top: 5rem;
 }
 
 .tree-text h2 {
@@ -349,7 +350,6 @@
     gap: 1.5rem;
     flex-wrap: nowrap;
     justify-content: space-between;
-    margin-top: -109px;
   }
 
   .top-section {
@@ -388,9 +388,9 @@
   }
 
   .result-map-placeholder {
-    max-height: 31vh;
+    max-height: 48vh;
     min-height: auto;
-    width: 23rem;
+    /* width: 23rem; */
     object-fit: contain;
   }
 

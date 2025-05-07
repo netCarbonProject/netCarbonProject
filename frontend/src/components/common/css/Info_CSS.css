@@ -219,11 +219,19 @@ html, body {
   }
 
   .chart_label1 img,
-  .chart_label2 img,
-  .chart_label3 img,
-  .chart_label4 img {
-    width: 100%;
+  .chart_label2 img {
+    width: 400px;
     height: 24px;
+  }
+  
+  .chart_label3 img{
+    min-width: 251px;
+    height: 18px;
+  }
+
+  .chart_label4 img {
+    min-width: 200px;
+    height: 19px;
   }
 
   .chart_label1,
@@ -236,7 +244,6 @@ html, body {
   svg.korea-map {
     max-width: 87%;
     max-height: 86%;
-    margin-left: 1.8rem;
   }
 
   .map-container {

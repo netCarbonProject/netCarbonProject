@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import NaverMap from "../components/map/NaverMap";
 import VMap from "../components/map/VMap";
 
-//추
 import LoadingAnimation from "./LodingAnimation";
 
 const SimulationPage = () => {
@@ -30,8 +29,6 @@ const SimulationPage = () => {
   // 지도 좌표 동기화
   const [centerLat, setCenterLat] = useState("");
   const [centerLon, setCenterLon] = useState("");
-  // const [customWidth, setCustomWidth] = useState("");
-  // const [customHeight, setCustomHeight] = useState("");
 
   const [showSolarOverlay, setShowSolarOverlay] = useState(false);
   const [placingPanel, setPlacingPanel] = useState(null);
@@ -64,7 +61,6 @@ const SimulationPage = () => {
   const [totalArea, setTotalArea] = useState(0);
   const [aiMaskArea, setAiMaskArea] = useState(0);
 
-  // 수정
   const computeDistance = useCallback((lat1, lng1, lat2, lng2) => {
     const toRad = (val) => (val * Math.PI) / 180;
     const R = 6371000;
@@ -807,7 +803,12 @@ const SimulationPage = () => {
             )}
 
             {/* 패널 보기 버튼 */}
-            <div className="panel-button-topright">
+            <div className="panel-button-topright"
+              style={{
+                pointerEvents: useVMap ? "none" : "auto",
+                opacity: useVMap ? 0.5 : 1, // 회색빛으로 표시하면 사용자에게 비활성화 느낌 줌
+                cursor: useVMap ? "not-allowed" : "pointer",
+              }}>
               <button
                 className="open-panel-button"
                 onClick={() => setShowPanel(prev => !prev)}
@@ -815,6 +816,7 @@ const SimulationPage = () => {
                 <img
                   src={isMobile ? simulation_btn_mobile : simulation_button}
                   alt="패널 보기 버튼"
+
                 />
               </button>
             </div>
@@ -977,14 +979,26 @@ const SimulationPage = () => {
             <div className="switch-btn">
               <button
                 className="switch-button"
-                onClick={() => setUseVMap((prev) => !prev)}
+                onClick={() => {
+                  setUseVMap((prev) => !prev);       // 기존: 그림자 맵 전환
+                  setShowPanel(false);               // 패널 설정 팝업 닫기
+                  setPlacingPanel(null);             // 설치 중 패널 제거
+                  setPlacingRotation(0);             // 회전 상태 초기화
+                  setDragIndex(null);                // 드래그 중이면 초기화
+                  setResizeIndex(null);              // 리사이즈 중이면 초기화
+                }}
               >
                 <img src={isMobile ? shadow_btn_mobile : shadow_btn} alt="맵 전환 버튼" />
               </button>
             </div>
 
             {/* 일조량 버튼 */}
-            <div className="sunlight-filter-button">
+            <div className="sunlight-filter-button"
+              style={{
+                pointerEvents: useVMap ? "none" : "auto",
+                opacity: useVMap ? 0.5 : 1, // 회색빛으로 표시하면 사용자에게 비활성화 느낌 줌
+              }}
+            >
               <button
                 className="filter-button"
                 onClick={() => setShowSolarOverlay((prev) => !prev)}
@@ -1028,6 +1042,7 @@ const SimulationPage = () => {
             )}
           </div>
         </div>
+        <div className="simulation-log-placeholder"></div>
       </div>
     </div>
   );

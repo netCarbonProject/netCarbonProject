@@ -362,7 +362,6 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
             검색
           </button>
 
-          {/* 추가 */}
           {showRecent && recentSearches.length > 0 && (
             <ul className="recent-search-list">
               {recentSearches.map((item, idx) => (
@@ -400,7 +399,7 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
                   />
 
                   {/* 모바일 전용 추가 */}
-                  {isMobile && showAddressSlide && searchResults.length > 0 && isMapReady && (
+                  {showAddressSlide && searchResults.length > 0 && isMapReady && (
                     <ul className="search-result-list">
                       {searchResults.map((place, idx) => (
                         <li key={idx} onClick={() => handleSelectLocation(place)}>
