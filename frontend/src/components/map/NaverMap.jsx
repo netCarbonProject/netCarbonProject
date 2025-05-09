@@ -60,8 +60,7 @@ const NaverMap = ({ centerLat, centerLon, setCenterLat, setCenterLon, showSolarO
   const handleSlideToggle = () => setShowAddressSlide(!showAddressSlide);
 
   // 모바일 버전
-  const [isMobile, setIsMobile] = useState(false); // 상태 정의
-
+  const [isMobile, setIsMobile] = useState(false); 
   // 모바일 추가
   const [isMapReady, setIsMapReady] = useState(false);
 

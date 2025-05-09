@@ -17,7 +17,7 @@ const PlacementDonutChart = ({ area, aiMaskArea }) => {
   ];
 
   // 모바일 기준 판단
-  const isMobile = window.innerWidth <= 480;
+  const isMobile = window.innerWidth <= 550;
 
   return (
     <div style={{

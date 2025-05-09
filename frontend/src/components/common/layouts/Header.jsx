@@ -38,10 +38,8 @@ const Header = () => {
   // 버튼 클릭 시 페이지로 이동
   const handleNav = (path) => {
     navigate(path);
-    setMenuOpen(false);  // 메뉴가 클릭되면 닫히도록
+    setMenuOpen(false);
   };
-
-  // const isMobile = window.innerWidth <= 808;
 
   return (
     <header className={`header ${pageClass} ${menuOpen ? 'menu-open' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
@@ -59,12 +57,12 @@ const Header = () => {
           </>
         )}
         <div className="menu-group">
-          {!isMobile && (
+          {/* {!isMobile && (
             <>
               <img className='menu_title' src={menu} alt="menu" />
               <img className='menu_icon' src={vector2b} alt="menu vector" />
               </>
-          )}
+          )} */}
         </div>
         {menuOpen && isMobile && (
           <div className={`dropdown-menu ${pageClass}`}>

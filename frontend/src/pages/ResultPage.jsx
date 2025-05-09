@@ -12,7 +12,8 @@ const ResultPage = () => {
   const location = useLocation();
   const sectionRefs = useRef([]);
   const [croppedImage, setCroppedImage] = useState(null); // 잘라낸 이미지를 저장할 상태
-
+  // 모바일 추가
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
 
   const { panelCount, area, energy, image, aiMaskArea } = location.state || {
     panelCount: 0,
@@ -26,6 +27,16 @@ const ResultPage = () => {
     aiMaskArea: "0.00",
     image: "",
   };
+
+  // 모바일 추가
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 550);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // 이미지 로드 후 자르는 작업
   useEffect(() => {
@@ -168,7 +179,7 @@ const ResultPage = () => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div style={{ backgroundColor: '#ffffff', border: '1px solid #ccc', padding: '8px', borderRadius: '6px' }}>
+        <div style={{ backgroundColor: '#ffffff', border: '1px solid #ccc', padding: '8px', borderRadius: '6px', fontSize: isMobile ? '12px' : '14px', }}>
           <p>{label}</p>
           <p style={{ fontWeight: 'bold' }}>{`${payload[0].value} kg CO₂`}</p>
         </div>
@@ -190,10 +201,9 @@ const ResultPage = () => {
                 style={{
                   width: "100%",          
                   height: "100%",         
-                  objectFit: "fill",     
+                  // objectFit: "fill",     
                   objectPosition: "center", 
                   borderRadius: "1rem",
-                  // clipPath: "polygon(20% 0, 80% 0, 80% 100%, 20% 100%)", 
                 }}
               />
             ) : (
@@ -216,7 +226,7 @@ const ResultPage = () => {
               <h3>태양광 발전량</h3>
             </div>
             <div className="donut-chart-placeholder">
-              <ResponsiveContainer width="100%" height={250}>
+              <ResponsiveContainer width="100%" height={ isMobile ? 90 : 250}>
                 <PieChart>
                   <Pie
                     data={[
@@ -225,8 +235,8 @@ const ResultPage = () => {
                     ]}
                     startAngle={90}
                     endAngle={-270}
-                    innerRadius={60}
-                    outerRadius={100}
+                    innerRadius= {isMobile ? 20 : 60}
+                    outerRadius={isMobile ? 40 : 100}
                     paddingAngle={3}
                     dataKey="value"
                   >
@@ -247,82 +257,122 @@ const ResultPage = () => {
       <section className="carbon-section" ref={el => (sectionRefs.current[1] = el)}>
         <div className="carbon-title">에너지원별 탄소배출량 비교</div>
         {carbonEmissions ? (
-          <div className="carbon-layout">
-
-            {/* 왼쪽 카드들 (태양광 제외) */}
-            <div className="carbon-cards">
-              {chartData.filter(item => item.name !== '태양광').map((item, index) => (
-                <div key={index} className={`carbon-card ${item.name.toLowerCase()}`} style={{ backgroundColor: item.color, padding: '12px', borderRadius: '8px', color: '#fff', marginBottom: '2px' }}>
-                  <div className="card-text" style={{ fontWeight: 'bold' }}>{item.name}</div>
-                  <span className="carbon-amount">{item.emission} kg CO₂</span>
-                </div>
-              ))}
-            </div>
-
-            {/* 오른쪽 차트와 태양광 카드 */}
-            <div className="carbon-right">
-              <div className="carbon-card solar" style={{ backgroundColor: '#f8e473', padding: '12px', borderRadius: '8px', color: '#fff', marginBottom: '2px' }}>
-                <div className="card-text" style={{ fontWeight: 'bold' }}>태양광 발전 시 탄소 배출량</div>
-                <span className="carbon-amount solar-amount">{carbonEmissions.solar} kg CO₂</span>
-              </div>
-
-              <div className="carbon-chart-placeholder">
-                <ResponsiveContainer width="100%" height={300} padding={20}>
-                  <BarChart data={chartData} margin={{ top: 20, left: 40, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis unit=" kg" />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="emission">
-                      {chartData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
+            isMobile ? (
+                <>
+                  <div className="carbon-layout">
+                    <div className="carbon-cards">
+                      {chartData.filter(item => item.name !== '태양광').map((item, index) => (
+                        <div key={index} className={`carbon-card ${item.name.toLowerCase()}`} style={{ backgroundColor: item.color, padding: '12px', borderRadius: '8px', color: '#fff', marginBottom: '2px' }}>
+                          <div className="card-text" style={{ fontWeight: 'bold' }}>{item.name}</div>
+                          <span className="carbon-amount">{item.emission} kg CO₂</span>
+                        </div>
                       ))}
-                      <LabelList dataKey="emission" position="top" formatter={(val) => `${val}`} />
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
+                    </div>
+
+                    <div className="carbon-right">
+                      <div className="carbon-card solar" style={{ backgroundColor: '#f8e473', padding: '12px', borderRadius: '8px', color: '#fff', marginBottom: '2px' }}>
+                        <div className="card-text" style={{ fontWeight: 'bold' }}>태양광 발전 시 탄소 배출량</div>
+                        <span className="carbon-amount solar-amount">{carbonEmissions.solar} kg CO₂</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="carbon-chart-placeholder">
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart
+                          data={chartData}
+                          margin={{ top: 20, left: 10, bottom: 5 }}
+                          barCategoryGap="10%">
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" tick={{ fontSize: isMobile ? 9 : 14 }} />
+                          <YAxis unit=" kg" tick={{ fontSize: 11 }} />
+                          <Tooltip content={<CustomTooltip />} />
+                          <Bar dataKey="emission" barSize={30}>
+                            {chartData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                            <LabelList dataKey="emission" position="top" formatter={(val) => `${val}`} style={{ fontSize: 12 }} />
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                  </div>
+                </>
+            ) : (
+            <div className="carbon-layout">
+              {/* 왼쪽 카드들 (태양광 제외) */}
+              <div className="carbon-cards">
+                {chartData.filter(item => item.name !== '태양광').map((item, index) => (
+                  <div key={index} className={`carbon-card ${item.name.toLowerCase()}`} style={{ backgroundColor: item.color, padding: '12px', borderRadius: '8px', color: '#fff', marginBottom: '2px' }}>
+                    <div className="card-text" style={{ fontWeight: 'bold' }}>{item.name}</div>
+                    <span className="carbon-amount">{item.emission} kg CO₂</span>
+                  </div>
+                ))}
+              </div>
+              <div className="carbon-right">
+                <div className="carbon-card solar" style={{ backgroundColor: '#f8e473', padding: '12px', borderRadius: '8px', color: '#fff', marginBottom: '2px' }}>
+                  <div className="card-text" style={{ fontWeight: 'bold' }}>태양광 발전 시 탄소 배출량</div>
+                  <span className="carbon-amount solar-amount">{carbonEmissions.solar} kg CO₂</span>
+                </div>
+                <div className="carbon-chart-placeholder">
+                  <ResponsiveContainer width="100%" height={300} padding={20}>
+                    <BarChart data={chartData} margin={{ top: 20, left: 3, bottom: 5 }} barCategoryGap={isMobile ? "10%" : "20%"} >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis unit=" kg" tick={{ fontSize: isMobile ? 11 : 15 }} />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Bar dataKey="emission"
+                        barSize={isMobile ? 30 : 20} // 막대 너비 직접 지정
+                      >
+                        {chartData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                        <LabelList dataKey="emission" position="top" formatter={(val) => `${val}`} style={{ fontSize: isMobile ? 12 : 15 }} />
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
+          )
+                
+          ) : (
+    <p>탄소배출량을 계산할 수 없습니다.</p>
+  )}
+  </section >
+
+  {/* 미래 예측 절감량 */ }
+  < section className = "future-section" ref = { el => (sectionRefs.current[2] = el)}>
+    {/* <h2>앞으로 {treeEquivalent.toLocaleString()}그루 심은 효과가 예상돼요!</h2> */ }
+    < FutureCarbonChart treeEquivalent = { treeEquivalent } yearlyEnergy = { energy.yearly } />
+      </section >
+
+  {/* 나무 효과 */ }
+  < section className = "tree-section" ref = { el => (sectionRefs.current[3] = el)}>
+    <div className="tree-content">
+      <div className="tree-text">
+        <h2>나무를 {treeEquivalent.toLocaleString()}그루 심은 것과 비슷한 효과에요!</h2>
+        <p className='tree-down'>
+          (석탄 발전 대비 연간 탄소 절감량 기준, 나무 1그루는 연간 약 20kg CO₂를 흡수합니다.)
+        </p>
+        <div className="tree-effect">
+          <div className="tree-effect-item">
+            <h3>🌱 실제 나무 {treeEquivalent.toLocaleString()}그루를 심는다면?</h3>
+            <p>• 1그루 심는 데 평균 비용: 3천~5천원</p>
+            <p>• 심고 20년 이상 키워야 저 효과</p>
+            <p>• 도심지에선 땅 확보 자체가 어려움</p>
+            <p>• 유지관리도 필요함 (물, 병충해 등)</p>
           </div>
-        ) : (
-          <p>탄소배출량을 계산할 수 없습니다.</p>
-        )}
-      </section>
-
-      {/* 미래 예측 절감량 */}
-      <section className="future-section" ref={el => (sectionRefs.current[2] = el)}>
-        {/* <h2>앞으로 {treeEquivalent.toLocaleString()}그루 심은 효과가 예상돼요!</h2> */}
-        <FutureCarbonChart treeEquivalent={treeEquivalent} yearlyEnergy={energy.yearly} />
-      </section>
-
-      {/* 나무 효과 */}
-      <section className="tree-section" ref={el => (sectionRefs.current[3] = el)}>
-        <div className="tree-content">
-          <div className="tree-text">
-            <h2>나무를 {treeEquivalent.toLocaleString()}그루 심은 것과 비슷한 효과에요!</h2>
-            <p className='tree-down'>
-              (석탄 발전 대비 연간 탄소 절감량 기준, 나무 1그루는 연간 약 20kg CO₂를 흡수합니다.)
-            </p>
-            <div className="tree-effect">
-              <div className="tree-effect-item">
-                <h3>🌱 실제 나무 {treeEquivalent.toLocaleString()}그루를 심는다면?</h3>
-                <p>• 1그루 심는 데 평균 비용: 3천~5천원</p>
-                <p>• 심고 20년 이상 키워야 저 효과</p>
-                <p>• 도심지에선 땅 확보 자체가 어려움</p>
-                <p>• 유지관리도 필요함 (물, 병충해 등)</p>
-              </div>
-              <div className="tree-effect-item">
-                <h3>⚡️ 근데 태양광은?</h3>
-                <p>• 설치 즉시 CO₂ 저감 시작</p>
-                <p>• 25년 이상 유지 가능</p>
-                <p>• 유지비 거의 없음</p>
-                <p>• 옥상, 공장 지붕, 버려진 땅 다 활용 가능</p>
-              </div>
-            </div>
+          <div className="tree-effect-item">
+            <h3>⚡️ 근데 태양광은?</h3>
+            <p>• 설치 즉시 CO₂ 저감 시작</p>
+            <p>• 25년 이상 유지 가능</p>
+            <p>• 유지비 거의 없음</p>
+            <p>• 옥상, 공장 지붕, 버려진 땅 다 활용 가능</p>
           </div>
         </div>
-      </section>
+      </div>
     </div>
+      </section >
+    </div >
   );
 };
 

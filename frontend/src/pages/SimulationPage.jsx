@@ -1,20 +1,23 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import html2canvas from "html2canvas";
 import "../components/common/css/Simulation_CSS.css";
-// import solarpanel1 from "../assets/SimulationPage/solarpanel1.png";
+import solarpanel1 from "../assets/SimulationPage/solarpanel1.png";
 import solarpanel2 from "../assets/SimulationPage/solarpanel2.png";
 import simulation_button from "../assets/SimulationPage/simulation_button.png";
 import simulation_btn_mobile from "../assets/SimulationPage/simulation_btn_mobile.png";
 import sunlight_btn from "../assets/SimulationPage/sunlight_btn.png";
-import sunlight_btn_mobile from "../assets/SimulationPage/sunlight_btn_mobile.png";
 import shadow_btn from "../assets/SimulationPage/shadow_btn.png";
-import shadow_btn_mobile from "../assets/SimulationPage/shadow_btn_mobile.png";
 
 import { useNavigate } from "react-router-dom";
 import NaverMap from "../components/map/NaverMap";
 import VMap from "../components/map/VMap";
 
+//추
 import LoadingAnimation from "./LodingAnimation";
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList,
+  Cell, PieChart, Pie
+} from 'recharts';
 
 const SimulationPage = () => {
   const [showPanel, setShowPanel] = useState(false);
@@ -34,8 +37,9 @@ const SimulationPage = () => {
   const [placingPanel, setPlacingPanel] = useState(null);
   const [placingSize, setPlacingSize] = useState({ width: 0, height: 0 });
   const [placedPanels, setPlacedPanels] = useState([]);
-  const [dragIndex, setDragIndex] = useState(null);
-  const [resizeIndex, setResizeIndex] = useState(null); // ✅ 리사이즈 대상 인덱스
+  const dragIndexRef = useRef(null);
+  const resizeIndexRef = useRef(null);
+  const resizeCornerRef = useRef(null);
   const [isShiftPressed, setIsShiftPressed] = useState(false); // ✅ Shift 고정 여부
   const [placingRotation, setPlacingRotation] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -43,7 +47,7 @@ const SimulationPage = () => {
   const placingPanelRef = useRef(placingPanel);
   const [aiPlacementMode, setAiPlacementMode] = useState(false);
   const polygonRefs = useRef([]); // 🔵 모든 생성된 Polygon 저장
-
+  //추
   const [isLoading, setIsLoading] = useState(false);
   const [energyOutput, setEnergyOutput] = useState({
     daily: "0.0",
@@ -51,6 +55,10 @@ const SimulationPage = () => {
     monthly: "0.0",
     yearly: "0.0",
   });
+  const [totalArea, setTotalArea] = useState(0);
+  const [aiMaskArea, setAiMaskArea] = useState(0);
+  const [animatedPlacementRatio, setAnimatedPlacementRatio] = useState(0);
+  const isResizingRef = useRef(false); // 🔵 현재 리사이즈 중 여부
 
   const cmToPx = (cm) => cm * 0.5;
   const MIN_WIDTH = 100;
@@ -58,9 +66,140 @@ const SimulationPage = () => {
   const MAX_WIDTH = 500;
   const MAX_HEIGHT = 250;
 
-  const [totalArea, setTotalArea] = useState(0);
-  const [aiMaskArea, setAiMaskArea] = useState(0);
 
+  const handleMouseMove = (e) => {
+    if (!canvasRef.current) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    setMousePosition({ x: e.clientX, y: e.clientY });
+
+    const pos = { x: mouseX, y: mouseY };
+
+    // 🔥 리사이즈 중이면 크기 조정
+    if (isResizingRef.current && resizeIndexRef.current !== null && resizeCornerRef.current) {
+      const panel = placedPanels[resizeIndexRef.current];
+      if (!panel) return;
+
+      let newWidth = panel.width;
+      let newHeight = panel.height;
+      let newX = panel.x;
+      let newY = panel.y;
+
+      const leftEdge = panel.x - panel.width / 2;
+      const rightEdge = panel.x + panel.width / 2;
+      const topEdge = panel.y - panel.height / 2;
+      const bottomEdge = panel.y + panel.height / 2;
+
+      if (resizeCornerRef.current.includes("left")) {
+        newWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, rightEdge - mouseX));
+        newX = rightEdge - newWidth / 2;
+      }
+      if (resizeCornerRef.current.includes("right")) {
+        newWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, mouseX - leftEdge));
+        newX = leftEdge + newWidth / 2;
+      }
+      if (resizeCornerRef.current.includes("top")) {
+        newHeight = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, bottomEdge - mouseY));
+        newY = bottomEdge - newHeight / 2;
+      }
+      if (resizeCornerRef.current.includes("bottom")) {
+        newHeight = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, mouseY - topEdge));
+        newY = topEdge + newHeight / 2;
+      }
+
+      if (isShiftPressed) {
+        const ratio = panel.width / panel.height;
+        if (newWidth / newHeight > ratio) newWidth = newHeight * ratio;
+        else newHeight = newWidth / ratio;
+      }
+
+      setPlacedPanels((prev) =>
+        prev.map((p, i) =>
+          i === resizeIndexRef.current ? { ...p, width: newWidth, height: newHeight, x: newX, y: newY } : p
+        )
+      );
+      return;
+    }
+
+    // 🔥 드래그 중이면 이동
+    if (dragIndexRef.current !== null) {
+      setPlacedPanels((prev) =>
+        prev.map((p, i) => (i === dragIndexRef.current ? { ...p, x: mouseX, y: mouseY } : p))
+      );
+      return;
+    }
+
+    // 🔥 리사이즈 시작 감지 (마우스가 모서리에 오면)
+    let foundCorner = false;
+    placedPanels.forEach((panel, idx) => {
+      const corner = isNearCorner(pos, panel);
+      if (corner) {
+        canvasRef.current.style.cursor = (corner.includes("left") || corner.includes("right")) ? "ew-resize" : "ns-resize";
+        resizeIndexRef.current = idx;
+        resizeCornerRef.current = corner;
+        foundCorner = true;
+      }
+    });
+
+    if (!foundCorner) {
+      canvasRef.current.style.cursor = "move";
+      resizeIndexRef.current = null;
+      resizeCornerRef.current = null;
+    }
+  };
+
+
+
+
+
+  const handleMouseDown = (e) => {
+    const rect = canvasRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    let found = false;
+    placedPanels.forEach((panel, idx) => {
+      const corner = isNearCorner({ x, y }, panel);
+      if (corner) {
+        handleResizeStart(idx, corner);
+        found = true;
+      }
+    });
+
+    if (!found) {
+      placedPanels.forEach((panel, idx) => {
+        // 중앙에 클릭했는지 확인 (여유 margin 있음)
+        const margin = 10;
+        if (
+          x > panel.x - panel.width / 2 + margin &&
+          x < panel.x + panel.width / 2 - margin &&
+          y > panel.y - panel.height / 2 + margin &&
+          y < panel.y + panel.height / 2 - margin
+        ) {
+          handleDragStart(idx);
+          found = true;
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Shift") setIsShiftPressed(true);
+    };
+    const handleKeyUp = (e) => {
+      if (e.key === "Shift") setIsShiftPressed(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
+  // 수정
   const computeDistance = useCallback((lat1, lng1, lat2, lng2) => {
     const toRad = (val) => (val * Math.PI) / 180;
     const R = 6371000;
@@ -72,6 +211,9 @@ const SimulationPage = () => {
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }, []);
 
+  const placementRatio = useMemo(() => {
+    return aiMaskArea > 0 ? (totalArea / aiMaskArea) * 100 : 0;
+  }, [totalArea, aiMaskArea]);
 
   const getPixelToMeterRatio = useCallback(() => {
     const map = window.naverMap;
@@ -89,12 +231,12 @@ const SimulationPage = () => {
   const calculateAIMaskArea = useCallback(() => {
     const map = window.naverMap;
     if (!map || !map.getProjection || !canvasRef.current) return;
-  
+
     const proj = map.getProjection();
     const canvasRect = canvasRef.current.getBoundingClientRect();
-  
+
     let totalMaskArea = 0;
-  
+
     aiDetections.forEach((det) => {
       if (det.box && det.box.length === 4) {
         const offsetX = window.innerWidth * 0.1;
@@ -102,7 +244,7 @@ const SimulationPage = () => {
         const y1 = det.box[1] + canvasRect.top;
         const x2 = det.box[2] + offsetX + canvasRect.left;
         const y2 = det.box[3] + canvasRect.top;
-  
+
         // 박스 4개 모서리 계산
         const corners = [
           new window.naver.maps.Point(x1, y1),
@@ -110,23 +252,23 @@ const SimulationPage = () => {
           new window.naver.maps.Point(x2, y2),
           new window.naver.maps.Point(x1, y2),
         ];
-  
+
         const geoCoords = corners.map((pt) =>
           proj.fromPageXYToCoord(pt)
         );
-  
+
         const polygon = new window.naver.maps.Polygon({ paths: geoCoords, map });
         const area = polygon.getAreaSize();
         polygon.setMap(null);
-  
+
         totalMaskArea += area;
       }
     });
-  
+
     const finalArea = totalMaskArea / 1.37; // 🔥 패널이랑 똑같이 35% 보정 적용
     setAiMaskArea(finalArea);
   }, [aiDetections]);
-  
+
 
   const loadStationCSV = useCallback(async () => {
     const res = await fetch("/data/station.csv");
@@ -250,7 +392,7 @@ const SimulationPage = () => {
   // 모바일 화면 체크
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 550);
+      setIsMobile(window.innerWidth <= 420);
     };
 
     checkMobile();
@@ -270,12 +412,6 @@ const SimulationPage = () => {
       setAiDetections([]);
     };
   }, []);
-
-  // // 시뮬 페이지 다녀오기 위한 체크
-  // useEffect(() => {
-  //   sessionStorage.setItem("placedPanels", JSON.stringify(placedPanels));
-  // }, [placedPanels]);
-  
 
 
   useEffect(() => {
@@ -359,74 +495,35 @@ const SimulationPage = () => {
 
   // ✅ 마우스 이동 추적 + 크기 조절
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      if (resizeIndex !== null && canvasRef.current) {
-        const rect = canvasRef.current.getBoundingClientRect();
-        const panel = placedPanels[resizeIndex];
-        const dx = e.clientX - rect.left - panel.x;
-        const dy = e.clientY - rect.top - panel.y;
-        let newWidth = Math.min(
-          Math.max(Math.abs(dx) * 2, MIN_WIDTH),
-          MAX_WIDTH
-        );
-        let newHeight = Math.min(
-          Math.max(Math.abs(dy) * 2, MIN_HEIGHT),
-          MAX_HEIGHT
-        );
-
-        // ✅ Shift 누르면 비율 고정
-        if (isShiftPressed) {
-          const ratio = panel.width / panel.height;
-          if (newWidth / newHeight > ratio) newWidth = newHeight * ratio;
-          else newHeight = newWidth / ratio;
-        }
-
-        setPlacedPanels((prev) =>
-          prev.map((p, i) =>
-            i === resizeIndex ? { ...p, width: newWidth, height: newHeight } : p
-          )
-        );
-      }
-    };
-
     // ✅ 키 입력 처리 (Shift, 회전)
+    // ✅ 키 입력 처리 (회전 등)
     const handleKeyDown = (e) => {
-      // 여기 로그 찍어보자
-      console.log("KEY DOWN:", e.key);
-
       if (e.key === "Shift") setIsShiftPressed(true);
 
-      // 1️⃣ placingPanel 상태일 때 우선 회전 처리
       if (placingPanelRef.current) {
-        if (e.key === "r" || e.key === "R") {
-          console.log("placing R");
+        if (e.key.toLowerCase() === "r") {
           setPlacingRotation((prev) => (prev + 45) % 360);
           return;
         }
-        if (e.key === "q" || e.key === "Q") {
-          console.log("placing Q");
+        if (e.key.toLowerCase() === "q") {
           setPlacingRotation((prev) => (prev - 45 + 360) % 360);
           return;
         }
       }
 
-      // 2️⃣ 드래그 중 회전
-      if (dragIndex !== null) {
-        if (e.key === "r" || e.key === "R") {
-          console.log("dragIndex R");
+      if (dragIndexRef.current !== null) {
+        if (e.key.toLowerCase() === "r") {
           setPlacedPanels((prev) =>
             prev.map((panel, idx) =>
-              idx === dragIndex
+              idx === dragIndexRef.current
                 ? { ...panel, rotation: (panel.rotation + 45) % 360 }
                 : panel
             )
           );
-        } else if (e.key === "q" || e.key === "Q") {
-          console.log("dragIndex Q");
+        } else if (e.key.toLowerCase() === "q") {
           setPlacedPanels((prev) =>
             prev.map((panel, idx) =>
-              idx === dragIndex
+              idx === dragIndexRef.current
                 ? { ...panel, rotation: (panel.rotation - 45 + 360) % 360 }
                 : panel
             )
@@ -448,11 +545,11 @@ const SimulationPage = () => {
         return;
       }
 
-      if (dragIndex !== null) {
+      if (dragIndexRef.current !== null) {
         e.preventDefault();
         setPlacedPanels((prev) =>
           prev.map((panel, idx) =>
-            idx === dragIndex
+            idx === dragIndexRef.current
               ? { ...panel, rotation: (panel.rotation + delta + 360) % 360 }
               : panel
           )
@@ -461,18 +558,19 @@ const SimulationPage = () => {
     };
 
     // ✅ 이벤트 리스너 등록
-    window.addEventListener("mousemove", handleMouseMove);
+    // window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("keyup", (e) => {
+      if (e.key === "Shift") setIsShiftPressed(false);
+    });
     window.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      // window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
       window.removeEventListener("wheel", handleWheel);
     };
-  }, [dragIndex, resizeIndex, isShiftPressed, placedPanels]);
+  }, [isShiftPressed, placedPanels]);
 
   // ✅ AI 결과가 갱신될 때마다 면적 계산
   useEffect(() => {
@@ -482,6 +580,29 @@ const SimulationPage = () => {
       setAiMaskArea(0);
     }
   }, [aiDetections, calculateAIMaskArea]);
+
+  useEffect(() => {
+    let animationFrame;
+    let start = animatedPlacementRatio;
+    let startTime = null;
+    const duration = 800; // 부드럽게 변화하는 시간 (ms)
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const current = start + (placementRatio - start) * progress;
+      setAnimatedPlacementRatio(current);
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    cancelAnimationFrame(animationFrame);
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [placementRatio]);
 
   const handleCaptureAndNavigate = async () => {
     const mapElement = document.querySelector(".simulation-canvas");
@@ -527,23 +648,39 @@ const SimulationPage = () => {
     setPlacingRotation(0);
   };
 
-  // ✅ 드래그 및 리사이즈 조작
-  const handleDragStart = (index) => setDragIndex(index);
-  const handleResizeStart = (index) => setResizeIndex(index);
-  const handleMouseUp = () => {
-    setDragIndex(null);
-    setResizeIndex(null);
+  // 드래그 시작
+  const handleDragStart = (index) => {
+    dragIndexRef.current = index;
+    isResizingRef.current = false;
   };
 
+  // 리사이즈 시작
+  const handleResizeStart = (index, corner) => {
+    resizeIndexRef.current = index;
+    resizeCornerRef.current = corner;
+    isResizingRef.current = true;
+  };
+
+  const handleMouseUp = () => {
+    dragIndexRef.current = null;
+    resizeIndexRef.current = null;
+    resizeCornerRef.current = null;
+    isResizingRef.current = false;
+  };
+
+
   const handleDrag = (e) => {
-    if (dragIndex === null) return;
+    if (dragIndexRef.current === null) return;
     const rect = canvasRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     setPlacedPanels((prev) =>
-      prev.map((panel, idx) => (idx === dragIndex ? { ...panel, x, y } : panel))
+      prev.map((panel, idx) =>
+        idx === dragIndexRef.current ? { ...panel, x, y } : panel
+      )
     );
   };
+
 
   // ✅ 우클릭 삭제
   const handleRightClick = (e, index) => {
@@ -553,47 +690,26 @@ const SimulationPage = () => {
 
   const isNearCorner = (pos, panel) => {
     const margin = 10;
+    const rad = (panel.rotation * Math.PI) / 180;
     const corners = [
-      {
-        x: panel.x - panel.width / 2,
-        y: panel.y - panel.height / 2,
-        name: "top-left",
-      },
-      {
-        x: panel.x + panel.width / 2,
-        y: panel.y - panel.height / 2,
-        name: "top-right",
-      },
-      {
-        x: panel.x + panel.width / 2,
-        y: panel.y + panel.height / 2,
-        name: "bottom-right",
-      },
-      {
-        x: panel.x - panel.width / 2,
-        y: panel.y + panel.height / 2,
-        name: "bottom-left",
-      },
-    ];
-    return corners.find(
-      (c) => Math.abs(pos.x - c.x) < margin && Math.abs(pos.y - c.y) < margin
+      { dx: -panel.width / 2, dy: -panel.height / 2, name: "top-left" },
+      { dx: panel.width / 2, dy: -panel.height / 2, name: "top-right" },
+      { dx: panel.width / 2, dy: panel.height / 2, name: "bottom-right" },
+      { dx: -panel.width / 2, dy: panel.height / 2, name: "bottom-left" },
+    ].map(({ dx, dy, name }) => {
+      const rotatedX = dx * Math.cos(rad) - dy * Math.sin(rad);
+      const rotatedY = dx * Math.sin(rad) + dy * Math.cos(rad);
+      return { x: panel.x + rotatedX, y: panel.y + rotatedY, name };
+    });
+
+    return corners.find((corner) =>
+      Math.abs(pos.x - corner.x) < margin && Math.abs(pos.y - corner.y) < margin
     )?.name;
   };
 
   // ✅ AI 추론 캡처 및 전송 - 로딩 기능 수정
   const handleAIInference = async () => {
     setIsLoading(true); // 🔄 로딩 시작
-
-    // 검색창 숨기기
-    const mobileSearch = document.querySelector(".address_mobile");
-    const slideSearch = document.querySelector(".address-slide");
-    const originalMobileDisplay = mobileSearch?.style.display;
-    const originalSlideDisplay = slideSearch?.style.display;
-    if (mobileSearch) mobileSearch.style.display = "none";
-    if (slideSearch) slideSearch.style.display = "none";
-
-    // ✅ 프레임 한 번 기다려서 화면이 완전히 업데이트된 후 캡처
-    await new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve, 50)));
 
     const mapElement = document.querySelector(".simulation-canvas");
     if (!mapElement) {
@@ -656,16 +772,11 @@ const SimulationPage = () => {
         console.error("AI 요청 실패:", error);
       } finally {
         setIsLoading(false); // 🔄 로딩 종료
-        
-        // 검색 창 복원
-        if (mobileSearch) mobileSearch.style.display = originalMobileDisplay || "";
-        if (slideSearch) slideSearch.style.display = originalSlideDisplay || "";
-
       }
     }, "image/png");
   };
 
-  
+
 
   return (
     <div className="simulation-container">
@@ -678,7 +789,8 @@ const SimulationPage = () => {
               id="simulation-canvas"
               ref={canvasRef}
               onClick={handleMapClick}
-              onMouseMove={handleDrag}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
               style={{ position: "relative" }}
             >
@@ -767,18 +879,24 @@ const SimulationPage = () => {
                       width: panel.width,
                       height: panel.height,
                       transform: `translate(-50%, -50%) rotate(${panel.rotation}deg)`,
-                      cursor,
+                      cursor: 'move',
                       zIndex: 1000,
                     }}
-                    onMouseDown={() => {
-                      if (corner) handleResizeStart(idx, corner);
-                      else handleDragStart(idx);
+                    onMouseMove={(e) => {
+                      const rect = canvasRef.current.getBoundingClientRect();
+                      const x = e.clientX - rect.left;
+                      const y = e.clientY - rect.top;
+                      const corner = isNearCorner({ x, y }, panel);
+
+                      if (corner === "top-left" || corner === "bottom-right") {
+                        e.currentTarget.style.cursor = "nwse-resize"; // ↘↖ 방향
+                      } else if (corner === "top-right" || corner === "bottom-left") {
+                        e.currentTarget.style.cursor = "nesw-resize"; // ↗↙ 방향
+                      } else {
+                        e.currentTarget.style.cursor = "move"; // 기본 move
+                      }
                     }}
                     onContextMenu={(e) => handleRightClick(e, idx)}
-                  /*
-                  onMouseEnter={() => showTooltip(panel)}
-                  onMouseLeave={hideTooltip}
-                  */
                   />
                 );
               })}
@@ -797,18 +915,13 @@ const SimulationPage = () => {
                   height: placingSize.height,
                   transform: `translate(-50%, -50%) rotate(${placingRotation}deg)`,
                   pointerEvents: "none",
-                  zIndex: 3001,
+                  zIndex: 2000,
                 }}
               />
             )}
 
             {/* 패널 보기 버튼 */}
-            <div className="panel-button-topright"
-              style={{
-                pointerEvents: useVMap ? "none" : "auto",
-                opacity: useVMap ? 0.5 : 1, // 회색빛으로 표시하면 사용자에게 비활성화 느낌 줌
-                cursor: useVMap ? "not-allowed" : "pointer",
-              }}>
+            <div className="panel-button-topright">
               <button
                 className="open-panel-button"
                 onClick={() => setShowPanel(prev => !prev)}
@@ -816,7 +929,6 @@ const SimulationPage = () => {
                 <img
                   src={isMobile ? simulation_btn_mobile : simulation_button}
                   alt="패널 보기 버튼"
-
                 />
               </button>
             </div>
@@ -831,29 +943,13 @@ const SimulationPage = () => {
                   {/* <h2>설치 패널 상세</h2> */}
                   <div className="panel-content-row">
                     <div className="panel-image-selection">
-                      {/* <div className="panel-image-box"> // 1번째 패널
-                        <img
-                          src={solarpanel1}
-                          alt="패널1"
-                          className="panel-image panel-small"
-                          onClick={() => {
-                            if (!aiPlacementMode) return; 
-                            setPlacingPanel(solarpanel1);
-                            setPlacingSize({
-                              width: cmToPx(165),
-                              height: cmToPx(99),
-                            });
-                          }}
-                        />
-                        <div className="panel-size">165cm x 99cm</div>
-                      </div> */}
                       <div className="panel-image-box">
                         <img
                           src={solarpanel2}
-                          alt="패널2"
-                          className="panel-image panel-large"
+                          alt="패널"
+                          className="panel-image"
                           onClick={() => {
-                            if (!aiPlacementMode) return; // ✅ AI 모드 아닐 땐 무시
+                            if (!aiPlacementMode) return;
                             setPlacingPanel(solarpanel2);
                             setPlacingSize({
                               width: cmToPx(198),
@@ -861,12 +957,6 @@ const SimulationPage = () => {
                             });
                           }}
                         />
-                        <div className="panel-size">198cm x 99cm</div>
-                      </div>
-                      <div className="panel-image-box">
-                        <button className="panel-custom">
-                          커스텀
-                        </button>
                       </div>
                     </div>
                     <div className="panel-stats-row">
@@ -923,16 +1013,44 @@ const SimulationPage = () => {
                           </label>
                           <input type="text" value={`${energyOutput.yearly} kWh`} className="panel-month-input" readOnly></input>
                         </div>
-
                       </div>
-                      <div className="panel-info">
-                          <label className="panel-label panel-label-energy">
-                            설치율
-                          </label>
-                          <div className="energy-generation">
-                            
-                          </div>
+                      {/* 🔥 도넛 차트 추가 */}
+                      <div className="simulation-donut-chart">
+                        <ResponsiveContainer width="100%" height={200}>
+                          <PieChart>
+                            <Pie
+                              data={[
+                                { name: '설치된 면적', value: Math.min(animatedPlacementRatio, 100) },  // 🔥 capped to 100
+                                { name: '남은 면적', value: 100 - Math.min(animatedPlacementRatio, 100) },
+                              ]}
+                              startAngle={90}
+                              endAngle={-270}
+                              innerRadius={50}
+                              outerRadius={90}
+                              paddingAngle={0}
+                              dataKey="value"
+                              isAnimationActive={false}
+                            >
+                              <Cell
+                                key="installed"
+                                fill={
+                                  animatedPlacementRatio < 30
+                                    ? "#FF7043" // 연주황 (주의)
+                                    : animatedPlacementRatio < 70
+                                      ? "#FFD54F" // 노랑 (중간)
+                                      : "#66BB6A" // 초록 (충분)
+                                }
+                              />
+                              <Cell key="remaining" fill="#E0E0E0" /> {/* 남은 면적은 회색 */}
+                            </Pie>
+                          </PieChart>
+                        </ResponsiveContainer>
+
+                        <div style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.2rem', marginTop: '8px' }}>
+                          설치율 {Math.min(placementRatio, 100).toFixed(1)}%
                         </div>
+                      </div>
+
                     </div>
                   </div>
 
@@ -979,31 +1097,19 @@ const SimulationPage = () => {
             <div className="switch-btn">
               <button
                 className="switch-button"
-                onClick={() => {
-                  setUseVMap((prev) => !prev);       // 기존: 그림자 맵 전환
-                  setShowPanel(false);               // 패널 설정 팝업 닫기
-                  setPlacingPanel(null);             // 설치 중 패널 제거
-                  setPlacingRotation(0);             // 회전 상태 초기화
-                  setDragIndex(null);                // 드래그 중이면 초기화
-                  setResizeIndex(null);              // 리사이즈 중이면 초기화
-                }}
+                onClick={() => setUseVMap((prev) => !prev)}
               >
-                <img src={isMobile ? shadow_btn_mobile : shadow_btn} alt="맵 전환 버튼" />
+                <img src={shadow_btn} alt="맵 전환 버튼" />
               </button>
             </div>
 
             {/* 일조량 버튼 */}
-            <div className="sunlight-filter-button"
-              style={{
-                pointerEvents: useVMap ? "none" : "auto",
-                opacity: useVMap ? 0.5 : 1, // 회색빛으로 표시하면 사용자에게 비활성화 느낌 줌
-              }}
-            >
+            <div className="sunlight-filter-button">
               <button
                 className="filter-button"
                 onClick={() => setShowSolarOverlay((prev) => !prev)}
               >
-                <img src={isMobile ? sunlight_btn_mobile : sunlight_btn} alt="일조량 버튼" />
+                <img src={sunlight_btn} alt="일조량 버튼" />
               </button>
             </div>
 
@@ -1042,7 +1148,6 @@ const SimulationPage = () => {
             )}
           </div>
         </div>
-        <div className="simulation-log-placeholder"></div>
       </div>
     </div>
   );
